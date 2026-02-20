@@ -1,30 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Navbar } from './components/Navbar.jsx';
-import { Hero } from './components/Hero.jsx';
-import { AutoScrollCarousel } from './components/AutoScrollCarousel.jsx';
-import { CategoryGrid } from './components/CategoryGrid.jsx';
-import { Footer } from './components/Footer.jsx';
-import { LoginPage } from './components/LoginPageNew.jsx';
-import { RegisterPage } from './components/RegisterPageNew.jsx';
-import { BrowseCatalogsPage } from './components/BrowseCatalogsPage.jsx';
-import { AdminDashboard } from './components/AdminDashboard.jsx'; // ROLE SYSTEM: Import admin dashboard
+import { HomePage } from './pages/HomePage.jsx';
+import { LoginPage } from './pages/LoginPage.jsx';
+import { RegisterPage } from './pages/RegisterPage.jsx';
+import { BrowseCatalogsPage } from './pages/BrowseCatalogsPage.jsx';
+import { AdminDashboard } from './pages/AdminDashboard.jsx';
 import './index.css';
-
-/**
- * HOME PAGE COMPONENT - Landing page with all features
- */
-function HomePage() {
-  return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Navbar />
-      <Hero />
-      <AutoScrollCarousel />
-      <CategoryGrid />
-      <Footer />
-    </div>
-  );
-}
 
 /**
  * MAIN APP COMPONENT WITH ROUTING
