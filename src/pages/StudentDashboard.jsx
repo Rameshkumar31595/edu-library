@@ -43,10 +43,10 @@ export const StudentDashboard = () => {
 
   // Mock data
   const recentResources = [
-    { title: 'Data Structures and Algorithms', subject: 'Computer Science', type: 'PDF', lastAccessed: '2 hours ago' },
-    { title: 'Thermodynamics Fundamentals', subject: 'Mechanical Engg.', type: 'Video', lastAccessed: '5 hours ago' },
-    { title: 'Digital Signal Processing', subject: 'Electronics', type: 'PDF', lastAccessed: '1 day ago' },
-    { title: 'Software Engineering Principles', subject: 'Computer Science', type: 'Document', lastAccessed: '2 days ago' },
+    { id: 1, title: 'Data Structures and Algorithms', subject: 'Computer Science', type: 'PDF', lastAccessed: '2 hours ago', url: 'https://www.orimi.com/pdf-test.pdf' },
+    { id: 2, title: 'Thermodynamics Fundamentals', subject: 'Mechanical Engg.', type: 'Video', lastAccessed: '5 hours ago', url: 'https://www.youtube.com/watch?v=4LqZdkkBDas' },
+    { id: 3, title: 'Digital Signal Processing', subject: 'Electronics', type: 'PDF', lastAccessed: '1 day ago', url: 'https://web.eecs.utk.edu/~hqi/teaching/ece505f15/lecture01_intro.pdf' },
+    { id: 4, title: 'Software Engineering Principles', subject: 'Computer Science', type: 'Video', lastAccessed: '2 days ago', url: 'https://www.youtube.com/watch?v=O753uuutqH8' },
   ];
 
   const departments = [
@@ -114,7 +114,15 @@ export const StudentDashboard = () => {
               <tbody>
                 {recentResources.map((resource, idx) => (
                   <tr key={idx}>
-                    <td className="resource-title">{resource.title}</td>
+                    <td className="resource-title">
+                      {resource.url ? (
+                        <a href={resource.url} target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:underline">
+                          {resource.title}
+                        </a>
+                      ) : (
+                        resource.title
+                      )}
+                    </td>
                     <td>{resource.subject}</td>
                     <td><span className="resource-badge">{resource.type}</span></td>
                     <td className="text-muted">{resource.lastAccessed}</td>
