@@ -12,6 +12,7 @@ export const StudentDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState('');
   const [userName, setUserName] = useState('Student');
+  const [activeNav, setActiveNav] = useState('overview');
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('uiExtension-isLoggedIn') === 'true';
@@ -101,8 +102,10 @@ export const StudentDashboard = () => {
         </button>
       </aside>
 
+
+    <div className="dashboard-wrapper dashboard-wrapper--bottom-nav">
       {/* Main Content */}
-      <main className="dashboard-main">
+      <main className="dashboard-main dashboard-main--bottom-nav">
         {/* Welcome Section */}
         <section className="dashboard-welcome">
           <h1>Welcome back, {userName}!</h1>
@@ -224,6 +227,39 @@ export const StudentDashboard = () => {
           </div>
         </section>
       </main>
+
+      {/* Bottom Navigation Menu */}
+      <nav className="bottom-nav-menu" role="navigation" aria-label="Main navigation">
+        <a href="#overview" className={`nav-link ${activeNav === 'overview' ? 'active' : ''}`} onClick={() => setActiveNav('overview')} aria-label="Overview">
+          <span className="nav-icon">📊</span>
+          <span className="nav-title">Overview</span>
+        </a>
+        <a href="#browse" className={`nav-link ${activeNav === 'browse' ? 'active' : ''}`} onClick={() => setActiveNav('browse')} aria-label="Browse Resources">
+          <span className="nav-icon">📚</span>
+          <span className="nav-title">Browse Resources</span>
+        </a>
+        <a href="#saved" className={`nav-link ${activeNav === 'saved' ? 'active' : ''}`} onClick={() => setActiveNav('saved')} aria-label="Saved Items">
+          <span className="nav-icon">💾</span>
+          <span className="nav-title">Saved Items</span>
+        </a>
+        <a href="#downloads" className={`nav-link ${activeNav === 'downloads' ? 'active' : ''}`} onClick={() => setActiveNav('downloads')} aria-label="Downloads">
+          <span className="nav-icon">📥</span>
+          <span className="nav-title">Downloads</span>
+        </a>
+        <a href="#requests" className={`nav-link ${activeNav === 'requests' ? 'active' : ''}`} onClick={() => setActiveNav('requests')} aria-label="My Requests">
+          <span className="nav-icon">✉️</span>
+          <span className="nav-title">My Requests</span>
+        </a>
+        <a href="#announcements" className={`nav-link ${activeNav === 'announcements' ? 'active' : ''}`} onClick={() => setActiveNav('announcements')} aria-label="Announcements">
+          <span className="nav-icon">📢</span>
+          <span className="nav-title">Announcements</span>
+        </a>
+        <button onClick={handleLogout} className="nav-link nav-logout" aria-label="Logout">
+          <span className="nav-icon">🚪</span>
+          <span className="nav-title">Logout</span>
+        </button>
+      </nav>
+    </div>
     </div>
   );
 };

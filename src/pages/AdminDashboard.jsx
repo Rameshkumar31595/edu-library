@@ -11,6 +11,7 @@ export const AdminDashboard = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState('');
+  const [activeNav, setActiveNav] = useState('overview');
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('uiExtension-isLoggedIn') === 'true';
@@ -55,46 +56,9 @@ export const AdminDashboard = () => {
   ];
 
   return (
-    <div className="dashboard-wrapper">
-      {/* Sidebar */}
-      <aside className="dashboard-sidebar dashboard-sidebar--admin">
-        <div className="sidebar-header">
-          <div className="logo">EduLibrary</div>
-          <div className="admin-badge">Admin</div>
-        </div>
-        <nav className="sidebar-nav">
-          <a href="#overview" className="sidebar-link active">
-            <span className="link-icon">📊</span>
-            Overview
-          </a>
-          <a href="#resources" className="sidebar-link">
-            <span className="link-icon">📚</span>
-            Resource Management
-          </a>
-          <a href="#students" className="sidebar-link">
-            <span className="link-icon">👥</span>
-            Student Activity
-          </a>
-          <a href="#requests" className="sidebar-link">
-            <span className="link-icon">✉️</span>
-            Requests
-          </a>
-          <a href="#announcements" className="sidebar-link">
-            <span className="link-icon">📢</span>
-            Announcements
-          </a>
-          <a href="#settings" className="sidebar-link">
-            <span className="link-icon">⚙️</span>
-            Settings
-          </a>
-        </nav>
-        <button onClick={handleLogout} className="sidebar-logout">
-          Logout
-        </button>
-      </aside>
-
+    <div className="dashboard-wrapper dashboard-wrapper--bottom-nav">
       {/* Main Content */}
-      <main className="dashboard-main">
+      <main className="dashboard-main dashboard-main--bottom-nav">
         {/* Welcome Section */}
         <section className="dashboard-welcome admin-welcome">
           <h1>Admin Control Center</h1>
@@ -268,6 +232,38 @@ export const AdminDashboard = () => {
           </div>
         </section>
       </main>
+
+      {/* Bottom Navigation Menu */}
+      <nav className="bottom-nav-menu bottom-nav-menu--admin" role="navigation" aria-label="Admin navigation">
+        <a href="#overview" className={`nav-link ${activeNav === 'overview' ? 'active' : ''}`} onClick={() => setActiveNav('overview')} aria-label="Overview">
+          <span className="nav-icon">📊</span>
+          <span className="nav-title">Overview</span>
+        </a>
+        <a href="#resources" className={`nav-link ${activeNav === 'resources' ? 'active' : ''}`} onClick={() => setActiveNav('resources')} aria-label="Resource Management">
+          <span className="nav-icon">📚</span>
+          <span className="nav-title">Resources</span>
+        </a>
+        <a href="#students" className={`nav-link ${activeNav === 'students' ? 'active' : ''}`} onClick={() => setActiveNav('students')} aria-label="Student Activity">
+          <span className="nav-icon">👥</span>
+          <span className="nav-title">Students</span>
+        </a>
+        <a href="#requests" className={`nav-link ${activeNav === 'requests' ? 'active' : ''}`} onClick={() => setActiveNav('requests')} aria-label="Requests">
+          <span className="nav-icon">✉️</span>
+          <span className="nav-title">Requests</span>
+        </a>
+        <a href="#announcements" className={`nav-link ${activeNav === 'announcements' ? 'active' : ''}`} onClick={() => setActiveNav('announcements')} aria-label="Announcements">
+          <span className="nav-icon">📢</span>
+          <span className="nav-title">Announcements</span>
+        </a>
+        <a href="#settings" className={`nav-link ${activeNav === 'settings' ? 'active' : ''}`} onClick={() => setActiveNav('settings')} aria-label="Settings">
+          <span className="nav-icon">⚙️</span>
+          <span className="nav-title">Settings</span>
+        </a>
+        <button onClick={handleLogout} className="nav-link nav-logout" aria-label="Logout">
+          <span className="nav-icon">🚪</span>
+          <span className="nav-title">Logout</span>
+        </button>
+      </nav>
     </div>
   );
 };
