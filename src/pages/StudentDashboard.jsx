@@ -43,17 +43,11 @@ export const StudentDashboard = () => {
 
   // Mock data
   const recentResources = [
-    { title: 'Data Structures and Algorithms', subject: 'Computer Science', type: 'PDF', lastAccessed: '2 hours ago', url: 'https://www.cs.cmu.edu/~ckingsf/class/02-601/www_2024/slides/lecture-01.pdf' },
-    { title: 'Thermodynamics Fundamentals', subject: 'Mechanical Engg.', type: 'Video', lastAccessed: '5 hours ago', url: 'https://www.youtube.com/watch?v=lJcvjzP0lLg' },
-    { title: 'Digital Signal Processing', subject: 'Electronics', type: 'PDF', lastAccessed: '1 day ago', url: 'https://www.dsprelated.com/freebooks/sasp/Digital_Signal_Processing.pdf' },
-    { title: 'Software Engineering Principles', subject: 'Computer Science', type: 'Document', lastAccessed: '2 days ago', url: 'https://www.google.com/url?q=https://www.cs.cornell.edu/courses/cs3110/2024fa/&sa=D' },
+    { id: 1, title: 'Data Structures and Algorithms', subject: 'Computer Science', type: 'PDF', lastAccessed: '2 hours ago', url: 'https://www.orimi.com/pdf-test.pdf' },
+    { id: 2, title: 'Thermodynamics Fundamentals', subject: 'Mechanical Engg.', type: 'Video', lastAccessed: '5 hours ago', url: 'https://www.youtube.com/watch?v=4LqZdkkBDas' },
+    { id: 3, title: 'Digital Signal Processing', subject: 'Electronics', type: 'PDF', lastAccessed: '1 day ago', url: 'https://web.eecs.utk.edu/~hqi/teaching/ece505f15/lecture01_intro.pdf' },
+    { id: 4, title: 'Software Engineering Principles', subject: 'Computer Science', type: 'Video', lastAccessed: '2 days ago', url: 'https://www.youtube.com/watch?v=O753uuutqH8' },
   ];
-
-  const handleResourceClick = (url) => {
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-  };
 
   const departments = [
     { name: 'Computer Science', count: 45 },
@@ -157,8 +151,16 @@ export const StudentDashboard = () => {
               </thead>
               <tbody>
                 {recentResources.map((resource, idx) => (
-                  <tr key={idx} onClick={() => handleResourceClick(resource.url)} style={{ cursor: resource.url ? 'pointer' : 'default' }}>
-                    <td className="resource-title" style={{ color: resource.url ? '#0066cc' : 'inherit', textDecoration: resource.url ? 'underline' : 'none' }}>{resource.title}</td>
+                  <tr key={idx}>
+                    <td className="resource-title">
+                      {resource.url ? (
+                        <a href={resource.url} target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:underline">
+                          {resource.title}
+                        </a>
+                      ) : (
+                        resource.title
+                      )}
+                    </td>
                     <td>{resource.subject}</td>
                     <td><span className="resource-badge">{resource.type}</span></td>
                     <td className="text-muted">{resource.lastAccessed}</td>
