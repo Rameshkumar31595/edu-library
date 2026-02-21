@@ -65,44 +65,6 @@ export const StudentDashboard = () => {
   ];
 
   return (
-    <div className="dashboard-wrapper">
-      {/* Sidebar */}
-      <aside className="dashboard-sidebar">
-        <div className="sidebar-header">
-          <div className="logo">EduLibrary</div>
-        </div>
-        <nav className="sidebar-nav">
-          <a href="#overview" className="sidebar-link active">
-            <span className="link-icon">📊</span>
-            Overview
-          </a>
-          <a href="/catalogs" className="sidebar-link">
-            <span className="link-icon">📚</span>
-            Browse Resources
-          </a>
-          <a href="/saved-resources" className="sidebar-link">
-            <span className="link-icon">💾</span>
-            Saved Items
-          </a>
-          <a href="/downloads" className="sidebar-link">
-            <span className="link-icon">📥</span>
-            Downloads
-          </a>
-          <a href="/my-requests" className="sidebar-link">
-            <span className="link-icon">✉️</span>
-            My Requests
-          </a>
-          <a href="/announcements" className="sidebar-link">
-            <span className="link-icon">📢</span>
-            Announcements
-          </a>
-        </nav>
-        <button onClick={handleLogout} className="sidebar-logout">
-          Logout
-        </button>
-      </aside>
-
-
     <div className="dashboard-wrapper dashboard-wrapper--bottom-nav">
       {/* Main Content */}
       <main className="dashboard-main dashboard-main--bottom-nav">
@@ -259,7 +221,6 @@ export const StudentDashboard = () => {
           <span className="nav-title">Logout</span>
         </button>
       </nav>
-    </div>
     </div>
   );
 };
