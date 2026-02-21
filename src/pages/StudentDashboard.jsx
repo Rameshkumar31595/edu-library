@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SAVED_RESOURCES_DATA, DOWNLOADS_DATA } from '../data/studentResourcesData';
 
 /**
  * STUDENT DASHBOARD
@@ -74,19 +75,19 @@ export const StudentDashboard = () => {
             <span className="link-icon">📊</span>
             Overview
           </a>
-          <a href="#browse" className="sidebar-link">
+          <a href="/catalogs" className="sidebar-link">
             <span className="link-icon">📚</span>
             Browse Resources
           </a>
-          <a href="#saved" className="sidebar-link">
+          <a href="/saved-resources" className="sidebar-link">
             <span className="link-icon">💾</span>
             Saved Items
           </a>
-          <a href="#downloads" className="sidebar-link">
+          <a href="/downloads" className="sidebar-link">
             <span className="link-icon">📥</span>
             Downloads
           </a>
-          <a href="#requests" className="sidebar-link">
+          <a href="/request-resource" className="sidebar-link">
             <span className="link-icon">✉️</span>
             My Requests
           </a>
@@ -115,17 +116,17 @@ export const StudentDashboard = () => {
             <h3>Browse Catalog</h3>
             <p>Explore all resources</p>
           </div>
-          <div className="quick-access-card">
+          <div className="quick-access-card" onClick={() => navigate('/saved-resources')}>
             <div className="quick-icon">💾</div>
             <h3>Saved Resources</h3>
-            <p>24 items saved</p>
+            <p>{SAVED_RESOURCES_DATA.length} items saved</p>
           </div>
-          <div className="quick-access-card">
+          <div className="quick-access-card" onClick={() => navigate('/downloads')}>
             <div className="quick-icon">📥</div>
             <h3>Downloads</h3>
-            <p>18 files downloaded</p>
+            <p>{DOWNLOADS_DATA.length} files downloaded</p>
           </div>
-          <div className="quick-access-card">
+          <div className="quick-access-card" onClick={() => navigate('/request-resource')}>
             <div className="quick-icon">✉️</div>
             <h3>Request Resource</h3>
             <p>Suggest new materials</p>

@@ -6,6 +6,9 @@ import { LoginPage } from './pages/LoginPage.jsx';
 import { RegisterPage } from './pages/RegisterPage.jsx';
 import { RegistrationPage } from './pages/RegistrationPage.jsx';
 import { BrowseCatalogsPage } from './pages/BrowseCatalogsPage.jsx';
+import { SavedResourcesPage } from './pages/SavedResourcesPage.jsx';
+import { DownloadsPage } from './pages/DownloadsPage.jsx';
+import { RequestResourcePage } from './pages/RequestResourcePage.jsx';
 import { AdminDashboard } from './pages/AdminDashboard.jsx';
 import { StudentDashboard } from './pages/StudentDashboard.jsx';
 import './index.css';
@@ -58,6 +61,9 @@ function App() {
 
         {/* Browse Catalogs - Always accessible */}
         <Route path="/catalogs" element={<BrowseCatalogsPage />} />
+        <Route path="/saved-resources" element={<SavedResourcesPage />} />
+        <Route path="/downloads" element={<DownloadsPage />} />
+        <Route path="/request-resource" element={<RequestResourcePage />} />
 
         {/* ROLE SYSTEM: Admin Dashboard - Protected route for admins only */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
