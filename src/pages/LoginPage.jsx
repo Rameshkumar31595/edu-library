@@ -17,6 +17,23 @@ export const LoginPage = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const createDemoSession = (role) => {
+    const demoSession = {
+      id: Math.random().toString(36).substr(2, 9),
+      email: `demo.${role}@library.local`,
+      name: role === 'admin' ? 'Admin Demo' : 'Student Demo',
+      role,
+      isLoggedIn: true,
+      loginTime: new Date().toISOString(),
+    };
+
+    localStorage.setItem('uiExtension-user', JSON.stringify(demoSession));
+    localStorage.setItem('uiExtension-isLoggedIn', 'true');
+    localStorage.setItem('uiExtension-userRole', role);
+
+    navigate(role === 'admin' ? '/admin-dashboard' : '/student-dashboard');
+  };
+
   // Handle login form submission (frontend only)
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,7 +57,8 @@ export const LoginPage = () => {
       const registeredUser = existingUsers.find(u => u.email === email);
       
       // Extract role from registered user data, or default to "user"
-      const userRole = registeredUser?.role || 'user';
+      const normalizedRole = registeredUser?.role === 'user' ? 'student' : (registeredUser?.role || 'student');
+      const userRole = normalizedRole;
 
       // Create user session object
       const fakeUser = {
@@ -58,8 +76,8 @@ export const LoginPage = () => {
       localStorage.setItem('uiExtension-userRole', userRole); // ROLE SYSTEM: Store role separately
 
       setIsLoading(false);
-      // Redirect to home page
-      navigate('/');
+      // Redirect to role dashboard
+      navigate(userRole === 'admin' ? '/admin-dashboard' : '/student-dashboard');
     }, 600);
   };
 
@@ -155,6 +173,16 @@ export const LoginPage = () => {
               Create one
             </button>
           </p>
+        </div>
+
+        <div className="demo-login">
+          <span>Quick demo login:</span>
+          <button type="button" onClick={() => createDemoSession('student')}>
+            Student
+          </button>
+          <button type="button" onClick={() => createDemoSession('admin')}>
+            Admin
+          </button>
         </div>
 
         {/* Demo Credentials Info */}

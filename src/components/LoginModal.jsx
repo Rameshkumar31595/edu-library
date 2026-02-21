@@ -61,18 +61,19 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
       }
 
       // Create session
+      const normalizedRole = user.role === 'user' ? 'student' : (user.role || 'student');
       const userSession = {
         id: Math.random().toString(36).substr(2, 9),
         email: formData.email,
         name: user.name,
-        role: user.role || 'user',
+        role: normalizedRole,
         isLoggedIn: true,
         loginTime: new Date().toISOString(),
       };
 
       localStorage.setItem('uiExtension-user', JSON.stringify(userSession));
       localStorage.setItem('uiExtension-isLoggedIn', 'true');
-      localStorage.setItem('uiExtension-userRole', user.role || 'user');
+      localStorage.setItem('uiExtension-userRole', normalizedRole);
 
       if (formData.keepLoggedIn) {
         localStorage.setItem('uiExtension-rememberMe', 'true');
@@ -80,8 +81,26 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
 
       setIsLoading(false);
       onClose();
-      window.location.href = '/home';
+      window.location.href = normalizedRole === 'admin' ? '/admin-dashboard' : '/student-dashboard';
     }, 600);
+  };
+
+  const createDemoSession = (role) => {
+    const demoSession = {
+      id: Math.random().toString(36).substr(2, 9),
+      email: `demo.${role}@library.local`,
+      name: role === 'admin' ? 'Admin Demo' : 'Student Demo',
+      role,
+      isLoggedIn: true,
+      loginTime: new Date().toISOString(),
+    };
+
+    localStorage.setItem('uiExtension-user', JSON.stringify(demoSession));
+    localStorage.setItem('uiExtension-isLoggedIn', 'true');
+    localStorage.setItem('uiExtension-userRole', role);
+
+    onClose();
+    window.location.href = role === 'admin' ? '/admin-dashboard' : '/student-dashboard';
   };
 
   const handleRecoveryClick = () => {
@@ -169,6 +188,16 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
                 <span className="red-icon">👤🕒</span> Account recovery
               </button>
             </div>
+          </div>
+
+          <div className="demo-login">
+            <span>Quick demo login:</span>
+            <button type="button" onClick={() => createDemoSession('student')}>
+              Student
+            </button>
+            <button type="button" onClick={() => createDemoSession('admin')}>
+              Admin
+            </button>
           </div>
 
           {/* Footer & Buttons */}

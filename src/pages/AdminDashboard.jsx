@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, Users, BarChart3, Settings, Shield, LogOut } from 'lucide-react';
 
 /**
- * ROLE SYSTEM: ADMIN DASHBOARD
- * - Only accessible to users with role === "admin"
- * - Shows admin-only features and statistics
- * - Frontend-only implementation
+ * ADMIN DASHBOARD
+ * Clean resource management dashboard matching landing page theme
+ * Focus on managing student learning resources effectively
  */
 
 export const AdminDashboard = () => {
@@ -14,26 +12,19 @@ export const AdminDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState('');
 
-  // Check if user is admin on component mount
   useEffect(() => {
-    const checkAdminAccess = () => {
-      const loggedIn = localStorage.getItem('uiExtension-isLoggedIn') === 'true';
-      const role = localStorage.getItem('uiExtension-userRole');
+    const loggedIn = localStorage.getItem('uiExtension-isLoggedIn') === 'true';
+    const role = localStorage.getItem('uiExtension-userRole');
 
-      if (!loggedIn || role !== 'admin') {
-        // Redirect non-admin users to home
-        navigate('/');
-        return;
-      }
+    if (!loggedIn || role !== 'admin') {
+      navigate('/');
+      return;
+    }
 
-      setIsLoggedIn(loggedIn);
-      setUserRole(role);
-    };
-
-    checkAdminAccess();
+    setIsLoggedIn(loggedIn);
+    setUserRole(role);
   }, [navigate]);
 
-  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem('uiExtension-user');
     localStorage.removeItem('uiExtension-isLoggedIn');
@@ -42,203 +33,241 @@ export const AdminDashboard = () => {
   };
 
   if (!isLoggedIn || userRole !== 'admin') {
-    return null; // Should redirect before reaching here
+    return null;
   }
 
+  // Mock data
+  const mostAccessed = [
+    { title: 'Digital Electronics', department: 'ECE', accessCount: 245 },
+    { title: 'Engineering Mathematics', department: 'Mathematics', accessCount: 189 },
+    { title: 'Data Structures', department: 'CSE', accessCount: 167 },
+  ];
+
+  const recentDownloads = [
+    { student: 'Priya Sharma', resource: 'Circuit Theory Notes', time: '15 min ago' },
+    { student: 'Rahul Kumar', resource: 'Java Programming Guide', time: '45 min ago' },
+    { student: 'Ananya Singh', resource: 'Calculus Textbook', time: '2 hours ago' },
+  ];
+
+  const resourceRequests = [
+    { student: 'Amit Patel', request: 'Advanced Database Systems book', date: '28 May 2024', status: 'Pending' },
+    { student: 'Sneha Reddy', request: 'Machine Learning lecture videos', date: '27 May 2024', status: 'Pending' },
+  ];
+
   return (
-    <div className="roleSystem-adminDashboard min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Admin Header */}
-      <div className="roleSystem-adminHeader bg-gradient-to-r from-red-900 to-red-700 text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <Shield size={32} className="text-red-200" />
-              <h1 className="text-4xl font-bold">Admin Dashboard</h1>
-            </div>
-            <p className="text-red-100">Manage resources, users, and platform settings</p>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="roleSystem-adminLogout px-6 py-2 bg-red-800 hover:bg-red-900 rounded-lg font-medium flex items-center gap-2 transition"
-          >
-            <LogOut size={18} />
-            Logout
-          </button>
+    <div className="dashboard-wrapper">
+      {/* Sidebar */}
+      <aside className="dashboard-sidebar dashboard-sidebar--admin">
+        <div className="sidebar-header">
+          <div className="logo">EduLibrary</div>
+          <div className="admin-badge">Admin</div>
         </div>
-      </div>
+        <nav className="sidebar-nav">
+          <a href="#overview" className="sidebar-link active">
+            <span className="link-icon">📊</span>
+            Overview
+          </a>
+          <a href="#resources" className="sidebar-link">
+            <span className="link-icon">📚</span>
+            Resource Management
+          </a>
+          <a href="#students" className="sidebar-link">
+            <span className="link-icon">👥</span>
+            Student Activity
+          </a>
+          <a href="#requests" className="sidebar-link">
+            <span className="link-icon">✉️</span>
+            Requests
+          </a>
+          <a href="#announcements" className="sidebar-link">
+            <span className="link-icon">📢</span>
+            Announcements
+          </a>
+          <a href="#settings" className="sidebar-link">
+            <span className="link-icon">⚙️</span>
+            Settings
+          </a>
+        </nav>
+        <button onClick={handleLogout} className="sidebar-logout">
+          Logout
+        </button>
+      </aside>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Stats Grid */}
-        <div className="roleSystem-statsGrid grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <StatCard
-            icon={<BarChart3 size={28} />}
-            label="Total Resources"
-            value="18"
-            color="bg-blue-500"
-          />
-          <StatCard
-            icon={<Users size={28} />}
-            label="Registered Users"
-            value="124"
-            color="bg-green-500"
-          />
-          <StatCard
-            icon={<Upload size={28} />}
-            label="Uploads (This Month)"
-            value="23"
-            color="bg-purple-500"
-          />
-          <StatCard
-            icon={<Settings size={28} />}
-            label="System Status"
-            value="Active"
-            color="bg-orange-500"
-          />
-        </div>
+      <main className="dashboard-main">
+        {/* Welcome Section */}
+        <section className="dashboard-welcome admin-welcome">
+          <h1>Admin Control Center</h1>
+          <p>Manage learning resources and monitor student activity</p>
+        </section>
 
-        {/* Admin Features Grid */}
-        <div className="roleSystem-featuresGrid grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Upload Resources Section */}
-          <AdminFeatureCard
-            icon={<Upload size={32} />}
-            title="Upload Resources"
-            description="Add new educational materials, books, and research papers to the platform"
-            actions={[
-              { label: 'Upload New', color: 'bg-blue-600' },
-              { label: 'Bulk Upload', color: 'bg-blue-500' },
-            ]}
-          />
-
-          {/* Manage Users Section */}
-          <AdminFeatureCard
-            icon={<Users size={32} />}
-            title="Manage Users"
-            description="View, edit, or remove user accounts. Change user roles and permissions"
-            actions={[
-              { label: 'View All Users', color: 'bg-green-600' },
-              { label: 'Add User', color: 'bg-green-500' },
-            ]}
-          />
-
-          {/* Content Moderation Section */}
-          <AdminFeatureCard
-            icon={<Shield size={32} />}
-            title="Content Moderation"
-            description="Review flagged content and ensure compliance with platform policies"
-            actions={[
-              { label: 'Review Content', color: 'bg-red-600' },
-              { label: 'View Reports', color: 'bg-red-500' },
-            ]}
-          />
-
-          {/* System Settings Section */}
-          <AdminFeatureCard
-            icon={<Settings size={32} />}
-            title="System Settings"
-            description="Configure platform settings, categories, and administrative preferences"
-            actions={[
-              { label: 'Edit Settings', color: 'bg-purple-600' },
-              { label: 'View Logs', color: 'bg-purple-500' },
-            ]}
-          />
-        </div>
-
-        {/* Recent Activity Section */}
-        <div className="roleSystem-recentActivity mt-12 bg-white rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Activity</h2>
-          <div className="space-y-4">
-            <ActivityLog
-              action="User registered"
-              detail="john.doe@example.com"
-              time="2 hours ago"
-            />
-            <ActivityLog
-              action="Resource uploaded"
-              detail="Engineering Handbook Vol. 2"
-              time="5 hours ago"
-            />
-            <ActivityLog
-              action="User role changed"
-              detail="jane.smith@example.com → Admin"
-              time="1 day ago"
-            />
-            <ActivityLog
-              action="Content flagged"
-              detail="Review requested for resource #1245"
-              time="2 days ago"
-            />
+        {/* Overview Stats Grid */}
+        <section className="admin-stats-grid">
+          <div className="admin-stat-card">
+            <div className="stat-icon">📚</div>
+            <div className="stat-content">
+              <h3>Total Resources</h3>
+              <p className="stat-number">1,248</p>
+              <span className="stat-meta">+36 this month</span>
+            </div>
           </div>
-        </div>
+          <div className="admin-stat-card">
+            <div className="stat-icon">👥</div>
+            <div className="stat-content">
+              <h3>Active Students</h3>
+              <p className="stat-number">392</p>
+              <span className="stat-meta">Across 24 institutions</span>
+            </div>
+          </div>
+          <div className="admin-stat-card">
+            <div className="stat-icon">📥</div>
+            <div className="stat-content">
+              <h3>Recent Uploads</h3>
+              <p className="stat-number">58</p>
+              <span className="stat-meta">Last 7 days</span>
+            </div>
+          </div>
+          <div className="admin-stat-card">
+            <div className="stat-icon">✉️</div>
+            <div className="stat-content">
+              <h3>Pending Requests</h3>
+              <p className="stat-number">12</p>
+              <span className="stat-meta">Requires attention</span>
+            </div>
+          </div>
+        </section>
 
-        {/* Admin Info Box */}
-        <div className="roleSystem-infoBox mt-12 p-6 bg-blue-50 border border-blue-200 rounded-lg">
-          <h3 className="text-lg font-semibold text-blue-900 mb-3">💡 Admin Features Info</h3>
-          <p className="text-blue-800 text-sm leading-relaxed">
-            This is a frontend-only demonstration of an admin dashboard. In a production environment, 
-            you would have full backend integration for managing resources, users, and system settings. 
-            All features shown here are simulated for demonstration purposes using localStorage.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
+        {/* Resource Management Section */}
+        <section className="dashboard-section">
+          <h2 className="section-title">Resource Management</h2>
+          <div className="admin-action-grid">
+            <div className="admin-action-card">
+              <h3>Add New Resource</h3>
+              <form className="admin-form">
+                <input type="text" placeholder="Resource Title" className="admin-input" />
+                <select className="admin-input">
+                  <option>Select Department</option>
+                  <option>Computer Science</option>
+                  <option>Electronics</option>
+                  <option>Mechanical</option>
+                  <option>Civil</option>
+                </select>
+                <select className="admin-input">
+                  <option>Resource Type</option>
+                  <option>PDF</option>
+                  <option>Video</option>
+                  <option>Document</option>
+                </select>
+                <button type="button" className="admin-submit-btn">Add Resource</button>
+              </form>
+            </div>
+            <div className="admin-action-card">
+              <h3>Quick Actions</h3>
+              <div className="action-buttons">
+                <button className="action-btn">Edit Existing Resources</button>
+                <button className="action-btn">Delete Resources</button>
+                <button className="action-btn">Assign to Departments</button>
+                <button className="action-btn">Bulk Upload</button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-/**
- * Stat Card Component
- */
-const StatCard = ({ icon, label, value, color }) => {
-  return (
-    <div className="roleSystem-statCard bg-white rounded-lg shadow-md p-6">
-      <div className={`roleSystem-statIcon ${color} text-white rounded-full p-3 w-12 h-12 flex items-center justify-center mb-4`}>
-        {icon}
-      </div>
-      <p className="text-gray-600 text-sm font-medium">{label}</p>
-      <p className="text-3xl font-bold text-gray-900 mt-2">{value}</p>
-    </div>
-  );
-};
+        {/* Student Activity Insights */}
+        <section className="dashboard-section">
+          <h2 className="section-title">Student Activity Insights</h2>
+          <div className="insight-grid">
+            <div className="insight-panel">
+              <h3>Most Accessed Resources</h3>
+              <div className="insight-list">
+                {mostAccessed.map((item, idx) => (
+                  <div key={idx} className="insight-item">
+                    <div>
+                      <p className="insight-title">{item.title}</p>
+                      <p className="insight-meta">{item.department}</p>
+                    </div>
+                    <span className="insight-badge">{item.accessCount} views</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="insight-panel">
+              <h3>Recent Downloads</h3>
+              <div className="insight-list">
+                {recentDownloads.map((item, idx) => (
+                  <div key={idx} className="insight-item">
+                    <div>
+                      <p className="insight-title">{item.student}</p>
+                      <p className="insight-meta">{item.resource}</p>
+                    </div>
+                    <span className="insight-time">{item.time}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="trending-subjects">
+            <h3>Trending Subjects This Week</h3>
+            <div className="subject-tags">
+              <span className="subject-tag">Data Structures</span>
+              <span className="subject-tag">Digital Electronics</span>
+              <span className="subject-tag">Engineering Mathematics</span>
+              <span className="subject-tag">Thermodynamics</span>
+              <span className="subject-tag">Circuit Theory</span>
+            </div>
+          </div>
+        </section>
 
-/**
- * Admin Feature Card Component
- */
-const AdminFeatureCard = ({ icon, title, description, actions }) => {
-  return (
-    <div className="roleSystem-featureCard bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
-      <div className="flex items-start gap-4 mb-4">
-        <div className="text-red-600">{icon}</div>
-        <div className="flex-1">
-          <h3 className="text-xl font-bold text-gray-900">{title}</h3>
-          <p className="text-gray-600 text-sm mt-1">{description}</p>
-        </div>
-      </div>
-      <div className="roleSystem-actionButtons flex gap-3 pt-4 border-t border-gray-200">
-        {actions.map((action, idx) => (
-          <button
-            key={idx}
-            className={`roleSystem-actionBtn ${action.color} text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition flex-1`}
-          >
-            {action.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
+        {/* Resource Requests Panel */}
+        <section className="dashboard-section">
+          <h2 className="section-title">Resource Requests from Students</h2>
+          <div className="request-table-wrapper">
+            <table className="request-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Request</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {resourceRequests.map((req, idx) => (
+                  <tr key={idx}>
+                    <td>{req.student}</td>
+                    <td className="request-text">{req.request}</td>
+                    <td>{req.date}</td>
+                    <td><span className="status-badge status-pending">{req.status}</span></td>
+                    <td>
+                      <button className="action-link">Approve</button>
+                      <button className="action-link action-link--reject">Reject</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-/**
- * Activity Log Component
- */
-const ActivityLog = ({ action, detail, time }) => {
-  return (
-    <div className="roleSystem-activityItem flex items-start gap-4 py-3 border-b border-gray-200 last:border-b-0">
-      <div className="roleSystem-activityDot w-3 h-3 rounded-full bg-blue-600 mt-2 flex-shrink-0" />
-      <div className="flex-1 min-w-0">
-        <p className="text-gray-900 font-medium">{action}</p>
-        <p className="text-gray-600 text-sm">{detail}</p>
-      </div>
-      <span className="roleSystem-activityTime text-gray-500 text-xs whitespace-nowrap ml-4">{time}</span>
+        {/* Announcement Management */}
+        <section className="dashboard-section">
+          <h2 className="section-title">Announcement Management</h2>
+          <div className="announcement-form-card">
+            <form className="admin-form admin-form--announcement">
+              <textarea 
+                placeholder="Write announcement for students..." 
+                className="admin-textarea"
+                rows="3"
+              ></textarea>
+              <div className="form-actions">
+                <button type="button" className="admin-submit-btn">Publish Announcement</button>
+                <button type="button" className="admin-cancel-btn">Clear</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };

@@ -14,6 +14,7 @@ export const RegistrationPage = () => {
     firstName: '',
     lastName: '',
     email: '',
+    role: 'student',
     password: '',
     confirmPassword: '',
     dob: '',
@@ -62,6 +63,10 @@ export const RegistrationPage = () => {
       setError('Email is required');
       return;
     }
+    if (!formData.role) {
+      setError('Account type is required');
+      return;
+    }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setError('Please enter a valid email');
       return;
@@ -101,7 +106,7 @@ export const RegistrationPage = () => {
         gender: formData.gender,
         state: formData.state,
         district: formData.district,
-        role: 'user',
+        role: formData.role,
         registeredAt: new Date().toISOString(),
       };
 
@@ -123,6 +128,7 @@ export const RegistrationPage = () => {
       firstName: '',
       lastName: '',
       email: '',
+      role: 'student',
       password: '',
       confirmPassword: '',
       dob: '',
@@ -200,6 +206,21 @@ export const RegistrationPage = () => {
                 required
                 className="register-inline-input"
               />
+            </div>
+
+            {/* Account Type Row */}
+            <div className="form-row">
+              <label>Account Type <span>*</span></label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="register-inline-input"
+                required
+              >
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+              </select>
             </div>
 
             {/* Password Row */}

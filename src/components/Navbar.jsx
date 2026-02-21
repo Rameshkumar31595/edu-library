@@ -25,8 +25,9 @@ export const Navbar = () => {
       
       if (loggedIn) {
         const user = JSON.parse(localStorage.getItem('uiExtension-user') || '{}');
+        const normalizedRole = user.role === 'user' ? 'student' : (user.role || 'student');
         setUserName(user.name || user.email || 'User');
-        setUserRole(user.role || 'user');
+        setUserRole(normalizedRole);
       }
     };
     
@@ -114,12 +115,19 @@ export const Navbar = () => {
                   👤 {userName}
                   {userRole === 'admin' && <span className="text-red-600 ml-1">👑</span>}
                 </span>
-                {userRole === 'admin' && (
+                {userRole === 'admin' ? (
                   <Link
                     to="/admin-dashboard"
                     className="text-xs font-medium text-red-600 hover:text-red-700 transition"
                   >
                     Admin
+                  </Link>
+                ) : (
+                  <Link
+                    to="/student-dashboard"
+                    className="text-xs font-medium text-blue-900 hover:text-blue-700 transition"
+                  >
+                    Student
                   </Link>
                 )}
                 <button
@@ -181,13 +189,21 @@ export const Navbar = () => {
             {isLoggedIn ? (
               <>
                 <div className="px-3 py-2 text-sm text-gray-700">👤 {userName}</div>
-                {userRole === 'admin' && (
+                {userRole === 'admin' ? (
                   <Link
                     to="/admin-dashboard"
                     className="block text-red-600 hover:text-red-700 text-sm font-medium px-3 py-2 hover:bg-red-50 rounded"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Admin Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    to="/student-dashboard"
+                    className="block text-blue-900 hover:text-blue-700 text-sm font-medium px-3 py-2 hover:bg-blue-50 rounded"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Student Dashboard
                   </Link>
                 )}
                 <button

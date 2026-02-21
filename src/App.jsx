@@ -7,6 +7,7 @@ import { RegisterPage } from './pages/RegisterPage.jsx';
 import { RegistrationPage } from './pages/RegistrationPage.jsx';
 import { BrowseCatalogsPage } from './pages/BrowseCatalogsPage.jsx';
 import { AdminDashboard } from './pages/AdminDashboard.jsx';
+import { StudentDashboard } from './pages/StudentDashboard.jsx';
 import './index.css';
 
 /**
@@ -60,6 +61,9 @@ function App() {
 
         {/* ROLE SYSTEM: Admin Dashboard - Protected route for admins only */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
+        {/* ROLE SYSTEM: Student Dashboard - Protected route for students only */}
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
 
         {/* 404 Handler - Redirect unknown routes to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
