@@ -30,6 +30,12 @@ import { IDRHostingPage } from './pages/IDRHostingPage.jsx';
 import { InstitutionalLibraryPage } from './pages/InstitutionalLibraryPage.jsx';
 import { DigitalPreservationPage } from './pages/DigitalPreservationPage.jsx';
 import { FeedbackPage } from './pages/FeedbackPage.jsx';
+import { RecentUploads } from './pages/RecentUploads.jsx';
+import { RequestsLog } from './pages/RequestsLog.jsx';
+import { AdminAnnouncements } from './pages/AdminAnnouncements.jsx';
+import { UsersLog } from './pages/UsersLog.jsx';
+import { AdminSettings } from './pages/AdminSettings.jsx';
+import { VideoPlayerPage } from './pages/VideoPlayerPage.jsx';
 import './index.css';
 
 /**
@@ -106,7 +112,13 @@ function App() {
 
         {/* ROLE SYSTEM: Admin Dashboard - Protected route for admins only */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/resources-analytics" element={<ResourcesAnalytics />} />
+        <Route path="/resources-analytics/:section?" element={<ResourcesAnalytics />} />
+        <Route path="/recent-uploads" element={<RecentUploads />} />
+        <Route path="/requests-log" element={<RequestsLog />} />
+        <Route path="/admin-announcements" element={<AdminAnnouncements />} />
+        <Route path="/users-log" element={<UsersLog />} />
+        <Route path="/admin-settings" element={<AdminSettings />} />
+        <Route path="/videos/:slug" element={<VideoPlayerPage />} />
 
         {/* ROLE SYSTEM: Student Dashboard - Protected route for students only */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
