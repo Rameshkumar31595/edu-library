@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Users, Download, Mail, Megaphone, Settings, LogOut, LayoutDashboard } from 'lucide-react';
+import { Documents, PDFs, Videos } from '../data/resourcesCatalog.js';
 
 /**
  * ADMIN DASHBOARD
