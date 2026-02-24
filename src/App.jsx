@@ -16,6 +16,7 @@ import { DepartmentsPage } from './pages/DepartmentsPage.jsx';
 import { AdminDashboard } from './pages/AdminDashboard.jsx';
 import { StudentDashboard } from './pages/StudentDashboard.jsx';
 import { ResourcesAnalytics } from './pages/ResourcesAnalytics.jsx';
+import { VideoPlayerPage } from './pages/VideoPlayerPage.jsx';
 import './index.css';
 
 /**
@@ -77,6 +78,7 @@ function App() {
         {/* ROLE SYSTEM: Admin Dashboard - Protected route for admins only */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/resources-analytics" element={<ResourcesAnalytics />} />
+        <Route path="/videos/:slug" element={<VideoPlayerPage />} />
 
         {/* ROLE SYSTEM: Student Dashboard - Protected route for students only */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />

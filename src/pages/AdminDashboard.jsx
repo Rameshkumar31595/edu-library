@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Users, Download, Mail, Megaphone, Settings, LogOut, LayoutDashboard } from 'lucide-react';
+import { Documents, PDFs, Videos } from '../data/resourcesCatalog.js';
 
 /**
  * ADMIN DASHBOARD
@@ -56,29 +57,22 @@ export const AdminDashboard = () => {
     { student: 'Sneha Reddy', request: 'Machine Learning lecture videos', date: '27 May 2024', status: 'Pending' },
   ];
 
-  const dummyResources = {
-    PDFs: [
-      { id: 1, title: 'Data Structures Notes' },
-      { id: 2, title: 'Operating Systems Guide' },
-      { id: 3, title: 'Computer Networks PDF' },
-    ],
-    Videos: [
-      { id: 4, title: 'React Basics Tutorial' },
-      { id: 5, title: 'DBMS Full Course' },
-    ],
-    Documents: [
-      { id: 6, title: 'Physics Lab Manual' },
-      { id: 7, title: 'Project Documentation Template' },
-    ],
-  };
+  const activeStudentsData = Array.from({ length: 26 }, (_, i) => ({
+    id: i + 1,
+    name: `Student ${i + 1}`,
+    department: ['CSE', 'ECE', 'EEE', 'IT'][i % 4],
+    year: ['1st Year', '2nd Year', '3rd Year', '4th Year'][i % 4],
+    status: 'Active',
+  }));
 
-  const totalResourcesCount = dummyResources.PDFs.length
-    + dummyResources.Videos.length
-    + dummyResources.Documents.length;
+  const totalResources = PDFs.length
+    + Documents.length
+    + Videos.length;
 
   const handleResourceCardClick = () => {
     navigate('/resources-analytics');
   };
+
 
   return (
     <div className="dashboard-wrapper dashboard-wrapper--bottom-nav">
@@ -119,7 +113,7 @@ export const AdminDashboard = () => {
             <div className="stat-icon flex items-center justify-center rounded-xl bg-teal-50 text-teal-600 p-3 h-14 w-14"><BookOpen size={36} /></div>
             <div className="stat-content">
               <h3 className="heading-entrance heading-entrance-card heading-premium">Total Resources</h3>
-              <p className="stat-number">{totalResourcesCount}</p>
+              <p className="stat-number">{totalResources}</p>
               <span className="stat-meta">+36 this month</span>
             </div>
           </div>
@@ -127,7 +121,7 @@ export const AdminDashboard = () => {
             <div className="stat-icon flex items-center justify-center rounded-xl bg-green-50 text-green-600 p-3 h-14 w-14"><Users size={36} /></div>
             <div className="stat-content">
               <h3 className="heading-entrance heading-entrance-card heading-premium">Active Students</h3>
-              <p className="stat-number">392</p>
+              <p className="stat-number">{activeStudentsData.length}</p>
               <span className="stat-meta">Across 24 institutions</span>
             </div>
           </div>
