@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCategorySlug } from '../data/categoryContentData';
 
@@ -119,43 +119,98 @@ const CARDS_DATA = [
 
 export const LandingContentSlider = () => {
   const navigate = useNavigate();
+  const trackRef   = useRef(null);
+  const firstCardRef = useRef(null);
+  const stepRef    = useRef(270); // card width + gap (measured after mount)
+  const indexRef   = useRef(0);   // current card-unit offset
+  const inMotion   = useRef(false);
+  const timerRef   = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
+
+  const TOTAL = CARDS_DATA.length; // 16 — we render 3 copies (48 cards)
 
   const handleCardClick = (title) => {
     const slug = getCategorySlug(title);
     navigate(`/category/${slug}`);
   };
 
+  /* Measure real card width (+ gap) after first render */
+  useEffect(() => {
+    if (firstCardRef.current && trackRef.current) {
+      const cardW = firstCardRef.current.getBoundingClientRect().width;
+      const styles = window.getComputedStyle(trackRef.current);
+      const gap = parseFloat(styles.columnGap || styles.gap || '20');
+      stepRef.current = cardW + gap;
+
+      // Start positioned at the 2nd copy so we can loop backwards too
+      indexRef.current = TOTAL;
+      trackRef.current.style.transition = 'none';
+      trackRef.current.style.transform = `translateX(-${TOTAL * stepRef.current}px)`;
+    }
+  }, []);
+
+  /* After a slide animation completes, silently re-center if needed */
+  const onTransitionEnd = useCallback(() => {
+    inMotion.current = false;
+    if (!trackRef.current) return;
+
+    if (indexRef.current >= TOTAL * 2) {
+      indexRef.current = TOTAL;
+      trackRef.current.style.transition = 'none';
+      trackRef.current.style.transform = `translateX(-${TOTAL * stepRef.current}px)`;
+    } else if (indexRef.current < TOTAL) {
+      indexRef.current = TOTAL * 2 - 1;
+      trackRef.current.style.transition = 'none';
+      trackRef.current.style.transform = `translateX(-${(TOTAL * 2 - 1) * stepRef.current}px)`;
+    }
+  }, []);
+
+  /* Slide one card to the left */
+  const slideNext = useCallback(() => {
+    if (inMotion.current || isHoveredRef.current || !trackRef.current) return;
+    inMotion.current = true;
+    indexRef.current += 1;
+    trackRef.current.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+    trackRef.current.style.transform = `translateX(-${indexRef.current * stepRef.current}px)`;
+  }, []);
+
+  /* Auto-advance every 2 s */
+  useEffect(() => {
+    timerRef.current = setInterval(slideNext, 2000);
+    return () => clearInterval(timerRef.current);
+  }, [slideNext]);
+
+  const handleMouseEnter = () => {
+    isHoveredRef.current = true;
+    setIsHovered(true);
+  };
+  const handleMouseLeave = () => {
+    isHoveredRef.current = false;
+    setIsHovered(false);
+  };
+
+  /* Render 3 copies for seamless forward + backward looping */
+  const allCards = [...CARDS_DATA, ...CARDS_DATA, ...CARDS_DATA];
+
   return (
     <section
       className="slider-container"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <style>{`
-        @keyframes landingMarquee {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .landing-marquee-track {
-          display: flex;
-          gap: 20px;
-          width: max-content;
-          will-change: transform;
-          animation: landingMarquee 40s linear infinite;
-        }
-        .landing-marquee-paused {
-          animation-play-state: paused !important;
-        }
-      `}</style>
-
-      {/* Overflow-hidden wrapper — no JS scroll, pure CSS loop */}
-      <div style={{ overflow: 'hidden', padding: '10px 0' }}>
-        <div className={`landing-marquee-track${isHovered ? ' landing-marquee-paused' : ''}`}>
-          {[...CARDS_DATA, ...CARDS_DATA].map((card, idx) => (
+      <div style={{ overflow: 'hidden', padding: '10px 0', position: 'relative' }}>
+        <div
+          ref={trackRef}
+          onTransitionEnd={onTransitionEnd}
+          style={{ display: 'flex', gap: '20px', width: 'max-content' }}
+        >
+          {allCards.map((card, idx) => (
             <div
               key={idx}
-              className="card cursor-pointer"
+              ref={idx === 0 ? firstCardRef : null}
+              className="card"
+              style={{ cursor: 'pointer', flexShrink: 0 }}
               onClick={() => handleCardClick(card.title)}
             >
               <div
@@ -177,7 +232,7 @@ export const LandingContentSlider = () => {
       </div>
 
       {isHovered && (
-        <p style={{ textAlign: 'center', fontSize: '0.7rem', color: '#999', marginTop: '8px' }}>
+        <p style={{ textAlign: 'center', fontSize: '0.7rem', color: '#999', marginTop: '6px' }}>
           ⏸ Paused — move mouse away to resume
         </p>
       )}
