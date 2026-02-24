@@ -17,8 +17,8 @@ export const CategoryGrid = () => {
       id: 1,
       name: 'School Textbooks',
       icon: GraduationCap,
-      color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50',
+      color: 'from-teal-500 to-teal-600',
+      bgColor: 'bg-teal-50',
       count: '2,450+',
       description: 'NCERT & State Board Books',
     },
@@ -71,8 +71,8 @@ export const CategoryGrid = () => {
       id: 7,
       name: 'Arts & Culture',
       icon: Music,
-      color: 'from-indigo-500 to-indigo-600',
-      bgColor: 'bg-indigo-50',
+      color: 'from-green-500 to-green-600',
+      bgColor: 'bg-green-50',
       count: '1,560+',
       description: 'Music, Arts & Design',
     },
@@ -92,10 +92,10 @@ export const CategoryGrid = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+          <h2 className="heading-entrance heading-premium text-3xl md:text-4xl font-bold text-teal-900 mb-4">
             Explore by Discipline
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="heading-entrance heading-entrance-delay-1 text-gray-600 text-lg max-w-2xl mx-auto">
             Browse through our comprehensive collection organized by subject areas and disciplines
           </p>
         </div>
@@ -117,7 +117,7 @@ export const CategoryGrid = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-gray-900 mb-2">
                   {category.name}
                 </h3>
                 <p className="text-gray-600 text-sm mb-4">
@@ -126,14 +126,14 @@ export const CategoryGrid = () => {
 
                 {/* Count Badge */}
                 <div className="pt-4 border-t border-gray-200">
-                  <p className="text-2xl font-bold text-blue-900">
+                  <p className="text-2xl font-bold text-teal-900">
                     {category.count}
                   </p>
                   <p className="text-xs text-gray-500">Resources Available</p>
                 </div>
 
                 {/* Hover Effect - Arrow */}
-                <div className="mt-4 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="mt-4 text-teal-600 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="text-sm font-semibold">Explore →</span>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export const CategoryGrid = () => {
           </p>
           <Link
             to="/catalogs"
-            className="inline-block px-8 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition font-semibold shadow-md hover:shadow-lg"
+            className="inline-block px-8 py-3 bg-teal-900 text-white rounded-lg hover:bg-teal-800 transition font-semibold shadow-md hover:shadow-lg"
           >
             Browse All Categories
           </Link>

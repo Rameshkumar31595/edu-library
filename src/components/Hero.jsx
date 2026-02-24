@@ -19,18 +19,18 @@ export const Hero = () => {
   };
 
   return (
-    <section className="ndl-hero relative bg-gradient-to-b from-white to-blue-50 py-16 md:py-24 px-4 overflow-hidden">
+    <section className="ndl-hero relative bg-gradient-to-b from-white to-teal-50 py-16 md:py-24 px-4 overflow-hidden">
       {/* Decorative Element */}
       <div className="absolute top-0 left-0 w-48 h-48 bg-orange-100 rounded-full opacity-10 -translate-x-1/3 -translate-y-1/3"></div>
 
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Headline */}
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-2 text-blue-900">
+        <h1 className="heading-entrance heading-premium text-4xl md:text-5xl font-bold text-center mb-3 text-teal-900">
           One Library <span className="text-green-600">All of India</span>
         </h1>
 
         {/* Tagline */}
-        <p className="text-center text-gray-600 italic mb-8 text-lg">
+        <p className="heading-entrance heading-entrance-delay-1 text-center text-gray-600 italic mb-8 text-lg">
           A Single Window Towards Paradigm Shift in Indian Education
         </p>
 
@@ -63,7 +63,7 @@ export const Hero = () => {
           {/* Search Button */}
           <button
             onClick={handleSearch}
-            className="px-6 py-3 bg-blue-900 hover:bg-blue-800 text-white font-bold transition flex items-center gap-2"
+            className="px-6 py-3 bg-teal-900 hover:bg-teal-800 text-white font-bold transition flex items-center gap-2"
           >
             <Search size={18} />
             Search
@@ -84,7 +84,7 @@ export const Hero = () => {
 
 const StatItem = ({ value, label }) => (
   <div className="text-center">
-    <p className="text-2xl md:text-3xl font-bold text-blue-900">{value}</p>
+    <p className="text-2xl md:text-3xl font-bold text-teal-900">{value}</p>
     <p className="text-xs md:text-sm text-gray-600 mt-1">{label}</p>
   </div>
 );

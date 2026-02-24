@@ -12,8 +12,8 @@ export const LandingHero = () => {
 
   return (
     <header className="hero">
-      <h1>One Library <span>All of India</span></h1>
-      <p>A Single Window Towards Paradigm Shift in Indian Education</p>
+      <h1 className="heading-entrance heading-premium">One Library <span>All of India</span></h1>
+      <p className="heading-entrance heading-entrance-delay-1">A Single Window Towards Paradigm Shift in Indian Education</p>
       
       <div className="search-container">
         <select value={language} onChange={(e) => setLanguage(e.target.value)}>

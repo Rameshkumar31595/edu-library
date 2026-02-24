@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Grid3X3, List, BookOpen } from 'lucide-react';
+import { Search, Grid3X3, List, BookOpen, ArrowLeft } from 'lucide-react';
 import { SAVED_RESOURCES_DATA } from '../data/studentResourcesData';
 
 export const SavedResourcesPage = () => {
@@ -22,45 +22,44 @@ export const SavedResourcesPage = () => {
   }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 font-sans">
+      <div className="bg-white border-b border-gray-200 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Saved Resources</h1>
-          <p className="text-blue-100 text-lg">Access your bookmarked learning materials</p>
+          <h1 className="heading-entrance heading-premium text-4xl md:text-5xl font-bold leading-tight mb-4 bg-gradient-to-r from-primary via-teal-700 to-slate-800 bg-clip-text text-transparent">Saved Resources</h1>
+          <p className="heading-entrance heading-entrance-delay-1 text-slate-600 text-lg max-w-2xl leading-relaxed">Access your bookmarked learning materials</p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <button
           onClick={() => navigate('/student-dashboard')}
-          className="text-sm text-teal-600 hover:underline mb-4"
+          className="text-sm text-blue-600 hover:text-blue-800 font-medium tracking-wide mb-6 inline-flex items-center gap-1.5 transition-colors"
         >
-          ← Back to Dashboard
+          <ArrowLeft size={16} /> Dashboard
         </button>
-        <div className="uiExtension-filterSection mb-12">
-          <div className="mb-8">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        <div className="mb-10">
+          <div className="mb-6 max-w-2xl">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={20} />
               <input
                 type="text"
                 placeholder="Search saved resources..."
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="uiExtension-searchInput w-full pl-12 pr-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                className="w-full pl-12 pr-4 py-3.5 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow shadow-sm text-slate-900 placeholder:text-slate-400"
               />
             </div>
           </div>
 
-          <div className="uiExtension-categoryFilter flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-2 mb-8 border-b border-gray-200 pb-6">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`uiExtension-categoryBtn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                  selectedCategory === category
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategory === category
+                    ? 'bg-slate-800 text-white shadow-sm ring-1 ring-slate-800'
+                    : 'bg-white text-slate-600 border border-gray-200 hover:bg-slate-50 hover:border-gray-300'
+                  }`}
               >
                 {category}
               </button>
@@ -68,25 +67,23 @@ export const SavedResourcesPage = () => {
           </div>
 
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <p className="text-gray-600">
-              Showing <span className="font-semibold">{filteredResources.length}</span> resource
+            <p className="text-slate-600 text-sm">
+              Showing <span className="font-semibold text-slate-900">{filteredResources.length}</span> resource
               {filteredResources.length !== 1 ? 's' : ''}
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`uiExtension-viewToggleBtn p-2 rounded-lg transition ${
-                  viewMode === 'grid' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
+                className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-blue-50 text-blue-700' : 'text-slate-400 border border-transparent hover:bg-slate-100 hover:text-slate-600'
+                  }`}
                 aria-label="Grid view"
               >
                 <Grid3X3 size={20} />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`uiExtension-viewToggleBtn p-2 rounded-lg transition ${
-                  viewMode === 'list' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
+                className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-blue-50 text-blue-700' : 'text-slate-400 border border-transparent hover:bg-slate-100 hover:text-slate-600'
+                  }`}
                 aria-label="List view"
               >
                 <List size={20} />
@@ -97,19 +94,18 @@ export const SavedResourcesPage = () => {
 
         {filteredResources.length > 0 ? (
           <div
-            className={`uiExtension-catalogsContainer ${
-              viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 'space-y-4'
-            }`}
+            className={`${viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 'space-y-4 max-w-5xl'
+              }`}
           >
             {filteredResources.map((resource) => (
               <SavedResourceCard key={resource.id} resource={resource} viewMode={viewMode} />
             ))}
           </div>
         ) : (
-          <div className="uiExtension-emptyState text-center py-16">
-            <BookOpen size={64} className="mx-auto text-gray-300 mb-4" />
-            <h3 className="text-2xl font-semibold text-gray-700 mb-2">No saved resources found</h3>
-            <p className="text-gray-500">Try adjusting your search or filters</p>
+          <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300">
+            <BookOpen size={48} className="mx-auto text-slate-300 mb-4" />
+            <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-slate-800 mb-2">No saved resources found</h3>
+            <p className="text-slate-500">Try adjusting your search or filters</p>
           </div>
         )}
       </div>
@@ -120,43 +116,52 @@ export const SavedResourcesPage = () => {
 const SavedResourceCard = ({ resource, viewMode }) => {
   return (
     <div
-      className={`uiExtension-catalogCard transition-all duration-300 hover:shadow-lg ${
-        viewMode === 'grid'
-          ? 'bg-white rounded-xl overflow-hidden shadow-md hover:-translate-y-2'
-          : 'bg-white p-6 rounded-lg shadow-md hover:shadow-lg border border-gray-200 flex items-start gap-6'
-      }`}
+      className={`cursor-pointer transition-all duration-300 border border-gray-200 bg-white group hover:border-blue-300 hover:shadow-md ${viewMode === 'grid'
+          ? 'rounded-xl overflow-hidden flex flex-col h-full transform hover:-translate-y-1'
+          : 'p-6 rounded-xl flex items-start gap-6 hover:translate-x-1'
+        }`}
     >
       {viewMode === 'grid' ? (
         <>
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 h-32 flex items-center justify-center text-5xl">
-            {resource.icon}
+          <div className="bg-slate-50 border-b border-gray-100 h-24 flex flex-col items-center justify-center transition-colors group-hover:bg-blue-50/50">
+            <div className="transform transition-transform group-hover:scale-110 duration-200">
+              {React.cloneElement(resource.icon, { className: "w-10 h-10 text-slate-600" })}
+            </div>
           </div>
-          <div className="p-6">
-            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+          <div className="p-5 flex-1 flex flex-col">
+            <span className="inline-block self-start text-xs font-semibold px-2.5 py-1 rounded border border-slate-200 text-slate-600 bg-white mb-3 shadow-sm">
               {resource.category}
             </span>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">{resource.title}</h3>
-            <p className="text-sm text-gray-600 mb-4">{resource.coverage}</p>
-            <div className="flex items-center justify-between">
-              <span className="text-2xl font-bold text-blue-600">{resource.resources}</span>
-              <span className="text-xs text-gray-500">Saved</span>
+            <h3 className="heading-entrance heading-entrance-card text-[1.075rem] font-semibold tracking-[-0.01em] text-slate-900 mb-2.5 leading-snug group-hover:text-blue-700 transition-colors">{resource.title}</h3>
+            <p className="text-sm text-slate-500 mb-5 line-clamp-2 leading-relaxed">{resource.coverage}</p>
+            <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span className="text-sm font-bold text-slate-800">{resource.resources}</span>
+              <span className="text-[0.65rem] uppercase tracking-wider font-semibold text-slate-400">Saved</span>
             </div>
           </div>
         </>
       ) : (
         <>
-          <div className="text-5xl flex-shrink-0">{resource.icon}</div>
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <h3 className="text-lg font-bold text-gray-900">{resource.title}</h3>
-              <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
-                {resource.category}
-              </span>
+          <div className="w-16 h-16 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center flex-shrink-0 transition-colors group-hover:bg-blue-50/50">
+            <div className="transform transition-transform group-hover:scale-110 duration-200">
+              {React.cloneElement(resource.icon, { className: "w-8 h-8 text-slate-600" })}
             </div>
-            <p className="text-gray-600 text-sm mb-2">{resource.description}</p>
-            <p className="text-sm text-gray-500">
-              {resource.coverage} • {resource.resources} saved
-            </p>
+          </div>
+          <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-1">
+                <h3 className="heading-entrance heading-entrance-card text-lg font-semibold tracking-[-0.01em] text-slate-900 group-hover:text-blue-700 transition-colors">{resource.title}</h3>
+                <span className="text-[0.7rem] uppercase tracking-wide font-semibold px-2 py-0.5 rounded border border-slate-200 text-slate-600 bg-slate-50">
+                  {resource.category}
+                </span>
+              </div>
+              <p className="text-slate-500 text-sm mb-2">{resource.description}</p>
+              <div className="flex items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                <span>{resource.coverage}</span>
+                <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                <span className="text-slate-600">{resource.resources} saved</span>
+              </div>
+            </div>
           </div>
         </>
       )}

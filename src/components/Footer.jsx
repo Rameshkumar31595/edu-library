@@ -139,16 +139,16 @@ export const Footer = () => {
 
             {/* Social Media */}
             <div className="ndl-social-bar flex gap-4">
-              <a href="#" className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition" title="Facebook">
+              <a href="#" className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition" title="Facebook">
                 f
               </a>
-              <a href="#" className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition" title="Twitter/X">
+              <a href="#" className="w-10 h-10 bg-teal-400 rounded-full flex items-center justify-center hover:bg-teal-500 transition" title="Twitter/X">
                 𝕏
               </a>
               <a href="#" className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center hover:bg-pink-600 transition" title="Instagram">
                 📷
               </a>
-              <a href="#" className="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-800 transition" title="LinkedIn">
+              <a href="#" className="w-10 h-10 bg-teal-700 rounded-full flex items-center justify-center hover:bg-teal-800 transition" title="LinkedIn">
                 in
               </a>
               <a href="#" className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center hover:bg-red-600 transition" title="YouTube">

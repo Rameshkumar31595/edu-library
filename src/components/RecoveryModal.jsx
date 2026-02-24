@@ -56,7 +56,7 @@ export const RecoveryModal = ({ isOpen, onClose }) => {
     <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-content recovery-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>
+          <h3 className="heading-entrance heading-premium">
             <span className="header-icon">👤🕒</span> Account Recovery
           </h3>
           <button className="close-btn" onClick={handleClose} type="button">

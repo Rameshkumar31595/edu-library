@@ -11,10 +11,10 @@ export const AnnouncementsPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-gradient-to-r from-teal-900 to-green-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Announcements</h1>
-          <p className="text-blue-100 text-lg">Stay updated with the latest library news and updates</p>
+          <h1 className="heading-entrance heading-premium text-4xl md:text-5xl font-bold leading-tight mb-4">Announcements</h1>
+          <p className="heading-entrance heading-entrance-delay-1 text-teal-100 text-lg">Stay updated with the latest library news and updates</p>
         </div>
       </div>
 
@@ -31,7 +31,7 @@ export const AnnouncementsPage = () => {
               announcements.map((announcement, idx) => (
                 <div
                   key={idx}
-                  className="border-l-4 border-blue-600 bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow"
+                  className="border-l-4 border-teal-600 bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">

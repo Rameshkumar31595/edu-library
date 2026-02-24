@@ -89,15 +89,15 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="uiExtension-registerContainer min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 flex items-center justify-center px-4 py-8">
+    <div className="uiExtension-registerContainer min-h-screen bg-gradient-to-br from-green-50 to-teal-100 flex items-center justify-center px-4 py-8">
       <div className="uiExtension-registerCard w-full max-w-md bg-white rounded-2xl shadow-xl p-8 md:p-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-teal-600 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-4 shadow-lg">
             ✨
           </div>
-          <h1 className="text-3xl font-bold text-blue-900 mb-2">Create Account</h1>
-          <p className="text-gray-600">Join our learning community</p>
+          <h1 className="heading-entrance heading-premium text-3xl font-bold text-teal-900 mb-2">Create Account</h1>
+          <p className="heading-entrance heading-entrance-delay-1 text-gray-600">Join our learning community</p>
         </div>
 
         {/* Error Message */}
@@ -130,7 +130,7 @@ export const RegisterPage = () => {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="John Doe"
-                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ export const RegisterPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
               />
             </div>
           </div>
@@ -166,7 +166,7 @@ export const RegisterPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
               />
             </div>
           </div>
@@ -184,7 +184,7 @@ export const RegisterPage = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
               />
             </div>
           </div>
@@ -198,7 +198,7 @@ export const RegisterPage = () => {
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="roleSystem-roleSelect w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="roleSystem-roleSelect w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
             >
               <option value="user">👤 Student / Educator</option>
               <option value="admin">🔐 Administrator</option>
@@ -212,7 +212,7 @@ export const RegisterPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="uiExtension-registerBtn w-full py-3 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-lg font-semibold hover:from-indigo-700 hover:to-blue-700 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+            className="uiExtension-registerBtn w-full py-3 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-teal-700 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
           >
             {isLoading ? 'Creating Account...' : 'Create Account'}
           </button>
@@ -231,7 +231,7 @@ export const RegisterPage = () => {
             Already have an account?{' '}
             <button
               onClick={() => navigate('/login')}
-              className="text-indigo-600 font-semibold hover:text-indigo-700 transition hover:underline"
+              className="text-green-600 font-semibold hover:text-green-700 transition hover:underline"
             >
               Sign in
             </button>
@@ -239,8 +239,8 @@ export const RegisterPage = () => {
         </div>
 
         {/* Info Message */}
-        <div className="uiExtension-infoBox mt-8 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
-          <p className="text-xs text-indigo-700">
+        <div className="uiExtension-infoBox mt-8 p-4 bg-green-50 rounded-lg border border-green-200">
+          <p className="text-xs text-green-700">
             💾 <strong>Note:</strong> User data stored locally in your browser
           </p>
         </div>
