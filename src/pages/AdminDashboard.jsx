@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BookOpen, Users, Download, Mail, Megaphone, Settings, LogOut, LayoutDashboard } from 'lucide-react';
 
 /**
  * ADMIN DASHBOARD
@@ -61,40 +62,40 @@ export const AdminDashboard = () => {
       <main className="dashboard-main dashboard-main--bottom-nav">
         {/* Welcome Section */}
         <section className="dashboard-welcome admin-welcome">
-          <h1>Admin Control Center</h1>
-          <p>Manage learning resources and monitor student activity</p>
+          <h1 className="heading-entrance heading-premium">Admin Control Center</h1>
+          <p className="heading-entrance heading-entrance-delay-1">Manage learning resources and monitor student activity</p>
         </section>
 
         {/* Overview Stats Grid */}
         <section className="admin-stats-grid">
           <div className="admin-stat-card">
-            <div className="stat-icon">📚</div>
+            <div className="stat-icon flex items-center justify-center rounded-xl bg-teal-50 text-teal-600 p-3 h-14 w-14"><BookOpen size={36} /></div>
             <div className="stat-content">
-              <h3>Total Resources</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Total Resources</h3>
               <p className="stat-number">1,248</p>
               <span className="stat-meta">+36 this month</span>
             </div>
           </div>
           <div className="admin-stat-card">
-            <div className="stat-icon">👥</div>
+            <div className="stat-icon flex items-center justify-center rounded-xl bg-green-50 text-green-600 p-3 h-14 w-14"><Users size={36} /></div>
             <div className="stat-content">
-              <h3>Active Students</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Active Students</h3>
               <p className="stat-number">392</p>
               <span className="stat-meta">Across 24 institutions</span>
             </div>
           </div>
           <div className="admin-stat-card">
-            <div className="stat-icon">📥</div>
+            <div className="stat-icon flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 p-3 h-14 w-14"><Download size={36} /></div>
             <div className="stat-content">
-              <h3>Recent Uploads</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Recent Uploads</h3>
               <p className="stat-number">58</p>
               <span className="stat-meta">Last 7 days</span>
             </div>
           </div>
           <div className="admin-stat-card">
-            <div className="stat-icon">✉️</div>
+            <div className="stat-icon flex items-center justify-center rounded-xl bg-orange-50 text-orange-600 p-3 h-14 w-14"><Mail size={36} /></div>
             <div className="stat-content">
-              <h3>Pending Requests</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Pending Requests</h3>
               <p className="stat-number">12</p>
               <span className="stat-meta">Requires attention</span>
             </div>
@@ -103,10 +104,10 @@ export const AdminDashboard = () => {
 
         {/* Resource Management Section */}
         <section className="dashboard-section">
-          <h2 className="section-title">Resource Management</h2>
+          <h2 className="section-title heading-entrance heading-premium">Resource Management</h2>
           <div className="admin-action-grid">
             <div className="admin-action-card">
-              <h3>Add New Resource</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Add New Resource</h3>
               <form className="admin-form">
                 <input type="text" placeholder="Resource Title" className="admin-input" />
                 <select className="admin-input">
@@ -126,7 +127,7 @@ export const AdminDashboard = () => {
               </form>
             </div>
             <div className="admin-action-card">
-              <h3>Quick Actions</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Quick Actions</h3>
               <div className="action-buttons">
                 <button className="action-btn">Edit Existing Resources</button>
                 <button className="action-btn">Delete Resources</button>
@@ -139,10 +140,10 @@ export const AdminDashboard = () => {
 
         {/* Student Activity Insights */}
         <section className="dashboard-section">
-          <h2 className="section-title">Student Activity Insights</h2>
+          <h2 className="section-title heading-entrance heading-premium">Student Activity Insights</h2>
           <div className="insight-grid">
             <div className="insight-panel">
-              <h3>Most Accessed Resources</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Most Accessed Resources</h3>
               <div className="insight-list">
                 {mostAccessed.map((item, idx) => (
                   <div key={idx} className="insight-item">
@@ -156,7 +157,7 @@ export const AdminDashboard = () => {
               </div>
             </div>
             <div className="insight-panel">
-              <h3>Recent Downloads</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Recent Downloads</h3>
               <div className="insight-list">
                 {recentDownloads.map((item, idx) => (
                   <div key={idx} className="insight-item">
@@ -171,7 +172,7 @@ export const AdminDashboard = () => {
             </div>
           </div>
           <div className="trending-subjects">
-            <h3>Trending Subjects This Week</h3>
+            <h3 className="heading-entrance heading-entrance-card heading-premium">Trending Subjects This Week</h3>
             <div className="subject-tags">
               <span className="subject-tag">Data Structures</span>
               <span className="subject-tag">Digital Electronics</span>
@@ -184,7 +185,7 @@ export const AdminDashboard = () => {
 
         {/* Resource Requests Panel */}
         <section className="dashboard-section">
-          <h2 className="section-title">Resource Requests from Students</h2>
+          <h2 className="section-title heading-entrance heading-premium">Resource Requests from Students</h2>
           <div className="request-table-wrapper">
             <table className="request-table">
               <thead>
@@ -216,11 +217,11 @@ export const AdminDashboard = () => {
 
         {/* Announcement Management */}
         <section className="dashboard-section">
-          <h2 className="section-title">Announcement Management</h2>
+          <h2 className="section-title heading-entrance heading-premium">Announcement Management</h2>
           <div className="announcement-form-card">
             <form className="admin-form admin-form--announcement">
-              <textarea 
-                placeholder="Write announcement for students..." 
+              <textarea
+                placeholder="Write announcement for students..."
                 className="admin-textarea"
                 rows="3"
               ></textarea>
@@ -236,31 +237,31 @@ export const AdminDashboard = () => {
       {/* Bottom Navigation Menu */}
       <nav className="bottom-nav-menu bottom-nav-menu--admin" role="navigation" aria-label="Admin navigation">
         <a href="#overview" className={`nav-link ${activeNav === 'overview' ? 'active' : ''}`} onClick={() => setActiveNav('overview')} aria-label="Overview">
-          <span className="nav-icon">📊</span>
+          <span className="nav-icon"><LayoutDashboard size={20} /></span>
           <span className="nav-title">Overview</span>
         </a>
         <a href="#resources" className={`nav-link ${activeNav === 'resources' ? 'active' : ''}`} onClick={() => setActiveNav('resources')} aria-label="Resource Management">
-          <span className="nav-icon">📚</span>
+          <span className="nav-icon"><BookOpen size={20} /></span>
           <span className="nav-title">Resources</span>
         </a>
         <a href="#students" className={`nav-link ${activeNav === 'students' ? 'active' : ''}`} onClick={() => setActiveNav('students')} aria-label="Student Activity">
-          <span className="nav-icon">👥</span>
+          <span className="nav-icon"><Users size={20} /></span>
           <span className="nav-title">Students</span>
         </a>
         <a href="#requests" className={`nav-link ${activeNav === 'requests' ? 'active' : ''}`} onClick={() => setActiveNav('requests')} aria-label="Requests">
-          <span className="nav-icon">✉️</span>
+          <span className="nav-icon"><Mail size={20} /></span>
           <span className="nav-title">Requests</span>
         </a>
         <a href="#announcements" className={`nav-link ${activeNav === 'announcements' ? 'active' : ''}`} onClick={() => setActiveNav('announcements')} aria-label="Announcements">
-          <span className="nav-icon">📢</span>
+          <span className="nav-icon"><Megaphone size={20} /></span>
           <span className="nav-title">Announcements</span>
         </a>
         <a href="#settings" className={`nav-link ${activeNav === 'settings' ? 'active' : ''}`} onClick={() => setActiveNav('settings')} aria-label="Settings">
-          <span className="nav-icon">⚙️</span>
+          <span className="nav-icon"><Settings size={20} /></span>
           <span className="nav-title">Settings</span>
         </a>
         <button onClick={handleLogout} className="nav-link nav-logout" aria-label="Logout">
-          <span className="nav-icon">🚪</span>
+          <span className="nav-icon"><LogOut size={20} /></span>
           <span className="nav-title">Logout</span>
         </button>
       </nav>

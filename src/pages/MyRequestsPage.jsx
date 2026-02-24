@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, ArrowLeft } from 'lucide-react';
 import { MY_REQUESTS_DATA } from '../data/studentResourcesData';
 
 export const MyRequestsPage = () => {
@@ -21,54 +21,53 @@ export const MyRequestsPage = () => {
   }, [searchQuery, selectedStatus]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 font-sans">
+      <div className="bg-white border-b border-gray-200 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">My Requests</h1>
-          <p className="text-blue-100 text-lg">Track your submitted resource requests</p>
+          <h1 className="heading-entrance heading-premium text-4xl md:text-5xl font-bold leading-tight mb-4 bg-gradient-to-r from-primary via-teal-700 to-slate-800 bg-clip-text text-transparent">My Requests</h1>
+          <p className="heading-entrance heading-entrance-delay-1 text-slate-600 text-lg max-w-2xl leading-relaxed">Track your submitted resource requests</p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <button
           onClick={() => navigate('/student-dashboard')}
-          className="text-sm text-teal-600 hover:underline mb-4"
+          className="text-sm text-blue-600 hover:text-blue-800 font-medium tracking-wide mb-6 inline-flex items-center gap-1.5 transition-colors"
         >
-          ← Back to Dashboard
+          <ArrowLeft size={16} /> Dashboard
         </button>
-        <div className="bg-white rounded-xl shadow-md p-8">
-          <div className="uiExtension-filterSection mb-8">
-            <div className="mb-6">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+          <div className="mb-8">
+            <div className="mb-6 max-w-2xl">
+              <div className="relative group">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={20} />
                 <input
                   type="text"
                   placeholder="Search your requests..."
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
-                  className="uiExtension-searchInput w-full pl-12 pr-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                  className="w-full pl-12 pr-4 py-3.5 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow shadow-sm text-slate-900 placeholder:text-slate-400"
                 />
               </div>
             </div>
 
-            <div className="uiExtension-categoryFilter flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-200 pb-6">
               {statuses.map((status) => (
                 <button
                   key={status}
                   onClick={() => setSelectedStatus(status)}
-                  className={`uiExtension-categoryBtn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    selectedStatus === status
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${selectedStatus === status
+                      ? 'bg-slate-800 text-white shadow-sm ring-1 ring-slate-800'
+                      : 'bg-white text-slate-600 border border-gray-200 hover:bg-slate-50 hover:border-gray-300'
+                    }`}
                 >
                   {status}
                 </button>
               ))}
             </div>
 
-            <p className="text-gray-600">
-              Showing <span className="font-semibold">{filteredRequests.length}</span> request
+            <p className="text-slate-600 text-sm">
+              Showing <span className="font-semibold text-slate-900">{filteredRequests.length}</span> request
               {filteredRequests.length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -80,9 +79,9 @@ export const MyRequestsPage = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <p className="text-gray-500 text-lg mb-2">No requests found</p>
-              <p className="text-gray-400">Try adjusting your search or filters</p>
+            <div className="text-center py-16 bg-slate-50 rounded-xl border border-dashed border-gray-300">
+              <p className="text-slate-500 text-lg font-medium mb-2">No requests found</p>
+              <p className="text-slate-400 text-sm">Try adjusting your search query or category filters.</p>
             </div>
           )}
         </div>
@@ -94,28 +93,27 @@ export const MyRequestsPage = () => {
 const RequestItem = ({ request }) => {
   const statusStyle =
     request.status === 'Approved'
-      ? 'bg-green-100 text-green-700'
+      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
       : request.status === 'Pending'
-      ? 'bg-amber-100 text-amber-700'
-      : 'bg-red-100 text-red-700';
+        ? 'bg-amber-50 text-amber-700 border-amber-200'
+        : 'bg-red-50 text-red-700 border-red-200';
 
   return (
-    <div className="border-l-4 border-blue-600 bg-gradient-to-r from-blue-50 to-transparent rounded-lg p-6 hover:shadow-md transition-shadow">
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-lg font-bold text-gray-900">{request.title}</h3>
-            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusStyle}`}>
-              {request.status}
-            </span>
-          </div>
-          <p className="text-sm text-gray-600 mb-3">{request.description}</p>
-          <div className="flex items-center gap-4 text-sm text-gray-500">
-            <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">
-              {request.category}
-            </span>
-            <span>Submitted: {request.submittedDate}</span>
-          </div>
+    <div className="border border-gray-200 bg-white rounded-xl p-6 hover:border-blue-300 hover:shadow-md transition-all duration-300 group flex items-start justify-between cursor-default">
+      <div className="flex-1 pr-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
+          <h3 className="heading-entrance heading-entrance-card text-lg font-semibold tracking-[-0.01em] text-slate-900 group-hover:text-blue-700 transition-colors">{request.title}</h3>
+          <span className={`self-start sm:self-auto text-[0.65rem] uppercase tracking-wider font-bold px-2 py-0.5 rounded border ${statusStyle}`}>
+            {request.status}
+          </span>
+        </div>
+        <p className="text-sm text-slate-500 mb-4 leading-relaxed">{request.description}</p>
+        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <span className="inline-block px-2.5 py-1 rounded border border-slate-200 text-slate-600 bg-slate-50 shadow-sm">
+            {request.category}
+          </span>
+          <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+          <span className="text-slate-500">Submitted: {request.submittedDate}</span>
         </div>
       </div>
     </div>

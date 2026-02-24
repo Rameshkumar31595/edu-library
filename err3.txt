@@ -1,0 +1,88 @@
+﻿[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 22 modules transformed.
+node.exe : [31mΓ£ù[39m 
+Build failed in 1.35s
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:\Us
+ers\HP\AppData\Roaming\npm 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: ([31mΓ£  
+  ù[39m Build failed in 1   
+ .35s:String) [], RemoteE    
+xception
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+[31merror during build:
+[31m[vite:esbuild] 
+Transform failed with 1 
+error:
+C:/Users/HP/OneDrive/Desktop/
+edu-library/src/pages/BrowseC
+atalogsPage.jsx:243:28: 
+ERROR: Syntax error "`"[31m
+file: [36mC:/Users/HP/OneDri
+ve/Desktop/edu-library/src/pa
+ges/BrowseCatalogsPage.jsx:24
+3:28[31m
+[33m
+[33mSyntax error "`"[33m
+241 |                  
+key={category}
+242 |                  
+onClick={() => setSelectedCat
+egory(category)}
+243 |                  
+className={\`px-4 py-1.5 
+rounded-full text-sm 
+font-medium transition-all 
+duration-200 \${
+    |                        
+      ^
+244 |                
+selectedCategory === category
+245 |                  ? 
+'bg-slate-800 text-white 
+shadow-sm ring-1 
+ring-slate-800'
+[31m
+    at failureErrorWithLog (C
+:\Users\HP\OneDrive\Desktop\e
+du-library\node_modules\esbui
+ld\lib\main.js:1467:15)
+    at C:\Users\HP\OneDrive\D
+esktop\edu-library\node_modul
+es\esbuild\lib\main.js:736:50
+    at 
+responseCallbacks.<computed> 
+(C:\Users\HP\OneDrive\Desktop
+\edu-library\node_modules\esb
+uild\lib\main.js:603:9)
+    at handleIncomingPacket (
+C:\Users\HP\OneDrive\Desktop\
+edu-library\node_modules\esbu
+ild\lib\main.js:658:12)
+    at Socket.readFromStdout 
+(C:\Users\HP\OneDrive\Desktop
+\edu-library\node_modules\esb
+uild\lib\main.js:581:7)
+    at Socket.emit 
+(node:events:508:28)
+    at addChunk (node:interna
+l/streams/readable:559:12)
+    at 
+readableAddChunkPushByteMode 
+(node:internal/streams/readab
+le:510:3)
+    at Readable.push (node:in
+ternal/streams/readable:390:5
+)
+    at Pipe.onStreamRead (nod
+e:internal/stream_base_common
+s:189:23)[39m

@@ -58,29 +58,29 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="ndl-navbar bg-white shadow-sm sticky top-0 z-50 border-b-2 border-blue-900">
+    <nav className="ndl-navbar bg-white shadow-sm sticky top-0 z-50 border-b-2 border-teal-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-10 h-10 bg-gradient-to-br from-teal-900 to-teal-700 rounded-lg flex items-center justify-center text-white font-bold text-lg">
               📚
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-sm font-bold text-blue-900 leading-tight">NATIONAL</h1>
-              <p className="text-xs text-blue-700">DIGITAL LIBRARY</p>
+              <h1 className="text-sm font-bold text-teal-900 leading-tight">NATIONAL</h1>
+              <p className="text-xs text-teal-700">DIGITAL LIBRARY</p>
             </div>
           </Link>
 
           {/* Middle Nav Links - Desktop */}
           <div className="hidden md:flex items-center gap-8">
-            <Link to="/catalogs" className="text-gray-700 hover:text-blue-900 text-sm font-medium transition">
+            <Link to="/catalogs" className="text-gray-700 hover:text-teal-900 text-sm font-medium transition">
               Browse
             </Link>
-            <a href="#" className="text-gray-700 hover:text-blue-900 text-sm font-medium transition">
+            <a href="#" className="text-gray-700 hover:text-teal-900 text-sm font-medium transition">
               Guidelines
             </a>
-            <a href="#" className="text-gray-700 hover:text-blue-900 text-sm font-medium transition">
+            <a href="#" className="text-gray-700 hover:text-teal-900 text-sm font-medium transition">
               About
             </a>
           </div>
@@ -91,7 +91,7 @@ export const Navbar = () => {
             <select 
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900 cursor-pointer"
+              className="px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-900 cursor-pointer"
             >
               <option value="EN">EN</option>
               <option value="HI">हिंदी</option>
@@ -111,7 +111,7 @@ export const Navbar = () => {
             {/* Auth Buttons / User Menu */}
             {isLoggedIn ? (
               <>
-                <span className="text-xs font-medium text-gray-700 px-2 py-1 bg-blue-50 rounded">
+                <span className="text-xs font-medium text-gray-700 px-2 py-1 bg-teal-50 rounded">
                   👤 {userName}
                   {userRole === 'admin' && <span className="text-red-600 ml-1">👑</span>}
                 </span>
@@ -125,7 +125,7 @@ export const Navbar = () => {
                 ) : (
                   <Link
                     to="/student-dashboard"
-                    className="text-xs font-medium text-blue-900 hover:text-blue-700 transition"
+                    className="text-xs font-medium text-teal-900 hover:text-teal-700 transition"
                   >
                     Student
                   </Link>
@@ -142,13 +142,13 @@ export const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="text-xs font-medium text-blue-900 hover:text-blue-700 transition"
+                  className="text-xs font-medium text-teal-900 hover:text-teal-700 transition"
                 >
                   Log-in
                 </Link>
                 <Link
                   to="/register"
-                  className="px-3 py-1.5 text-xs font-medium text-white bg-blue-900 hover:bg-blue-800 rounded transition"
+                  className="px-3 py-1.5 text-xs font-medium text-white bg-teal-900 hover:bg-teal-800 rounded transition"
                 >
                   Sign-up
                 </Link>
@@ -159,7 +159,7 @@ export const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-gray-700 hover:text-blue-900"
+            className="md:hidden text-gray-700 hover:text-teal-900"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -170,7 +170,7 @@ export const Navbar = () => {
           <div className="md:hidden border-t border-gray-200 py-4 space-y-3">
             <Link
               to="/catalogs"
-              className="block text-gray-700 hover:text-blue-900 text-sm font-medium px-3 py-2 hover:bg-gray-50 rounded"
+              className="block text-gray-700 hover:text-teal-900 text-sm font-medium px-3 py-2 hover:bg-gray-50 rounded"
               onClick={() => setIsMenuOpen(false)}
             >
               Browse
@@ -200,7 +200,7 @@ export const Navbar = () => {
                 ) : (
                   <Link
                     to="/student-dashboard"
-                    className="block text-blue-900 hover:text-blue-700 text-sm font-medium px-3 py-2 hover:bg-blue-50 rounded"
+                    className="block text-teal-900 hover:text-teal-700 text-sm font-medium px-3 py-2 hover:bg-teal-50 rounded"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Student Dashboard
@@ -218,14 +218,14 @@ export const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="block w-full px-3 py-2 text-sm text-blue-900 border border-blue-900 rounded hover:bg-blue-50 text-center"
+                  className="block w-full px-3 py-2 text-sm text-teal-900 border border-teal-900 rounded hover:bg-teal-50 text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Log-in
                 </Link>
                 <Link
                   to="/register"
-                  className="block w-full px-3 py-2 text-sm text-white bg-blue-900 rounded hover:bg-blue-800 text-center"
+                  className="block w-full px-3 py-2 text-sm text-white bg-teal-900 rounded hover:bg-teal-800 text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Sign-up

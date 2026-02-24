@@ -145,7 +145,7 @@ export const RegistrationPage = () => {
       <div className="register-modal-wrapper">
         {/* Modal Header */}
         <div className="register-modal-header">
-          <h3>👤+ Account Registration</h3>
+          <h3 className="heading-entrance heading-premium">👤+ Account Registration</h3>
           <span 
             className="register-close-btn" 
             onClick={() => navigate('/')}

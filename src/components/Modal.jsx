@@ -51,7 +51,7 @@ export const Modal = ({ isOpen, onClose, children, title, width = '500px' }) => 
         </button>
 
         {/* Modal Title */}
-        {title && <h2 className="modal-title">{title}</h2>}
+        {title && <h2 className="modal-title heading-entrance heading-premium">{title}</h2>}
 
         {/* Modal Content */}
         {children}

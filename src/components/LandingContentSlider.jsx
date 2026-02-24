@@ -158,7 +158,7 @@ export const LandingContentSlider = () => {
               className="card-img" 
               style={{ backgroundImage: `url('${card.image}')` }}
             >
-              <h3>{card.title}</h3>
+              <h3 className="heading-entrance heading-entrance-card">{card.title}</h3>
             </div>
             <div className="icon-box">{card.icon}</div>
             <ul className="card-links">

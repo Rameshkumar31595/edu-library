@@ -82,15 +82,15 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="uiExtension-loginContainer min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-8">
+    <div className="uiExtension-loginContainer min-h-screen bg-gradient-to-br from-teal-50 to-green-100 flex items-center justify-center px-4 py-8">
       <div className="uiExtension-loginCard w-full max-w-md bg-white rounded-2xl shadow-xl p-8 md:p-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 bg-gradient-to-br from-teal-600 to-green-600 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-4 shadow-lg">
             📚
           </div>
-          <h1 className="text-3xl font-bold text-blue-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to your account to continue</p>
+          <h1 className="heading-entrance heading-premium text-3xl font-bold text-teal-900 mb-2">Welcome Back</h1>
+          <p className="heading-entrance heading-entrance-delay-1 text-gray-600">Sign in to your account to continue</p>
         </div>
 
         {/* Error Message */}
@@ -114,7 +114,7 @@ export const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="uiExtension-inputField w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
               />
             </div>
           </div>
@@ -131,7 +131,7 @@ export const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="uiExtension-inputField w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="uiExtension-inputField w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
               />
               {/* Show/Hide Password Toggle */}
               <button
@@ -149,7 +149,7 @@ export const LoginPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="uiExtension-loginBtn w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="uiExtension-loginBtn w-full py-3 bg-gradient-to-r from-teal-600 to-green-600 text-white rounded-lg font-semibold hover:from-teal-700 hover:to-green-700 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
@@ -168,7 +168,7 @@ export const LoginPage = () => {
             Don't have an account?{' '}
             <button
               onClick={() => navigate('/register')}
-              className="text-blue-600 font-semibold hover:text-blue-700 transition hover:underline"
+              className="text-teal-600 font-semibold hover:text-teal-700 transition hover:underline"
             >
               Create one
             </button>
@@ -186,8 +186,8 @@ export const LoginPage = () => {
         </div>
 
         {/* Demo Credentials Info */}
-        <div className="uiExtension-demoInfo mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-xs text-blue-700 font-medium">
+        <div className="uiExtension-demoInfo mt-8 p-4 bg-teal-50 rounded-lg border border-teal-200">
+          <p className="text-xs text-teal-700 font-medium">
             💡 <strong>Demo Mode:</strong> Use any email/password to login
           </p>
         </div>

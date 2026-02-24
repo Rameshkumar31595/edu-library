@@ -116,7 +116,7 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         {/* Modal Header */}
         <div className="modal-header">
-          <h2>
+          <h2 className="heading-entrance heading-premium">
             <span className="login-icon">➜]</span> Log-in
           </h2>
           <span className="close-btn" onClick={onClose}>

@@ -19,7 +19,7 @@ export const AutoScrollCarousel = () => {
       title: 'SCHOOL TEXTBOOKS',
       icon: '📚',
       links: ['NCERT Books', 'State Boards', 'Question Banks'],
-      bgImage: 'from-blue-500 via-blue-600 to-blue-700',
+      bgImage: 'from-teal-500 via-teal-600 to-teal-700',
     },
     {
       id: 2,
@@ -124,10 +124,10 @@ export const AutoScrollCarousel = () => {
 
         {/* Section Header */}
         <div className="mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">
+          <h2 className="heading-entrance heading-premium text-3xl md:text-4xl font-bold text-teal-900 mb-3">
             Featured Collections
           </h2>
-          <p className="text-gray-600">
+          <p className="heading-entrance heading-entrance-delay-1 text-gray-600">
             Explore our curated collections across various disciplines
           </p>
         </div>
@@ -155,7 +155,7 @@ export const AutoScrollCarousel = () => {
             className="autoScrollV3-arrowBtn absolute top-1/2 -left-10 transform -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg hover:bg-gray-100 active:scale-95 transition-all duration-200 group"
             aria-label="Scroll left"
           >
-            <ChevronLeft size={24} className="text-blue-900 group-hover:text-blue-600 transition-colors" />
+            <ChevronLeft size={24} className="text-teal-900 group-hover:text-teal-600 transition-colors" />
           </button>
 
           <button
@@ -163,7 +163,7 @@ export const AutoScrollCarousel = () => {
             className="autoScrollV3-arrowBtn absolute top-1/2 -right-10 transform -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg hover:bg-gray-100 active:scale-95 transition-all duration-200 group"
             aria-label="Scroll right"
           >
-            <ChevronRight size={24} className="text-blue-900 group-hover:text-blue-600 transition-colors" />
+            <ChevronRight size={24} className="text-teal-900 group-hover:text-teal-600 transition-colors" />
           </button>
         </div>
 
@@ -198,7 +198,7 @@ const CarouselCard = ({ card }) => {
             {card.icon}
           </div>
 
-          <h3 className="text-2xl font-bold uppercase tracking-wider leading-tight">
+          <h3 className="heading-entrance heading-entrance-card text-2xl font-semibold uppercase tracking-wider leading-tight">
             {card.title}
           </h3>
         </div>

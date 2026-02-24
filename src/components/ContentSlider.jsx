@@ -119,7 +119,7 @@ export const ContentSlider = () => {
     <section className="ndl-slider-section py-12 px-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Section Title */}
-        <h2 className="text-3xl font-bold text-blue-900 mb-8">Explore Content Categories</h2>
+        <h2 className="heading-entrance heading-premium text-3xl font-bold text-teal-900 mb-8">Explore Content Categories</h2>
 
         {/* Slider Container */}
         <div
@@ -163,7 +163,7 @@ export const ContentSlider = () => {
                   <div className="absolute inset-0 bg-black opacity-35"></div>
                   
                   {/* Category Title */}
-                  <h3 className="absolute inset-0 flex items-center justify-center text-white text-center text-sm font-bold px-3 uppercase">
+                  <h3 className="heading-entrance heading-entrance-card absolute inset-0 flex items-center justify-center text-white text-center text-sm font-semibold tracking-wide px-3 uppercase">
                     {card.title}
                   </h3>
                 </div>
@@ -180,7 +180,7 @@ export const ContentSlider = () => {
                   {card.links.map((link, idx) => (
                     <li
                       key={idx}
-                      className="text-xs text-gray-600 hover:text-blue-900 cursor-pointer transition flex items-center"
+                      className="text-xs text-gray-600 hover:text-teal-900 cursor-pointer transition flex items-center"
                     >
                       <span className="mr-2">▶️</span>
                       {link}

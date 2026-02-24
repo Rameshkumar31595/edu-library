@@ -14,7 +14,7 @@ export const CategoryContentPage = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Category Not Found</h1>
+          <h1 className="heading-entrance heading-premium text-2xl font-bold text-gray-900 mb-2">Category Not Found</h1>
           <p className="text-gray-600">The category you're looking for doesn't exist.</p>
         </div>
       </div>
@@ -35,10 +35,10 @@ export const CategoryContentPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-gradient-to-r from-teal-900 to-green-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{category.title}</h1>
-          <p className="text-blue-100 text-lg">{category.description}</p>
+          <h1 className="heading-entrance heading-premium text-4xl md:text-5xl font-bold leading-tight mb-4">{category.title}</h1>
+          <p className="heading-entrance heading-entrance-delay-1 text-teal-100 text-lg">{category.description}</p>
         </div>
       </div>
 
@@ -53,7 +53,7 @@ export const CategoryContentPage = () => {
                   placeholder={`Search ${category.title.toLowerCase()}...`}
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
-                  className="uiExtension-searchInput w-full pl-12 pr-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                  className="uiExtension-searchInput w-full pl-12 pr-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm"
                 />
               </div>
             </div>
@@ -65,7 +65,7 @@ export const CategoryContentPage = () => {
                   onClick={() => setSelectedType(type)}
                   className={`uiExtension-categoryBtn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     selectedType === type
-                      ? 'bg-blue-600 text-white shadow-md'
+                      ? 'bg-teal-600 text-white shadow-md'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -89,7 +89,7 @@ export const CategoryContentPage = () => {
           ) : (
             <div className="uiExtension-emptyState text-center py-16">
               <BookOpen size={64} className="mx-auto text-gray-300 mb-4" />
-              <h3 className="text-2xl font-semibold text-gray-700 mb-2">No items found</h3>
+              <h3 className="heading-entrance heading-entrance-card text-2xl font-semibold tracking-[-0.01em] text-gray-700 mb-2">No items found</h3>
               <p className="text-gray-500">Try adjusting your search or filters</p>
             </div>
           )}
@@ -101,12 +101,12 @@ export const CategoryContentPage = () => {
 
 const ContentItem = ({ item }) => {
   return (
-    <div className="border-l-4 border-blue-600 bg-gradient-to-r from-blue-50 to-transparent rounded-lg p-6 hover:shadow-md transition-shadow">
+    <div className="border-l-4 border-teal-600 bg-gradient-to-r from-teal-50 to-transparent rounded-lg p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
-            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
+            <h3 className="heading-entrance heading-entrance-card text-lg font-semibold tracking-[-0.01em] text-gray-900">{item.title}</h3>
+            <span className="inline-block bg-teal-100 text-teal-800 text-xs font-semibold px-3 py-1 rounded-full">
               {item.type}
             </span>
           </div>
