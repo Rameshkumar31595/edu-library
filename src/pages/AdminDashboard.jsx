@@ -60,18 +60,47 @@ export const AdminDashboard = () => {
     { id: 5, title: 'DBMS Full Course', department: 'Computer Science', type: 'Video', accessCount: 221, addedAt: '2026-02-22', assigned: true },
     { id: 6, title: 'Physics Lab Manual', department: 'Mathematics', type: 'Document', accessCount: 152, addedAt: '2026-02-04', assigned: false },
     { id: 7, title: 'Project Documentation Template', department: 'Civil', type: 'Document', accessCount: 98, addedAt: '2026-02-01', assigned: true },
+    { id: 8, title: 'Web Development Best Practices', department: 'Computer Science', type: 'PDF', accessCount: 276, addedAt: '2026-02-18', assigned: true },
+    { id: 9, title: 'Advanced Python Programming', department: 'Computer Science', type: 'Video', accessCount: 198, addedAt: '2026-02-17', assigned: true },
+    { id: 10, title: 'Digital Logic Design', department: 'Electronics', type: 'PDF', accessCount: 143, addedAt: '2026-02-12', assigned: true },
+    { id: 11, title: 'Signal Processing Fundamentals', department: 'Electronics', type: 'Video', accessCount: 165, addedAt: '2026-02-15', assigned: true },
+    { id: 12, title: 'Calculus Complete Guide', department: 'Mathematics', type: 'Document', accessCount: 189, addedAt: '2026-02-11', assigned: true },
+    { id: 13, title: 'Linear Algebra Textbook', department: 'Mathematics', type: 'PDF', accessCount: 201, addedAt: '2026-02-14', assigned: true },
+    { id: 14, title: 'Thermodynamics Quick Pack', department: 'Mechanical', type: 'PDF', accessCount: 134, addedAt: '2026-02-17', assigned: true },
+    { id: 15, title: 'Circuit Theory Videos', department: 'Electronics', type: 'Video', accessCount: 156, addedAt: '2026-02-13', assigned: true },
+    { id: 16, title: 'Math Revision Sheets', department: 'Mathematics', type: 'Document', accessCount: 127, addedAt: '2026-02-09', assigned: true },
+    { id: 17, title: 'Structural Analysis Notes', department: 'Civil', type: 'PDF', accessCount: 112, addedAt: '2026-02-06', assigned: true },
+    { id: 18, title: 'Machine Learning Basics', department: 'Computer Science', type: 'Video', accessCount: 234, addedAt: '2026-02-21', assigned: true },
+    { id: 19, title: 'Cloud Computing Architecture', department: 'Computer Science', type: 'PDF', accessCount: 167, addedAt: '2026-02-17', assigned: false },
+    { id: 20, title: 'Environmental Impact Assessment', department: 'Civil', type: 'Document', accessCount: 98, addedAt: '2026-02-05', assigned: true },
   ]);
 
   const [recentDownloads, setRecentDownloads] = useState([
     { id: 1, student: 'Priya Sharma', resource: 'Circuit Theory Notes', time: '15 min ago' },
     { id: 2, student: 'Rahul Kumar', resource: 'Java Programming Guide', time: '45 min ago' },
     { id: 3, student: 'Ananya Singh', resource: 'Calculus Textbook', time: '2 hours ago' },
+    { id: 4, student: 'Vikram Patel', resource: 'Data Structures Notes', time: '3 hours ago' },
+    { id: 5, student: 'Neha Reddy', resource: 'Web Development Best Practices', time: '5 hours ago' },
+    { id: 6, student: 'Arjun Verma', resource: 'Machine Learning Basics', time: '7 hours ago' },
+    { id: 7, student: 'Isha Gupta', resource: 'Operating Systems Guide', time: '8 hours ago' },
+    { id: 8, student: 'Rohan Desai', resource: 'Linear Algebra Textbook', time: 'Yesterday, 11:30 AM' },
+    { id: 9, student: 'Divya Nair', resource: 'Digital Logic Design', time: 'Yesterday, 2:15 PM' },
+    { id: 10, student: 'Karan Singh', resource: 'Thermodynamics Quick Pack', time: 'Yesterday, 4:45 PM' },
+    { id: 11, student: 'Pooja Chandra', resource: 'Advanced Python Programming', time: '2 days ago' },
+    { id: 12, student: 'Sameer Khan', resource: 'Structural Analysis Notes', time: '2 days ago' },
   ]);
 
   const [resourceRequests, setResourceRequests] = useState([
     { id: 1, student: 'Amit Patel', request: 'Advanced Database Systems book', date: '24 Feb 2026', status: 'Pending' },
     { id: 2, student: 'Sneha Reddy', request: 'Machine Learning lecture videos', date: '23 Feb 2026', status: 'Pending' },
     { id: 3, student: 'Nikhil Rao', request: 'Signal Processing sample papers', date: '21 Feb 2026', status: 'Approved' },
+    { id: 4, student: 'Vishal Kumar', request: 'Network Security Case Studies', date: '24 Feb 2026', status: 'Pending' },
+    { id: 5, student: 'Anjali Gupta', request: 'Artificial Intelligence Research Papers', date: '22 Feb 2026', status: 'Approved' },
+    { id: 6, student: 'Sanjay Nair', request: 'Control Systems Simulation Software', date: '23 Feb 2026', status: 'Pending' },
+    { id: 7, student: 'Maya Singh', request: 'Embedded Systems Design Guide', date: '20 Feb 2026', status: 'Approved' },
+    { id: 8, student: 'Harsh Verma', request: 'Cloud Computing Certification Materials', date: '19 Feb 2026', status: 'Approved' },
+    { id: 9, student: 'Priya Kapoor', request: 'Data Visualization Tutorials', date: '24 Feb 2026', status: 'Pending' },
+    { id: 10, student: 'Ravi Shankar', request: 'IoT Development Framework Documentation', date: '22 Feb 2026', status: 'Rejected' },
   ]);
 
 
@@ -80,6 +109,9 @@ export const AdminDashboard = () => {
       { id: 1, type: 'upload', detail: 'Uploaded "React Basics Tutorial" to Computer Science', time: 'Today, 10:15 AM' },
       { id: 2, type: 'request', detail: 'Approved request for Signal Processing sample papers', time: 'Yesterday, 4:20 PM' },
       { id: 3, type: 'announcement', detail: 'Published new mid-term resource announcement', time: 'Yesterday, 11:05 AM' },
+      { id: 4, type: 'upload', detail: 'Added "Cloud Computing Architecture" to Computer Science', time: '2 days ago, 3:45 PM' },
+      { id: 5, type: 'request', detail: 'Rejected request for IoT Development Framework Documentation', time: '3 days ago, 9:20 AM' },
+      { id: 6, type: 'delete', detail: 'Removed deprecated "Old Java Basics Tutorial" resource', time: '3 days ago, 2:30 PM' },
     ]);
   }, []);
 
