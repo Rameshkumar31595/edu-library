@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ChevronRight, BookOpen, FlaskConical, Landmark, Scale, Palette, Heart, Library, TrendingUp } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 /**
  * DEPARTMENTS PAGE – Central Library Style
@@ -97,6 +99,7 @@ const COLOR_MAP = {
 
 export const DepartmentsPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [query, setQuery] = useState('');
   const [activeField, setActiveField] = useState('All');
 
@@ -139,13 +142,13 @@ export const DepartmentsPage = () => {
             className="mb-5 inline-flex items-center gap-1.5 text-teal-200 text-sm font-medium hover:text-white transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Back to Dashboard
+            {translate('backToDashboard', language)}
           </button>
           <h1 className="heading-entrance heading-premium text-4xl sm:text-5xl font-bold leading-tight mb-3">
-            Central Library
+            {translate('centralLibrary', language)}
           </h1>
           <p className="heading-entrance heading-entrance-delay-1 text-teal-100 text-lg mb-8 max-w-xl">
-            Explore {totalDepts} departments across {ALL_DEPARTMENTS.length} academic fields — {totalResources}+ curated resources at your fingertips.
+            {translate('showing', language)} {totalDepts} {totalDepts !== 1 ? translate('deptPlural', language) : translate('deptSingular', language)} — {totalResources}+ {translate('resourcesCount', language)}
           </p>
 
           {/* Search */}
@@ -153,7 +156,7 @@ export const DepartmentsPage = () => {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" aria-hidden="true" />
             <input
               type="text"
-              placeholder="Search departments…"
+              placeholder={translate('searchDepartments', language)}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/90 backdrop-blur-sm text-slate-800 placeholder-slate-400 text-sm font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-white"
@@ -186,8 +189,8 @@ export const DepartmentsPage = () => {
         {filtered.length === 0 ? (
           <div className="text-center py-24">
             <BookOpen className="mx-auto h-12 w-12 text-gray-300 mb-4" />
-            <h3 className="heading-entrance heading-premium text-xl font-semibold text-slate-700 mb-1">No departments found</h3>
-            <p className="text-slate-500 text-sm">Try a different search term or field filter.</p>
+            <h3 className="heading-entrance heading-premium text-xl font-semibold text-slate-700 mb-1">{translate('noDepartmentsFound', language)}</h3>
+            <p className="text-slate-500 text-sm">{translate('tryDifferentSearch', language)}</p>
           </div>
         ) : (
           filtered.map((group) => {
@@ -200,7 +203,7 @@ export const DepartmentsPage = () => {
                     {group.icon}
                   </span>
                   <h2 className={`heading-entrance heading-premium text-xl font-bold ${c.heading}`}>{group.field}</h2>
-                  <span className="ml-auto text-xs text-slate-400 font-medium">{group.departments.length} dept{group.departments.length !== 1 ? 's' : ''}</span>
+                  <span className="ml-auto text-xs text-slate-400 font-medium">{group.departments.length} {group.departments.length !== 1 ? translate('deptPlural', language) : translate('deptSingular', language)}</span>
                 </div>
 
                 {/* Department Cards */}
@@ -216,7 +219,7 @@ export const DepartmentsPage = () => {
                           {dept.name}
                         </h3>
                         <span className={`flex-shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full border ${c.badge}`}>
-                          {dept.count} resources
+                          {dept.count} {translate('resourcesCount', language)}
                         </span>
                       </div>
                       <p className="text-slate-500 text-sm leading-relaxed flex-1">{dept.description}</p>
@@ -224,7 +227,7 @@ export const DepartmentsPage = () => {
                         className={`mt-auto self-start inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-white text-xs font-semibold transition-colors ${c.btn}`}
                         onClick={(e) => { e.stopPropagation(); navigate(`/category/${dept.slug}`); }}
                       >
-                        Explore
+                        {translate('explore', language)}
                         <ChevronRight className="h-3.5 w-3.5" />
                       </button>
                     </div>

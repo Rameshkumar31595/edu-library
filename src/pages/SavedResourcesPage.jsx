@@ -2,9 +2,12 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Grid3X3, List, BookOpen, ArrowLeft, Bookmark, Heart, FolderOpen } from 'lucide-react';
 import { SAVED_RESOURCES_DATA } from '../data/studentResourcesData';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 export const SavedResourcesPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [viewMode, setViewMode] = useState('grid');
@@ -44,18 +47,18 @@ export const SavedResourcesPage = () => {
             className="heading-entrance mb-5 inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3.5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/40"
           >
             <ArrowLeft size={15} />
-            Dashboard
+            {translate('dashboard', language)}
           </button>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex-1 min-w-0">
               <p className="heading-entrance mb-2 text-xs font-semibold uppercase tracking-widest text-teal-200">
-                Your Library
+                {translate('yourLibrary', language)}
               </p>
               <h1 className="heading-entrance heading-premium text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white mb-3">
-                Saved Resources
+                {translate('savedResourcesPageTitle', language)}
               </h1>
               <p className="heading-entrance heading-entrance-delay-1 text-base sm:text-lg text-teal-100 leading-relaxed max-w-lg">
-                Access your bookmarked learning materials anytime, anywhere.
+                {translate('accessBookmarked', language)}
               </p>
             </div>
             {/* Floating icon cluster */}
@@ -93,7 +96,7 @@ export const SavedResourcesPage = () => {
             </div>
             <div>
               <p className="text-xl font-bold text-slate-800">{SAVED_RESOURCES_DATA.length}</p>
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Saved</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{translate('totalSaved', language)}</p>
             </div>
           </div>
           <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-5 py-3 shadow-sm">
@@ -102,7 +105,7 @@ export const SavedResourcesPage = () => {
             </div>
             <div>
               <p className="text-xl font-bold text-slate-800">{categories.length - 1}</p>
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Categories</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{translate('categories', language)}</p>
             </div>
           </div>
         </div>
@@ -115,7 +118,7 @@ export const SavedResourcesPage = () => {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-teal-600 transition-colors" size={20} />
               <input
                 type="text"
-                placeholder="Search saved resources..."
+                placeholder={translate('searchSaved', language)}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 className="w-full pl-12 pr-4 py-3.5 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-shadow shadow-sm text-slate-900 placeholder:text-slate-400"
@@ -140,8 +143,7 @@ export const SavedResourcesPage = () => {
 
           <div className="flex items-center justify-between flex-wrap gap-4">
             <p className="text-slate-600 text-sm">
-              Showing <span className="font-semibold text-slate-900">{filteredResources.length}</span> resource
-              {filteredResources.length !== 1 ? 's' : ''}
+              {translate('showing', language)} <span className="font-semibold text-slate-900">{filteredResources.length}</span> {filteredResources.length !== 1 ? translate('resourcePlural', language) : translate('resourceSingular', language)}
             </p>
             <div className="flex gap-2">
               <button
@@ -178,13 +180,13 @@ export const SavedResourcesPage = () => {
             <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-teal-50 mb-5">
               <BookOpen size={28} className="text-teal-400" />
             </div>
-            <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-slate-800 mb-2">No saved resources found</h3>
-            <p className="text-slate-500 mb-6">Try adjusting your search or filters</p>
+            <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-slate-800 mb-2">{translate('noSavedFound', language)}</h3>
+            <p className="text-slate-500 mb-6">{translate('tryAdjusting', language)}</p>
             <button
               onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}
               className="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
-              Clear Filters
+              {translate('clearFilters', language)}
             </button>
           </div>
         )}
@@ -194,6 +196,7 @@ export const SavedResourcesPage = () => {
 };
 
 const SavedResourceCard = ({ resource, viewMode, index = 0 }) => {
+  const { language } = useLanguage();
   return (
     <div
       className={`heading-entrance cursor-pointer transition-all duration-300 border border-gray-200 bg-white group hover:border-teal-300 hover:shadow-lg ${viewMode === 'grid'
@@ -217,7 +220,7 @@ const SavedResourceCard = ({ resource, viewMode, index = 0 }) => {
             <p className="text-sm text-slate-500 mb-5 line-clamp-2 leading-relaxed">{resource.coverage}</p>
             <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
               <span className="text-sm font-bold text-slate-800">{resource.resources}</span>
-              <span className="text-[0.65rem] uppercase tracking-wider font-semibold text-slate-400">Saved</span>
+              <span className="text-[0.65rem] uppercase tracking-wider font-semibold text-slate-400">{translate('saved', language)}</span>
             </div>
           </div>
         </>
@@ -240,7 +243,7 @@ const SavedResourceCard = ({ resource, viewMode, index = 0 }) => {
               <div className="flex items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 <span>{resource.coverage}</span>
                 <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                <span className="text-slate-600">{resource.resources} saved</span>
+                <span className="text-slate-600">{resource.resources} {translate('saved', language).toLowerCase()}</span>
               </div>
             </div>
           </div>

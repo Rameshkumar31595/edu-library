@@ -2,9 +2,12 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Video } from 'lucide-react';
 import { videoLibrary } from '../data/videoLibrary.js';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 export const VideoPlayerPage = () => {
   const { slug } = useParams();
+  const { language } = useLanguage();
   const video = videoLibrary.find((item) => item.slug === slug);
 
   if (!video) {
@@ -12,15 +15,15 @@ export const VideoPlayerPage = () => {
       <div className="dashboard-wrapper dashboard-wrapper--bottom-nav">
         <main className="dashboard-main dashboard-main--bottom-nav">
           <section className="dashboard-section">
-            <h1 className="heading-entrance heading-premium">Video Not Found</h1>
+            <h1 className="heading-entrance heading-premium">{translate('videoNotFound', language)}</h1>
             <p className="mt-3 text-sm text-slate-600">
-              This video is unavailable. Return to the resources catalog to pick another session.
+              {translate('videoUnavailable', language)}
             </p>
             <Link
               to="/resources-analytics"
               className="mt-6 inline-flex items-center rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-orange-500 hover:text-orange-600"
             >
-              Back to Resources
+              {translate('backToResources', language)}
             </Link>
           </section>
         </main>
@@ -46,7 +49,7 @@ export const VideoPlayerPage = () => {
               to="/resources-analytics"
               className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-orange-500 hover:text-orange-600"
             >
-              Back to Resources
+              {translate('backToResources', language)}
             </Link>
           </div>
         </section>

@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Grid3X3, List, Info, BookOpen, Book, Settings, Microscope, Library, Landmark, Scale, Palette, Globe, Activity, Laptop, Briefcase, LineChart, Leaf, Calculator, Atom, FlaskConical, Users, Dna, ArrowLeft, GraduationCap, Layers } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 /**
  * BROWSE CATALOGS PAGE
@@ -178,6 +180,7 @@ const CATALOG_DATA = [
 
 export const BrowseCatalogsPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [viewMode, setViewMode] = useState('grid');
@@ -218,18 +221,18 @@ export const BrowseCatalogsPage = () => {
             className="heading-entrance mb-5 inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3.5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/40"
           >
             <ArrowLeft size={15} />
-            Dashboard
+            {translate('dashboard', language)}
           </button>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex-1 min-w-0">
               <p className="heading-entrance mb-2 text-xs font-semibold uppercase tracking-widest text-teal-200">
-                Knowledge Repository
+                {translate('knowledgeRepository', language)}
               </p>
               <h1 className="heading-entrance heading-premium text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white mb-3">
-                Academic Catalogs
+                {translate('academicCatalogs', language)}
               </h1>
               <p className="heading-entrance heading-entrance-delay-1 text-base sm:text-lg text-teal-100 leading-relaxed max-w-lg">
-                Explore our comprehensive collection of peer-reviewed research, reference materials, and educational resources.
+                {translate('exploreCatalogs', language)}
               </p>
             </div>
             {/* Floating icon cluster */}
@@ -267,7 +270,7 @@ export const BrowseCatalogsPage = () => {
             </div>
             <div>
               <p className="text-xl font-bold text-slate-800">{CATALOG_DATA.length}</p>
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Catalogs</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{translate('catalogsLabel', language)}</p>
             </div>
           </div>
           <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-5 py-3 shadow-sm">
@@ -276,7 +279,7 @@ export const BrowseCatalogsPage = () => {
             </div>
             <div>
               <p className="text-xl font-bold text-slate-800">{categories.length - 1}</p>
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Categories</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{translate('categories', language)}</p>
             </div>
           </div>
         </div>
@@ -292,7 +295,7 @@ export const BrowseCatalogsPage = () => {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-teal-600 transition-colors" size={20} />
               <input
                 type="text"
-                placeholder="Search catalogs, publications, or topics..."
+                placeholder={translate('searchCatalogs', language)}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3.5 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-shadow shadow-sm text-slate-900 placeholder:text-slate-400"
@@ -317,7 +320,7 @@ export const BrowseCatalogsPage = () => {
 
           <div className="flex items-center justify-between flex-wrap gap-4">
             <p className="text-slate-600 text-sm">
-              Showing <span className="font-semibold text-slate-900">{filteredCatalogs.length}</span> catalog{filteredCatalogs.length !== 1 ? 's' : ''}
+              {translate('showing', language)} <span className="font-semibold text-slate-900">{filteredCatalogs.length}</span> {filteredCatalogs.length !== 1 ? translate('catalogPlural', language) : translate('catalogSingular', language)}
             </p>
             <div className="flex gap-2">
               <button
@@ -366,13 +369,13 @@ export const BrowseCatalogsPage = () => {
             <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-teal-50 mb-5">
               <BookOpen size={28} className="text-teal-400" />
             </div>
-            <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-slate-800 mb-2">No catalogs found</h3>
-            <p className="text-slate-500 mb-6">Try adjusting your search query or category filters.</p>
+            <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-slate-800 mb-2">{translate('noCatalogsFound', language)}</h3>
+            <p className="text-slate-500 mb-6">{translate('tryAdjustingCatalogs', language)}</p>
             <button
               onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}
               className="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
-              Clear Filters
+              {translate('clearFilters', language)}
             </button>
           </div>
         )}
@@ -389,6 +392,7 @@ export const BrowseCatalogsPage = () => {
 };
 
 const CatalogCard = ({ catalog, onClick, viewMode, index = 0 }) => {
+  const { language } = useLanguage();
   return (
     <div
       onClick={onClick}
@@ -415,7 +419,7 @@ const CatalogCard = ({ catalog, onClick, viewMode, index = 0 }) => {
               <span className="text-[0.8rem] font-semibold text-slate-400 tracking-wide uppercase">{catalog.coverage}</span>
               <div className="flex flex-col items-end">
                 <span className="text-sm font-bold text-slate-800">{catalog.resources}</span>
-                <span className="text-[0.65rem] uppercase tracking-wider font-semibold text-slate-400">Items</span>
+                <span className="text-[0.65rem] uppercase tracking-wider font-semibold text-slate-400">{translate('items', language)}</span>
               </div>
             </div>
           </div>
@@ -439,7 +443,7 @@ const CatalogCard = ({ catalog, onClick, viewMode, index = 0 }) => {
               <div className="flex items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 <span>{catalog.coverage}</span>
                 <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                <span className="text-slate-600">{catalog.resources} items</span>
+                <span className="text-slate-600">{catalog.resources} {translate('items', language).toLowerCase()}</span>
               </div>
             </div>
           </div>
@@ -450,6 +454,7 @@ const CatalogCard = ({ catalog, onClick, viewMode, index = 0 }) => {
 };
 
 const CatalogDetailsModal = ({ catalog, onClose }) => {
+  const { language } = useLanguage();
   return (
     <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto outline-none transition-all">
@@ -481,29 +486,29 @@ const CatalogDetailsModal = ({ catalog, onClose }) => {
 
         <div className="p-8">
           <div className="mb-8">
-            <h3 className="heading-entrance heading-entrance-card text-sm font-semibold tracking-wider text-slate-800 uppercase mb-2">Overview</h3>
+            <h3 className="heading-entrance heading-entrance-card text-sm font-semibold tracking-wider text-slate-800 uppercase mb-2">{translate('overviewLabel', language)}</h3>
             <p className="text-slate-600 leading-relaxed text-base">{catalog.description}</p>
           </div>
 
           <div className="grid grid-cols-3 gap-4 mb-8">
             <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-center">
               <p className="text-2xl font-bold text-slate-800">{catalog.resources}</p>
-              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Resources</p>
+              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">{translate('resourcePlural', language)}</p>
             </div>
             <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-center">
               <p className="text-lg font-bold text-slate-800 align-middle leading-8 inline-block truncate w-full">{catalog.coverage}</p>
-              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Coverage</p>
+              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">{translate('coverage', language)}</p>
             </div>
             <div className="bg-teal-50 border border-teal-100 p-4 rounded-xl text-center">
-              <p className="text-2xl font-bold text-teal-600">Active</p>
-              <p className="text-xs font-semibold text-teal-400 mt-1 uppercase tracking-wider">Status</p>
+              <p className="text-2xl font-bold text-teal-600">{translate('active', language)}</p>
+              <p className="text-xs font-semibold text-teal-400 mt-1 uppercase tracking-wider">{translate('statusLabel', language)}</p>
             </div>
           </div>
 
           <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 flex gap-3 mb-8 items-start">
             <Info size={18} className="text-teal-500 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-teal-800 leading-relaxed">
-              Access to specific materials within this catalog may depend on your current academic enrollment status.
+              {translate('accessNote', language)}
             </p>
           </div>
 
@@ -513,13 +518,13 @@ const CatalogDetailsModal = ({ catalog, onClose }) => {
               onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #006666, #004d4d)'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #008080, #006666)'}
             >
-              Access Catalog
+              {translate('accessCatalog', language)}
             </button>
             <button
               onClick={onClose}
               className="flex-1 bg-white border border-gray-300 text-slate-700 py-3 px-4 rounded-lg font-medium hover:bg-slate-50 active:bg-slate-100 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
             >
-              Close
+              {translate('close', language)}
             </button>
           </div>
         </div>

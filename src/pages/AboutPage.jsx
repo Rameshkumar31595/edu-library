@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 export const AboutPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   return (
     <div style={{ minHeight: '100vh', background: '#f4f7f6', padding: '40px 20px' }}>
@@ -35,47 +38,43 @@ export const AboutPage = () => {
           }}
         >
           <ArrowLeft size={20} />
-          Back to Home
+          {translate('backToHome', language)}
         </button>
         <div style={{ background: 'white', padding: '50px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-        <h1 style={{ color: '#0f4c4c', fontSize: '2rem', marginBottom: '24px', borderBottom: '3px solid #008080', paddingBottom: '12px' }}>About National Digital Library of India</h1>
+        <h1 style={{ color: '#0f4c4c', fontSize: '2rem', marginBottom: '24px', borderBottom: '3px solid #008080', paddingBottom: '12px' }}>{translate('aboutTitle', language)}</h1>
         
         <section style={{ marginBottom: '32px' }}>
-          <h2 style={{ color: '#008080', fontSize: '1.4rem', marginBottom: '16px' }}>Our Mission</h2>
+          <h2 style={{ color: '#008080', fontSize: '1.4rem', marginBottom: '16px' }}>{translate('ourMission', language)}</h2>
           <p style={{ color: '#555', lineHeight: 1.8, marginBottom: '16px' }}>
-            The National Digital Library of India (NDLI) is a project under the Ministry of Education, Government of India. 
-            Our mission is to provide a single-window platform for accessing educational content across all disciplines, languages, and levels.
+            {translate('aboutMissionText1', language)}
           </p>
           <p style={{ color: '#555', lineHeight: 1.8 }}>
-            We aim to democratize access to knowledge by bringing together content from various sources including IITs, NITs, 
-            universities, research institutions, and content aggregators from across the country.
+            {translate('aboutMissionText2', language)}
           </p>
         </section>
 
         <section style={{ marginBottom: '32px' }}>
-          <h2 style={{ color: '#008080', fontSize: '1.4rem', marginBottom: '16px' }}>Key Features</h2>
+          <h2 style={{ color: '#008080', fontSize: '1.4rem', marginBottom: '16px' }}>{translate('keyFeatures', language)}</h2>
           <ul style={{ color: '#555', lineHeight: 2, paddingLeft: '24px' }}>
-            <li>Access to over 5 million+ educational resources</li>
-            <li>Content available in 30+ Indian languages</li>
-            <li>Resources from 1000+ institutions nationwide</li>
-            <li>Free access to students, researchers, and educators</li>
-            <li>Advanced search and filtering capabilities</li>
-            <li>Multi-device accessibility (mobile, tablet, desktop)</li>
+            <li>{translate('aboutFeature1', language)}</li>
+            <li>{translate('aboutFeature2', language)}</li>
+            <li>{translate('aboutFeature3', language)}</li>
+            <li>{translate('aboutFeature4', language)}</li>
+            <li>{translate('aboutFeature5', language)}</li>
+            <li>{translate('aboutFeature6', language)}</li>
           </ul>
         </section>
 
         <section>
-          <h2 style={{ color: '#008080', fontSize: '1.4rem', marginBottom: '16px' }}>Vision</h2>
+          <h2 style={{ color: '#008080', fontSize: '1.4rem', marginBottom: '16px' }}>{translate('vision', language)}</h2>
           <p style={{ color: '#555', lineHeight: 1.8 }}>
-            We envision a digitally empowered India where quality educational content is accessible to every learner, 
-            regardless of their geographical location or economic background. Through NDLI, we are working towards 
-            creating a knowledge-based society and supporting the Atmanirbhar Bharat initiative.
+            {translate('aboutVisionText', language)}
           </p>
         </section>
 
         <div style={{ marginTop: '40px', padding: '20px', background: '#e0f2f1', borderRadius: '8px', borderLeft: '4px solid #008080' }}>
           <p style={{ color: '#0f4c4c', fontStyle: 'italic', margin: 0 }}>
-            "Knowledge is power. Information is liberating. Education is the premise of progress, in every society, in every family." - Kofi Annan
+            {translate('aboutQuote', language)}
           </p>
         </div>
         </div>

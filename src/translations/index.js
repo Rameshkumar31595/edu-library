@@ -2193,6 +2193,8 @@ export const translations = {
   },
 };
 
+import { pageTranslations } from './pageTranslations.js';
+
 export const translate = (key, language = 'English') => {
-  return translations[language]?.[key] || translations['English'][key] || key;
+  return translations[language]?.[key] || pageTranslations[language]?.[key] || translations['English'][key] || pageTranslations['English']?.[key] || key;
 };

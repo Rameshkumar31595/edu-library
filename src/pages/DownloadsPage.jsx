@@ -2,12 +2,22 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Grid3X3, List, Download, ArrowLeft, CheckCircle2, Loader, AlertTriangle, FileDown } from 'lucide-react';
 import { DOWNLOADS_DATA } from '../data/studentResourcesData';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 export const DownloadsPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [viewMode, setViewMode] = useState('grid');
+
+  const statusLabels = {
+    All: translate('all', language),
+    Completed: translate('completed', language),
+    'In Progress': translate('inProgress', language),
+    Failed: translate('failed', language),
+  };
 
   const statuses = ['All', 'Completed', 'In Progress', 'Failed'];
 
@@ -58,18 +68,18 @@ export const DownloadsPage = () => {
             className="heading-entrance mb-5 inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3.5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/40"
           >
             <ArrowLeft size={15} />
-            Dashboard
+            {translate('dashboard', language)}
           </button>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex-1 min-w-0">
               <p className="heading-entrance mb-2 text-xs font-semibold uppercase tracking-widest text-teal-200">
-                Download Manager
+                {translate('downloadManager', language)}
               </p>
               <h1 className="heading-entrance heading-premium text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white mb-3">
-                Downloads
+                {translate('downloadsPageTitle', language)}
               </h1>
               <p className="heading-entrance heading-entrance-delay-1 text-base sm:text-lg text-teal-100 leading-relaxed max-w-lg">
-                Track and manage all your downloaded resources in one place.
+                {translate('trackDownloads', language)}
               </p>
             </div>
             {/* Floating icon cluster */}
@@ -125,7 +135,7 @@ export const DownloadsPage = () => {
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-slate-800">{counts[status]}</p>
-                    <p className={`text-xs font-semibold uppercase tracking-wider ${isActive ? c.text : 'text-slate-400'}`}>{status}</p>
+                    <p className={`text-xs font-semibold uppercase tracking-wider ${isActive ? c.text : 'text-slate-400'}`}>{statusLabels[status]}</p>
                   </div>
                 </div>
               </button>
@@ -141,7 +151,7 @@ export const DownloadsPage = () => {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-teal-600 transition-colors" size={20} />
               <input
                 type="text"
-                placeholder="Search downloaded resources..."
+                placeholder={translate('searchDownloads', language)}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 className="w-full pl-12 pr-4 py-3.5 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-shadow shadow-sm text-slate-900 placeholder:text-slate-400"
@@ -151,8 +161,7 @@ export const DownloadsPage = () => {
 
           <div className="flex items-center justify-between flex-wrap gap-4">
             <p className="text-slate-600 text-sm">
-              Showing <span className="font-semibold text-slate-900">{filteredDownloads.length}</span> download
-              {filteredDownloads.length !== 1 ? 's' : ''}
+              {translate('showing', language)} <span className="font-semibold text-slate-900">{filteredDownloads.length}</span> {filteredDownloads.length !== 1 ? translate('downloadPlural', language) : translate('downloadSingular', language)}
             </p>
             <div className="flex gap-2">
               <button
@@ -189,13 +198,13 @@ export const DownloadsPage = () => {
             <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-teal-50 mb-5">
               <Download size={28} className="text-teal-400" />
             </div>
-            <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-slate-800 mb-2">No downloads found</h3>
-            <p className="text-slate-500 mb-6">Try adjusting your search or filters</p>
+            <h3 className="heading-entrance heading-entrance-card text-xl font-semibold tracking-[-0.01em] text-slate-800 mb-2">{translate('noDownloadsFound', language)}</h3>
+            <p className="text-slate-500 mb-6">{translate('tryAdjusting', language)}</p>
             <button
               onClick={() => { setSearchQuery(''); setSelectedStatus('All'); }}
               className="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
-              Clear Filters
+              {translate('clearFilters', language)}
             </button>
           </div>
         )}
@@ -205,6 +214,7 @@ export const DownloadsPage = () => {
 };
 
 const DownloadCard = ({ resource, viewMode, index = 0 }) => {
+  const { language } = useLanguage();
   const statusStyle =
     resource.status === 'Completed'
       ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
@@ -240,7 +250,7 @@ const DownloadCard = ({ resource, viewMode, index = 0 }) => {
             <p className="text-sm text-slate-500 mb-5 line-clamp-2 leading-relaxed">{resource.coverage}</p>
             <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
               <span className="text-sm font-bold text-slate-800">{resource.resources}</span>
-              <span className="text-[0.65rem] uppercase tracking-wider font-semibold text-slate-400">Downloaded</span>
+              <span className="text-[0.65rem] uppercase tracking-wider font-semibold text-slate-400">{translate('downloaded', language)}</span>
             </div>
           </div>
         </>
