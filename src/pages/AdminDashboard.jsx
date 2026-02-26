@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Users, Download, Mail, Megaphone, Settings, LogOut, LayoutDashboard, Upload, MessageSquare, BarChart3, ArrowRight } from 'lucide-react';
+import { BookOpen, Users, Download, Mail, Megaphone, Settings, LogOut, LayoutDashboard, Upload, MessageSquare, BarChart3, ArrowRight, ChevronLeft, ChevronRight, Grid3X3, List, FileText, Eye, Edit2, Trash2, Search, UserPlus, TrendingUp, Clock, CheckCircle2, XCircle, Activity } from 'lucide-react';
 import { Documents, PDFs, Videos } from '../data/resourcesCatalog.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { translate } from '../translations/index.js';
@@ -28,6 +28,9 @@ export const AdminDashboard = () => {
   const [assignDraft, setAssignDraft] = useState('');
   const [selectedResourceIds, setSelectedResourceIds] = useState([]);
   const [activityLog, setActivityLog] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState('table');
+  const RESOURCES_PER_PAGE = 8;
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('uiExtension-isLoggedIn') === 'true';
@@ -198,6 +201,20 @@ export const AdminDashboard = () => {
     const matchesDepartment = departmentFilter === 'All' || resource.department === departmentFilter;
     return matchesSearch && matchesType && matchesDepartment;
   });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredResources.length / RESOURCES_PER_PAGE);
+  const paginatedResources = filteredResources.slice(
+    (currentPage - 1) * RESOURCES_PER_PAGE,
+    currentPage * RESOURCES_PER_PAGE
+  );
+  // Reset page when filters change
+  useEffect(() => { setCurrentPage(1); }, [resourceSearch, resourceFilter, departmentFilter]);
+
+  // Resource type counts for summary
+  const pdfCount = resources.filter(r => r.type === 'PDF').length;
+  const videoCount = resources.filter(r => r.type === 'Video').length;
+  const docCount = resources.filter(r => r.type === 'Document').length;
 
   const addActivity = (type, detail) => {
     const now = new Date();
@@ -461,51 +478,100 @@ export const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="admin-action-card mt-6">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h3 className="heading-entrance heading-entrance-card heading-premium">Resource List</h3>
-                <p className="text-sm text-slate-500">Manage, edit, and assign resources in one view.</p>
+          {/* Resource List - Premium Redesign */}
+          <div className="rl-premium-container mt-6">
+            {/* Header with view toggle */}
+            <div className="rl-premium-header">
+              <div className="rl-premium-header__info">
+                <h3 className="rl-premium-header__title"><BookOpen size={20} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} />Resource Library</h3>
+                <p className="rl-premium-header__subtitle">
+                  {filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''} found
+                  {resourceSearch || resourceFilter !== 'All' || departmentFilter !== 'All' ? ' (filtered)' : ''}
+                </p>
               </div>
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                <input
-                  type="text"
-                  placeholder="Search resources"
-                  className="admin-input"
-                  value={resourceSearch}
-                  onChange={(event) => setResourceSearch(event.target.value)}
-                />
-                <select className="admin-input" value={resourceFilter} onChange={(event) => setResourceFilter(event.target.value)}>
-                  <option value="All">All Types</option>
-                  {typeOptions.map((type) => (
-                    <option key={type} value={type}>{type}</option>
-                  ))}
-                </select>
-                <select className="admin-input" value={departmentFilter} onChange={(event) => setDepartmentFilter(event.target.value)}>
-                  <option value="All">All Departments</option>
-                  {departmentOptions.map((dept) => (
-                    <option key={dept} value={dept}>{dept}</option>
-                  ))}
-                </select>
+              <div className="rl-premium-header__actions">
+                <button
+                  className={`rl-view-btn ${viewMode === 'table' ? 'rl-view-btn--active' : ''}`}
+                  onClick={() => setViewMode('table')}
+                  title="Table view"
+                >
+                  <List size={16} />
+                </button>
+                <button
+                  className={`rl-view-btn ${viewMode === 'grid' ? 'rl-view-btn--active' : ''}`}
+                  onClick={() => setViewMode('grid')}
+                  title="Grid view"
+                >
+                  <Grid3X3 size={16} />
+                </button>
               </div>
             </div>
 
-            {filteredResources.length === 0 ? (
-              <div className="mt-6 rounded-xl border border-dashed border-gray-200 p-6 text-center text-slate-500">
-                No resources match your filters yet. Add a resource to get started.
+            {/* Mini summary stats */}
+            <div className="rl-summary-row">
+              <div className="rl-summary-pill">
+                <BookOpen size={14} />
+                <span>{resources.length} Total</span>
               </div>
-            ) : (
-              <div className="resource-table-wrapper mt-6">
-                <table className="resource-table">
+              <div className="rl-summary-pill rl-summary-pill--pdf">
+                <FileText size={14} />
+                <span>{pdfCount} PDFs</span>
+              </div>
+              <div className="rl-summary-pill rl-summary-pill--video">
+                <Eye size={14} />
+                <span>{videoCount} Videos</span>
+              </div>
+              <div className="rl-summary-pill rl-summary-pill--doc">
+                <FileText size={14} />
+                <span>{docCount} Docs</span>
+              </div>
+            </div>
+
+            {/* Filters bar */}
+            <div className="rl-filters-bar">
+              <div className="rl-search-box">
+                <Search size={16} className="rl-search-box__icon" />
+                <input
+                  type="text"
+                  placeholder="Search resources..."
+                  className="rl-search-box__input"
+                  value={resourceSearch}
+                  onChange={(event) => setResourceSearch(event.target.value)}
+                />
+              </div>
+              <select className="rl-filter-select" value={resourceFilter} onChange={(event) => setResourceFilter(event.target.value)}>
+                <option value="All">All Types</option>
+                {typeOptions.map((type) => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+              <select className="rl-filter-select" value={departmentFilter} onChange={(event) => setDepartmentFilter(event.target.value)}>
+                <option value="All">All Departments</option>
+                {departmentOptions.map((dept) => (
+                  <option key={dept} value={dept}>{dept}</option>
+                ))}
+              </select>
+            </div>
+
+            {filteredResources.length === 0 ? (
+              <div className="rl-empty-state">
+                <BookOpen size={40} strokeWidth={1.2} />
+                <p>No resources match your filters.</p>
+                <span>Try adjusting your search or filter criteria.</span>
+              </div>
+            ) : viewMode === 'table' ? (
+              /* TABLE VIEW */
+              <div className="rl-table-wrap">
+                <table className="rl-table">
                   <thead>
                     <tr>
-                      <th>
+                      <th style={{ width: '40px' }}>
                         <input
                           type="checkbox"
-                          checked={selectedResourceIds.length === filteredResources.length}
+                          checked={selectedResourceIds.length === filteredResources.length && filteredResources.length > 0}
                           onChange={(event) => {
                             if (event.target.checked) {
-                              setSelectedResourceIds(filteredResources.map((resource) => resource.id));
+                              setSelectedResourceIds(filteredResources.map((r) => r.id));
                             } else {
                               setSelectedResourceIds([]);
                             }
@@ -515,13 +581,17 @@ export const AdminDashboard = () => {
                       <th>Title</th>
                       <th>Department</th>
                       <th>Type</th>
-                      <th>Engagement</th>
+                      <th>Views</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredResources.map((resource) => (
-                      <tr key={resource.id} className={selectedResourceIds.includes(resource.id) ? 'bg-teal-50/40' : ''}>
+                    {paginatedResources.map((resource, idx) => (
+                      <tr
+                        key={resource.id}
+                        className={`rl-table-row ${selectedResourceIds.includes(resource.id) ? 'rl-table-row--selected' : ''}`}
+                        style={{ animationDelay: `${idx * 0.04}s` }}
+                      >
                         <td>
                           <input
                             type="checkbox"
@@ -529,73 +599,63 @@ export const AdminDashboard = () => {
                             onChange={() => toggleSelection(resource.id)}
                           />
                         </td>
-                        <td className="resource-title">
+                        <td className="rl-cell-title">
                           {editingResourceId === resource.id ? (
-                            <input
-                              type="text"
-                              className="admin-input"
-                              value={editingDraft.title}
-                              onChange={(event) => setEditingDraft((prev) => ({ ...prev, title: event.target.value }))}
-                            />
+                            <input type="text" className="rl-inline-input" value={editingDraft.title}
+                              onChange={(e) => setEditingDraft((prev) => ({ ...prev, title: e.target.value }))} />
                           ) : (
-                            resource.title
+                            <span className="rl-resource-name">{resource.title}</span>
                           )}
                         </td>
                         <td>
                           {editingResourceId === resource.id ? (
-                            <select
-                              className="admin-input"
-                              value={editingDraft.department}
-                              onChange={(event) => setEditingDraft((prev) => ({ ...prev, department: event.target.value }))}
-                            >
-                              {departmentOptions.map((dept) => (
-                                <option key={dept} value={dept}>{dept}</option>
-                              ))}
+                            <select className="rl-inline-input" value={editingDraft.department}
+                              onChange={(e) => setEditingDraft((prev) => ({ ...prev, department: e.target.value }))}>
+                              {departmentOptions.map((dept) => <option key={dept} value={dept}>{dept}</option>)}
                             </select>
                           ) : (
-                            <span>{resource.department}</span>
+                            <span className="rl-dept-tag">{resource.department}</span>
                           )}
                         </td>
                         <td>
                           {editingResourceId === resource.id ? (
-                            <select
-                              className="admin-input"
-                              value={editingDraft.type}
-                              onChange={(event) => setEditingDraft((prev) => ({ ...prev, type: event.target.value }))}
-                            >
-                              {typeOptions.map((type) => (
-                                <option key={type} value={type}>{type}</option>
-                              ))}
+                            <select className="rl-inline-input" value={editingDraft.type}
+                              onChange={(e) => setEditingDraft((prev) => ({ ...prev, type: e.target.value }))}>
+                              {typeOptions.map((type) => <option key={type} value={type}>{type}</option>)}
                             </select>
                           ) : (
-                            <span className="resource-badge">{resource.type}</span>
+                            <span className={`rl-type-badge rl-type-badge--${resource.type.toLowerCase()}`}>{resource.type}</span>
                           )}
                         </td>
                         <td>
-                          <span className="insight-badge">{resource.accessCount} views</span>
+                          <span className="rl-views-badge">{resource.accessCount}</span>
                         </td>
                         <td>
                           {editingResourceId === resource.id ? (
-                            <div className="flex items-center gap-2">
-                              <button className="action-link" onClick={() => handleSaveResource(resource.id)}>Save</button>
-                              <button className="action-link action-link--reject" onClick={() => setEditingResourceId(null)}>Cancel</button>
+                            <div className="rl-action-group">
+                              <button className="rl-action-btn rl-action-btn--save" onClick={() => handleSaveResource(resource.id)}>Save</button>
+                              <button className="rl-action-btn rl-action-btn--cancel" onClick={() => setEditingResourceId(null)}>Cancel</button>
                             </div>
                           ) : assigningResourceId === resource.id ? (
-                            <div className="flex items-center gap-2">
-                              <select className="admin-input" value={assignDraft} onChange={(event) => setAssignDraft(event.target.value)}>
-                                <option value="">Select Department</option>
-                                {departmentOptions.map((dept) => (
-                                  <option key={dept} value={dept}>{dept}</option>
-                                ))}
+                            <div className="rl-action-group">
+                              <select className="rl-inline-input" value={assignDraft} onChange={(e) => setAssignDraft(e.target.value)}>
+                                <option value="">Select Dept</option>
+                                {departmentOptions.map((dept) => <option key={dept} value={dept}>{dept}</option>)}
                               </select>
-                              <button className="action-link" onClick={() => handleAssignResource(resource.id)}>Assign</button>
-                              <button className="action-link action-link--reject" onClick={() => setAssigningResourceId(null)}>Cancel</button>
+                              <button className="rl-action-btn rl-action-btn--save" onClick={() => handleAssignResource(resource.id)}>Assign</button>
+                              <button className="rl-action-btn rl-action-btn--cancel" onClick={() => setAssigningResourceId(null)}>Cancel</button>
                             </div>
                           ) : (
-                            <div className="flex items-center gap-3">
-                              <button className="action-link" onClick={() => handleEditResource(resource)}>Edit</button>
-                              <button className="action-link" onClick={() => { setAssigningResourceId(resource.id); setAssignDraft(resource.department); }}>Assign</button>
-                              <button className="action-link action-link--reject" onClick={() => handleDeleteResource(resource.id)}>Delete</button>
+                            <div className="rl-action-group">
+                              <button className="rl-icon-btn rl-icon-btn--edit" title="Edit" onClick={() => handleEditResource(resource)}>
+                                <Edit2 size={14} />
+                              </button>
+                              <button className="rl-icon-btn rl-icon-btn--assign" title="Assign" onClick={() => { setAssigningResourceId(resource.id); setAssignDraft(resource.department); }}>
+                                <UserPlus size={14} />
+                              </button>
+                              <button className="rl-icon-btn rl-icon-btn--delete" title="Delete" onClick={() => handleDeleteResource(resource.id)}>
+                                <Trash2 size={14} />
+                              </button>
                             </div>
                           )}
                         </td>
@@ -604,69 +664,166 @@ export const AdminDashboard = () => {
                   </tbody>
                 </table>
               </div>
+            ) : (
+              /* GRID / CARD VIEW */
+              <div className="rl-card-grid">
+                {paginatedResources.map((resource, idx) => (
+                  <div
+                    key={resource.id}
+                    className={`rl-resource-card ${selectedResourceIds.includes(resource.id) ? 'rl-resource-card--selected' : ''}`}
+                    style={{ animationDelay: `${idx * 0.06}s` }}
+                  >
+                    <div className="rl-resource-card__header">
+                      <span className={`rl-type-badge rl-type-badge--${resource.type.toLowerCase()}`}>{resource.type}</span>
+                      <input
+                        type="checkbox"
+                        checked={selectedResourceIds.includes(resource.id)}
+                        onChange={() => toggleSelection(resource.id)}
+                      />
+                    </div>
+                    <h4 className="rl-resource-card__title">{resource.title}</h4>
+                    <p className="rl-resource-card__dept">{resource.department}</p>
+                    <div className="rl-resource-card__stats">
+                      <span className="rl-views-badge"><Eye size={13} /> {resource.accessCount} views</span>
+                    </div>
+                    <div className="rl-resource-card__actions">
+                      <button className="rl-icon-btn rl-icon-btn--edit" title="Edit" onClick={() => handleEditResource(resource)}>
+                        <Edit2 size={14} />
+                      </button>
+                      <button className="rl-icon-btn rl-icon-btn--assign" title="Assign" onClick={() => { setAssigningResourceId(resource.id); setAssignDraft(resource.department); }}>
+                        <UserPlus size={14} />
+                      </button>
+                      <button className="rl-icon-btn rl-icon-btn--delete" title="Delete" onClick={() => handleDeleteResource(resource.id)}>
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="rl-pagination">
+                <button
+                  className="rl-pagination__btn"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => p - 1)}
+                >
+                  <ChevronLeft size={16} /> Prev
+                </button>
+                <div className="rl-pagination__pages">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      className={`rl-pagination__page ${currentPage === page ? 'rl-pagination__page--active' : ''}`}
+                      onClick={() => setCurrentPage(page)}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  className="rl-pagination__btn"
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => p + 1)}
+                >
+                  Next <ChevronRight size={16} />
+                </button>
+              </div>
             )}
           </div>
         </section>
 
-        {/* Student Activity Insights */}
+        {/* Student Activity Insights - Premium */}
         <section className="dashboard-section" id="students">
-          <h2 className="section-title heading-entrance heading-premium">Student Activity Insights</h2>
-          <div className="insight-grid">
-            <div className="insight-panel">
-              <h3 className="heading-entrance heading-entrance-card heading-premium">Most Accessed Resources</h3>
-              <div className="insight-list">
-                {mostAccessed.map((item) => (
-                  <div key={item.id} className="insight-item">
-                    <div>
-                      <p className="insight-title">{item.title}</p>
-                      <p className="insight-meta">{item.department} · {item.type}</p>
+          <div className="adm-section-banner">
+            <div className="adm-section-banner__text">
+              <h2 className="adm-section-banner__title">Student Activity Insights</h2>
+              <p className="adm-section-banner__sub">Track student engagement, downloads, and trending content.</p>
+            </div>
+            <div className="adm-section-banner__icon"><TrendingUp size={28} /></div>
+          </div>
+
+          <div className="adm-insight-grid">
+            {/* Most Accessed */}
+            <div className="adm-insight-card">
+              <div className="adm-insight-card__header">
+                <Eye size={18} className="adm-insight-card__icon adm-insight-card__icon--teal" />
+                <h3 className="adm-insight-card__title">Most Accessed Resources</h3>
+              </div>
+              <div className="adm-insight-card__list">
+                {mostAccessed.map((item, idx) => (
+                  <div key={item.id} className="adm-insight-row" style={{ animationDelay: `${idx * 0.07}s` }}>
+                    <div className="adm-insight-row__rank">{idx + 1}</div>
+                    <div className="adm-insight-row__info">
+                      <p className="adm-insight-row__name">{item.title}</p>
+                      <p className="adm-insight-row__meta">{item.department} · {item.type}</p>
                     </div>
-                    <span className="insight-badge">{item.accessCount} views</span>
+                    <span className="adm-insight-row__badge adm-insight-row__badge--views">{item.accessCount} views</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="insight-panel">
-              <h3 className="heading-entrance heading-entrance-card heading-premium">Recent Downloads</h3>
-              <div className="insight-list">
-                {recentDownloads.map((item) => (
-                  <div key={item.id} className="insight-item">
-                    <div>
-                      <p className="insight-title">{item.student}</p>
-                      <p className="insight-meta">{item.resource}</p>
+
+            {/* Recent Downloads */}
+            <div className="adm-insight-card">
+              <div className="adm-insight-card__header">
+                <Download size={18} className="adm-insight-card__icon adm-insight-card__icon--blue" />
+                <h3 className="adm-insight-card__title">Recent Downloads</h3>
+              </div>
+              <div className="adm-insight-card__list adm-insight-card__list--scroll">
+                {recentDownloads.slice(0, 8).map((item, idx) => (
+                  <div key={item.id} className="adm-insight-row" style={{ animationDelay: `${idx * 0.05}s` }}>
+                    <div className="adm-insight-row__avatar">{item.student.charAt(0)}</div>
+                    <div className="adm-insight-row__info">
+                      <p className="adm-insight-row__name">{item.student}</p>
+                      <p className="adm-insight-row__meta">{item.resource}</p>
                     </div>
-                    <span className="insight-time">{item.time}</span>
+                    <span className="adm-insight-row__time"><Clock size={12} /> {item.time}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <div className="trending-subjects">
-            <h3 className="heading-entrance heading-entrance-card heading-premium">Trending Subjects This Week</h3>
-            <div className="subject-tags">
+
+          {/* Trending Subjects */}
+          <div className="adm-trending-card">
+            <div className="adm-trending-card__header">
+              <TrendingUp size={18} className="adm-insight-card__icon adm-insight-card__icon--purple" />
+              <h3 className="adm-insight-card__title">Trending Subjects This Week</h3>
+            </div>
+            <div className="adm-trending-tags">
               {trendingSubjectsList.length === 0 ? (
-                <span className="subject-tag">No trends yet</span>
+                <span className="adm-trending-tag">No trends yet</span>
               ) : (
-                trendingSubjectsList.map((subject) => (
-                  <span key={subject} className="subject-tag">{subject}</span>
+                trendingSubjectsList.map((subject, idx) => (
+                  <span key={subject} className="adm-trending-tag" style={{ animationDelay: `${idx * 0.08}s` }}>
+                    <TrendingUp size={13} /> {subject}
+                  </span>
                 ))
               )}
             </div>
           </div>
 
-          <div className="admin-action-card mt-6">
-            <h3 className="heading-entrance heading-entrance-card heading-premium">Recent Activity Log</h3>
+          {/* Activity Log */}
+          <div className="adm-activity-card">
+            <div className="adm-activity-card__header">
+              <Activity size={18} className="adm-insight-card__icon adm-insight-card__icon--amber" />
+              <h3 className="adm-insight-card__title">Recent Activity Log</h3>
+            </div>
             {activityLog.length === 0 ? (
-              <p className="text-sm text-slate-500 mt-3">No recent admin activity yet.</p>
+              <p className="adm-activity-card__empty">No recent admin activity yet.</p>
             ) : (
-              <div className="insight-list mt-4">
-                {activityLog.map((activity) => (
-                  <div key={activity.id} className="insight-item">
-                    <div>
-                      <p className="insight-title">{activity.detail}</p>
-                      <p className="insight-meta">{activity.type.toUpperCase()}</p>
+              <div className="adm-activity-feed">
+                {activityLog.map((activity, idx) => (
+                  <div key={activity.id} className="adm-activity-item" style={{ animationDelay: `${idx * 0.05}s` }}>
+                    <div className={`adm-activity-item__dot adm-activity-item__dot--${activity.type}`} />
+                    <div className="adm-activity-item__content">
+                      <p className="adm-activity-item__text">{activity.detail}</p>
+                      <span className="adm-activity-item__type">{activity.type.toUpperCase()}</span>
                     </div>
-                    <span className="insight-time">{activity.time}</span>
+                    <span className="adm-activity-item__time"><Clock size={12} /> {activity.time}</span>
                   </div>
                 ))}
               </div>
@@ -674,55 +831,74 @@ export const AdminDashboard = () => {
           </div>
         </section>
 
-        {/* Resource Requests Panel */}
+        {/* Resource Requests Panel - Premium */}
         <section className="dashboard-section" id="requests">
-          <h2 className="section-title heading-entrance heading-premium">Resource Requests from Students</h2>
-          <div className="request-table-wrapper">
-            <table className="request-table">
-              <thead>
-                <tr>
-                  <th>Student Name</th>
-                  <th>Request</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {resourceRequests.length === 0 ? (
+          <div className="adm-section-banner adm-section-banner--warm">
+            <div className="adm-section-banner__text">
+              <h2 className="adm-section-banner__title">Resource Requests from Students</h2>
+              <p className="adm-section-banner__sub">{resourceRequests.filter(r => r.status === 'Pending').length} pending · {resourceRequests.filter(r => r.status === 'Approved').length} approved · {resourceRequests.filter(r => r.status === 'Rejected').length} rejected</p>
+            </div>
+            <div className="adm-section-banner__icon"><MessageSquare size={28} /></div>
+          </div>
+
+          <div className="adm-requests-container">
+            <div className="adm-requests-table-wrap">
+              <table className="adm-requests-table">
+                <thead>
                   <tr>
-                    <td colSpan="5" className="text-center text-slate-500 py-6">No requests pending right now.</td>
+                    <th>Student</th>
+                    <th>Request</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
-                ) : resourceRequests.map((req) => (
-                  <tr key={req.id}>
-                    <td>{req.student}</td>
-                    <td className="request-text">{req.request}</td>
-                    <td>{req.date}</td>
-                    <td>
-                      <span className={`status-badge ${req.status === 'Pending' ? 'status-pending' : req.status === 'Approved' ? 'status-approved' : 'status-rejected'}`}>
-                        {req.status}
-                      </span>
-                    </td>
-                    <td>
-                      <button
-                        className="action-link"
-                        onClick={() => handleRequestStatus(req.id, 'Approved')}
-                        disabled={req.status === 'Approved'}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        className="action-link action-link--reject"
-                        onClick={() => handleRequestStatus(req.id, 'Rejected')}
-                        disabled={req.status === 'Rejected'}
-                      >
-                        Reject
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {resourceRequests.length === 0 ? (
+                    <tr>
+                      <td colSpan="5" className="adm-requests-table__empty">No requests pending right now.</td>
+                    </tr>
+                  ) : resourceRequests.map((req, idx) => (
+                    <tr key={req.id} className="adm-requests-row" style={{ animationDelay: `${idx * 0.04}s` }}>
+                      <td>
+                        <div className="adm-requests-student">
+                          <div className="adm-requests-student__avatar">{req.student.charAt(0)}</div>
+                          <span className="adm-requests-student__name">{req.student}</span>
+                        </div>
+                      </td>
+                      <td className="adm-requests-text">{req.request}</td>
+                      <td className="adm-requests-date">{req.date}</td>
+                      <td>
+                        <span className={`adm-status-chip adm-status-chip--${req.status.toLowerCase()}`}>
+                          {req.status === 'Pending' && <Clock size={12} />}
+                          {req.status === 'Approved' && <CheckCircle2 size={12} />}
+                          {req.status === 'Rejected' && <XCircle size={12} />}
+                          {req.status}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="adm-requests-actions">
+                          <button
+                            className="adm-req-btn adm-req-btn--approve"
+                            onClick={() => handleRequestStatus(req.id, 'Approved')}
+                            disabled={req.status === 'Approved'}
+                          >
+                            <CheckCircle2 size={13} /> Approve
+                          </button>
+                          <button
+                            className="adm-req-btn adm-req-btn--reject"
+                            onClick={() => handleRequestStatus(req.id, 'Rejected')}
+                            disabled={req.status === 'Rejected'}
+                          >
+                            <XCircle size={13} /> Reject
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
