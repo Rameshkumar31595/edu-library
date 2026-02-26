@@ -5,14 +5,18 @@ import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { translate } from '../translations/index.js';
 
 const ANNOUNCEMENTS = [
-  { date: '28 May 2024', message: 'New semester study materials uploaded for all departments', priority: 'high',   category: 'Academic' },
-  { date: '25 May 2024', message: 'Database maintenance scheduled for Saturday 3AM–6AM',        priority: 'medium', category: 'System' },
-  { date: '22 May 2024', message: 'Request feature now available for suggesting new resources', priority: 'normal', category: 'Feature' },
-  { date: '18 May 2024', message: 'Library hours extended till 10PM during exam week',           priority: 'high',   category: 'Library' },
-  { date: '15 May 2024', message: 'Research paper submission deadline: 30 May 2024',             priority: 'high',   category: 'Academic' },
-  { date: '10 May 2024', message: 'New journals added: IEEE, Springer & Elsevier collections',  priority: 'normal', category: 'Resources' },
-  { date: '5 May 2024',  message: 'Faculty upload portal now live — request resources faster',  priority: 'normal', category: 'Feature' },
-  { date: '1 May 2024',  message: 'Inter-college project collaboration portal opens next week',  priority: 'medium', category: 'Academic' },
+  { date: '26 Feb 2026', message: 'End-semester exam resource packs now available for all departments',            priority: 'high',   category: 'Academic' },
+  { date: '25 Feb 2026', message: 'New Deep Learning & AI video series uploaded to Computer Science',              priority: 'normal', category: 'Resources' },
+  { date: '24 Feb 2026', message: 'Scheduled maintenance on Saturday 1 Mar 2026 from 2AM–5AM IST',                priority: 'medium', category: 'System' },
+  { date: '23 Feb 2026', message: 'Library hours extended till 11PM during exam preparation week',                  priority: 'high',   category: 'Library' },
+  { date: '22 Feb 2026', message: 'Research paper submission deadline extended to 15 Mar 2026',                     priority: 'high',   category: 'Academic' },
+  { date: '21 Feb 2026', message: 'New journals added: IEEE, ACM, Springer & Elsevier collections',                priority: 'normal', category: 'Resources' },
+  { date: '20 Feb 2026', message: 'Resource request feature now supports file attachments',                         priority: 'normal', category: 'Feature' },
+  { date: '18 Feb 2026', message: 'Inter-department project collaboration portal opens next week',                  priority: 'medium', category: 'Academic' },
+  { date: '16 Feb 2026', message: 'Faculty upload portal improvements — faster processing & better search',        priority: 'normal', category: 'Feature' },
+  { date: '14 Feb 2026', message: 'Guest lecture recordings from Tech Fest 2026 now available',                     priority: 'normal', category: 'Resources' },
+  { date: '12 Feb 2026', message: 'Mid-term resources updated for Computer Science and Electronics departments',   priority: 'high',   category: 'Academic' },
+  { date: '10 Feb 2026', message: 'New mobile-friendly interface for browsing resources on the go',                 priority: 'medium', category: 'Feature' },
 ];
 
 const PRIORITY_CONFIG = {

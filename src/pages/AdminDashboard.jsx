@@ -76,6 +76,21 @@ export const AdminDashboard = () => {
     { id: 18, title: 'Machine Learning Basics', department: 'Computer Science', type: 'Video', accessCount: 234, addedAt: '2026-02-21', assigned: true },
     { id: 19, title: 'Cloud Computing Architecture', department: 'Computer Science', type: 'PDF', accessCount: 167, addedAt: '2026-02-17', assigned: false },
     { id: 20, title: 'Environmental Impact Assessment', department: 'Civil', type: 'Document', accessCount: 98, addedAt: '2026-02-05', assigned: true },
+    { id: 21, title: 'Artificial Intelligence Primer', department: 'Computer Science', type: 'PDF', accessCount: 312, addedAt: '2026-02-23', assigned: true },
+    { id: 22, title: 'Embedded Systems Programming', department: 'Electronics', type: 'Video', accessCount: 178, addedAt: '2026-02-20', assigned: true },
+    { id: 23, title: 'Discrete Mathematics Handbook', department: 'Mathematics', type: 'PDF', accessCount: 156, addedAt: '2026-02-19', assigned: true },
+    { id: 24, title: 'Fluid Mechanics Lab Manual', department: 'Mechanical', type: 'Document', accessCount: 142, addedAt: '2026-02-18', assigned: true },
+    { id: 25, title: 'Network Security Fundamentals', department: 'Computer Science', type: 'PDF', accessCount: 195, addedAt: '2026-02-24', assigned: true },
+    { id: 26, title: 'Control Systems Engineering', department: 'Electronics', type: 'PDF', accessCount: 163, addedAt: '2026-02-14', assigned: true },
+    { id: 27, title: 'Concrete Technology Notes', department: 'Civil', type: 'PDF', accessCount: 89, addedAt: '2026-02-07', assigned: true },
+    { id: 28, title: 'Deep Learning with PyTorch', department: 'Computer Science', type: 'Video', accessCount: 287, addedAt: '2026-02-25', assigned: true },
+    { id: 29, title: 'Probability & Statistics', department: 'Mathematics', type: 'PDF', accessCount: 174, addedAt: '2026-02-16', assigned: true },
+    { id: 30, title: 'AutoCAD Design Guide', department: 'Mechanical', type: 'Document', accessCount: 118, addedAt: '2026-02-13', assigned: true },
+    { id: 31, title: 'Compiler Design Notes', department: 'Computer Science', type: 'PDF', accessCount: 145, addedAt: '2026-02-22', assigned: true },
+    { id: 32, title: 'Power Electronics Lab', department: 'Electronics', type: 'Document', accessCount: 131, addedAt: '2026-02-15', assigned: true },
+    { id: 33, title: 'Surveying & Geomatics', department: 'Civil', type: 'PDF', accessCount: 76, addedAt: '2026-02-03', assigned: false },
+    { id: 34, title: 'DevOps & CI/CD Pipeline', department: 'Computer Science', type: 'Video', accessCount: 253, addedAt: '2026-02-26', assigned: true },
+    { id: 35, title: 'Vibration Analysis Pack', department: 'Mechanical', type: 'PDF', accessCount: 107, addedAt: '2026-02-11', assigned: true },
   ];
   });
 
@@ -85,18 +100,24 @@ export const AdminDashboard = () => {
   }, [resources]);
 
   const [recentDownloads, setRecentDownloads] = useState([
-    { id: 1, student: 'Priya Sharma', resource: 'Circuit Theory Notes', time: '15 min ago' },
-    { id: 2, student: 'Rahul Kumar', resource: 'Java Programming Guide', time: '45 min ago' },
-    { id: 3, student: 'Ananya Singh', resource: 'Calculus Textbook', time: '2 hours ago' },
-    { id: 4, student: 'Vikram Patel', resource: 'Data Structures Notes', time: '3 hours ago' },
-    { id: 5, student: 'Neha Reddy', resource: 'Web Development Best Practices', time: '5 hours ago' },
-    { id: 6, student: 'Arjun Verma', resource: 'Machine Learning Basics', time: '7 hours ago' },
-    { id: 7, student: 'Isha Gupta', resource: 'Operating Systems Guide', time: '8 hours ago' },
-    { id: 8, student: 'Rohan Desai', resource: 'Linear Algebra Textbook', time: 'Yesterday, 11:30 AM' },
-    { id: 9, student: 'Divya Nair', resource: 'Digital Logic Design', time: 'Yesterday, 2:15 PM' },
-    { id: 10, student: 'Karan Singh', resource: 'Thermodynamics Quick Pack', time: 'Yesterday, 4:45 PM' },
-    { id: 11, student: 'Pooja Chandra', resource: 'Advanced Python Programming', time: '2 days ago' },
-    { id: 12, student: 'Sameer Khan', resource: 'Structural Analysis Notes', time: '2 days ago' },
+    { id: 1, student: 'Priya Sharma', resource: 'Circuit Theory Notes', time: '5 min ago' },
+    { id: 2, student: 'Rahul Kumar', resource: 'Java Programming Guide', time: '12 min ago' },
+    { id: 3, student: 'Ananya Singh', resource: 'Calculus Textbook', time: '28 min ago' },
+    { id: 4, student: 'Vikram Patel', resource: 'Data Structures Notes', time: '45 min ago' },
+    { id: 5, student: 'Neha Reddy', resource: 'Web Development Best Practices', time: '1 hour ago' },
+    { id: 6, student: 'Arjun Verma', resource: 'Machine Learning Basics', time: '2 hours ago' },
+    { id: 7, student: 'Isha Gupta', resource: 'Operating Systems Guide', time: '3 hours ago' },
+    { id: 8, student: 'Rohan Desai', resource: 'Linear Algebra Textbook', time: '4 hours ago' },
+    { id: 9, student: 'Divya Nair', resource: 'Digital Logic Design', time: '5 hours ago' },
+    { id: 10, student: 'Karan Singh', resource: 'Thermodynamics Quick Pack', time: '6 hours ago' },
+    { id: 11, student: 'Pooja Chandra', resource: 'Advanced Python Programming', time: '7 hours ago' },
+    { id: 12, student: 'Sameer Khan', resource: 'Structural Analysis Notes', time: '8 hours ago' },
+    { id: 13, student: 'Tanvi Mehta', resource: 'Artificial Intelligence Primer', time: 'Yesterday, 9:30 AM' },
+    { id: 14, student: 'Aditya Joshi', resource: 'Deep Learning with PyTorch', time: 'Yesterday, 11:45 AM' },
+    { id: 15, student: 'Shruti Iyer', resource: 'Compiler Design Notes', time: 'Yesterday, 2:20 PM' },
+    { id: 16, student: 'Manish Tiwari', resource: 'Network Security Fundamentals', time: 'Yesterday, 4:50 PM' },
+    { id: 17, student: 'Kavita Rao', resource: 'Discrete Mathematics Handbook', time: '2 days ago' },
+    { id: 18, student: 'Deepak Sinha', resource: 'Control Systems Engineering', time: '2 days ago' },
   ]);
 
   const defaultRequests = [
@@ -131,12 +152,18 @@ export const AdminDashboard = () => {
 
   useEffect(() => {
     setActivityLog([
-      { id: 1, type: 'upload', detail: 'Uploaded "React Basics Tutorial" to Computer Science', time: 'Today, 10:15 AM' },
-      { id: 2, type: 'request', detail: 'Approved request for Signal Processing sample papers', time: 'Yesterday, 4:20 PM' },
-      { id: 3, type: 'announcement', detail: 'Published new mid-term resource announcement', time: 'Yesterday, 11:05 AM' },
-      { id: 4, type: 'upload', detail: 'Added "Cloud Computing Architecture" to Computer Science', time: '2 days ago, 3:45 PM' },
-      { id: 5, type: 'request', detail: 'Rejected request for IoT Development Framework Documentation', time: '3 days ago, 9:20 AM' },
-      { id: 6, type: 'delete', detail: 'Removed deprecated "Old Java Basics Tutorial" resource', time: '3 days ago, 2:30 PM' },
+      { id: 1, type: 'upload', detail: 'Uploaded "Deep Learning with PyTorch" to Computer Science', time: 'Today, 10:15 AM' },
+      { id: 2, type: 'upload', detail: 'Added "DevOps & CI/CD Pipeline" video to Computer Science', time: 'Today, 9:40 AM' },
+      { id: 3, type: 'request', detail: 'Approved request for AI Research Papers by Anjali Gupta', time: 'Today, 8:55 AM' },
+      { id: 4, type: 'announcement', detail: 'Published end-semester resource availability announcement', time: 'Yesterday, 4:20 PM' },
+      { id: 5, type: 'request', detail: 'Approved request for Signal Processing sample papers', time: 'Yesterday, 3:10 PM' },
+      { id: 6, type: 'upload', detail: 'Added "Network Security Fundamentals" PDF to Computer Science', time: 'Yesterday, 11:05 AM' },
+      { id: 7, type: 'request', detail: 'Rejected request for IoT Development Framework Documentation', time: '2 days ago, 4:30 PM' },
+      { id: 8, type: 'upload', detail: 'Uploaded "Embedded Systems Programming" video to Electronics', time: '2 days ago, 2:15 PM' },
+      { id: 9, type: 'delete', detail: 'Removed deprecated "Old Java Basics Tutorial" resource', time: '3 days ago, 3:45 PM' },
+      { id: 10, type: 'announcement', detail: 'Updated library hours for mid-term exam period', time: '3 days ago, 10:20 AM' },
+      { id: 11, type: 'upload', detail: 'Added "Probability & Statistics" PDF to Mathematics', time: '4 days ago, 1:30 PM' },
+      { id: 12, type: 'request', detail: 'Approved Cloud Computing Certification Materials for Harsh Verma', time: '5 days ago, 9:15 AM' },
     ]);
   }, []);
 
