@@ -68,7 +68,7 @@ export const RequestResourcePage = () => {
                 Suggest a Resource
               </h1>
               <p className="heading-entrance heading-entrance-delay-1 text-base sm:text-lg text-teal-100 leading-relaxed max-w-lg">
-                Help us grow the library — request books, videos, or documents you'd like added.
+                Help us grow the library request books, videos, or documents you'd like added.
               </p>
             </div>
             {/* Floating icon cluster */}
