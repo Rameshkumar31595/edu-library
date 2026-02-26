@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Users, Download, Mail, Megaphone, Settings, LogOut, LayoutDashboard } from 'lucide-react';
+import { BookOpen, Users, Download, Mail, Megaphone, Settings, LogOut, LayoutDashboard, Upload, MessageSquare, BarChart3, ArrowRight } from 'lucide-react';
 import { Documents, PDFs, Videos } from '../data/resourcesCatalog.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { translate } from '../translations/index.js';
@@ -27,7 +27,6 @@ export const AdminDashboard = () => {
   const [assigningResourceId, setAssigningResourceId] = useState(null);
   const [assignDraft, setAssignDraft] = useState('');
   const [selectedResourceIds, setSelectedResourceIds] = useState([]);
-  const [bulkActionLoading, setBulkActionLoading] = useState(false);
   const [activityLog, setActivityLog] = useState([]);
 
   useEffect(() => {
@@ -313,24 +312,6 @@ export const AdminDashboard = () => {
     addActivity('request', `${status} request from ${resourceRequests.find((req) => req.id === requestId)?.student || 'student'}`);  };
 
 
-  const handleQuickAction = (action) => {
-    if (action === 'bulk') {
-      setBulkActionLoading(true);
-      setTimeout(() => {
-        const bulkResources = [
-          { id: Date.now() + 1, title: 'Thermodynamics Quick Pack', department: 'Mechanical', type: 'PDF', accessCount: 120, addedAt: new Date().toISOString().slice(0, 10), assigned: true },
-          { id: Date.now() + 2, title: 'Circuit Theory Videos', department: 'Electronics', type: 'Video', accessCount: 140, addedAt: new Date().toISOString().slice(0, 10), assigned: true },
-          { id: Date.now() + 3, title: 'Math Revision Sheets', department: 'Mathematics', type: 'Document', accessCount: 110, addedAt: new Date().toISOString().slice(0, 10), assigned: true },
-        ];
-        setResources((prev) => [...bulkResources, ...prev]);
-        setBulkActionLoading(false);
-        addActivity('upload', 'Bulk uploaded 3 new resources');
-      }, 800);
-    }
-    if (action === 'assign' && selectedResourceIds.length === 0) {
-      addActivity('assign', 'Select resources to assign departments');
-    }
-  };
 
 
   if (!isLoggedIn || userRole !== 'admin') {
@@ -449,16 +430,34 @@ export const AdminDashboard = () => {
                 </button>
               </form>
             </div>
-            <div className="admin-action-card">
-              <h3 className="heading-entrance heading-entrance-card heading-premium">Quick Actions</h3>
-              <div className="action-buttons">
-                <button className="action-btn" onClick={() => handleQuickAction('edit')}>Edit Existing Resources</button>
-                <button className="action-btn" onClick={() => handleQuickAction('delete')}>Delete Resources</button>
-                <button className="action-btn" onClick={() => handleQuickAction('assign')}>Assign to Departments</button>
-                <button className="action-btn" onClick={() => handleQuickAction('bulk')} disabled={bulkActionLoading}>
-                  {bulkActionLoading ? 'Uploading...' : 'Bulk Upload'}
-                </button>
-              </div>
+            <div className="admin-action-card" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <h3 className="heading-entrance heading-entrance-card heading-premium">Quick Navigation</h3>
+              <button className="action-btn" style={{ display: 'flex', alignItems: 'center', gap: '10px' }} onClick={() => navigate('/users-log')}>
+                <Users size={16} style={{ color: 'var(--primary-teal)' }} />
+                <span style={{ flex: 1, textAlign: 'left' }}>User Signups Log</span>
+                <ArrowRight size={14} style={{ color: '#94a3b8' }} />
+              </button>
+              <button className="action-btn" style={{ display: 'flex', alignItems: 'center', gap: '10px' }} onClick={() => navigate('/recent-uploads')}>
+                <Upload size={16} style={{ color: 'var(--primary-teal)' }} />
+                <span style={{ flex: 1, textAlign: 'left' }}>Recent Uploads</span>
+                <ArrowRight size={14} style={{ color: '#94a3b8' }} />
+              </button>
+              <button className="action-btn" style={{ display: 'flex', alignItems: 'center', gap: '10px' }} onClick={() => navigate('/requests-log')}>
+                <MessageSquare size={16} style={{ color: 'var(--primary-teal)' }} />
+                <span style={{ flex: 1, textAlign: 'left' }}>Requests Log</span>
+                <span style={{ fontSize: '0.75rem', background: '#fef3c7', color: '#92400e', padding: '2px 8px', borderRadius: '10px', fontWeight: 600 }}>{pendingRequestsCount} pending</span>
+                <ArrowRight size={14} style={{ color: '#94a3b8' }} />
+              </button>
+              <button className="action-btn" style={{ display: 'flex', alignItems: 'center', gap: '10px' }} onClick={() => navigate('/admin-announcements')}>
+                <Megaphone size={16} style={{ color: 'var(--primary-teal)' }} />
+                <span style={{ flex: 1, textAlign: 'left' }}>Announcements</span>
+                <ArrowRight size={14} style={{ color: '#94a3b8' }} />
+              </button>
+              <button className="action-btn" style={{ display: 'flex', alignItems: 'center', gap: '10px' }} onClick={() => navigate('/resources-analytics')}>
+                <BarChart3 size={16} style={{ color: 'var(--primary-teal)' }} />
+                <span style={{ flex: 1, textAlign: 'left' }}>Analytics Dashboard</span>
+                <ArrowRight size={14} style={{ color: '#94a3b8' }} />
+              </button>
             </div>
           </div>
 
