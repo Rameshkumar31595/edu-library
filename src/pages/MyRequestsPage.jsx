@@ -3,13 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { Search, ArrowLeft, FileText, Clock, CheckCircle2, XCircle, Send, Inbox } from 'lucide-react';
 import { MY_REQUESTS_DATA } from '../data/studentResourcesData';
 import { getStudentRequests } from '../utils/resourceStore.js';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 export const MyRequestsPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('All');
 
   const statuses = ['All', 'Pending', 'Approved', 'Rejected'];
+
+  const statusLabels = {
+    All: translate('all', language),
+    Pending: translate('pending', language),
+    Approved: translate('approved', language),
+    Rejected: translate('rejected', language),
+  };
 
   const statusConfig = {
     All:      { icon: FileText,     color: 'teal' },
@@ -67,18 +77,18 @@ export const MyRequestsPage = () => {
             className="heading-entrance mb-5 inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3.5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/40"
           >
             <ArrowLeft size={15} />
-            Dashboard
+            {translate('dashboard', language)}
           </button>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex-1 min-w-0">
               <p className="heading-entrance mb-2 text-xs font-semibold uppercase tracking-widest text-teal-200">
-                Request Tracker
+                {translate('requestTracker', language)}
               </p>
               <h1 className="heading-entrance heading-premium text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white mb-3">
-                My Requests
+                {translate('myRequestsPageTitle', language)}
               </h1>
               <p className="heading-entrance heading-entrance-delay-1 text-base sm:text-lg text-teal-100 leading-relaxed max-w-lg">
-                Track the status of resources you've requested — from pending to approved.
+                {translate('trackRequestStatus', language)}
               </p>
             </div>
             {/* Floating icon cluster */}
@@ -134,7 +144,7 @@ export const MyRequestsPage = () => {
                   <Icon size={20} className={c.icon} />
                 </div>
                 <div className="text-left min-w-0">
-                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">{status}</p>
+                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">{statusLabels[status]}</p>
                   <p className={`text-xl font-bold ${isActive ? c.text : 'text-slate-800'}`}>{counts[status]}</p>
                 </div>
                 {isActive && (
@@ -156,7 +166,7 @@ export const MyRequestsPage = () => {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-teal-500 transition-colors" size={18} />
             <input
               type="text"
-              placeholder="Search by title or description..."
+              placeholder={translate('searchByTitle', language)}
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-slate-900 placeholder:text-slate-400 transition-all duration-200 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 focus:bg-white shadow-sm hover:border-gray-300"
@@ -164,14 +174,14 @@ export const MyRequestsPage = () => {
           </div>
           <div className="flex items-center gap-4">
             <p className="text-sm text-slate-500">
-              Showing <span className="font-bold text-slate-800">{filteredRequests.length}</span> request{filteredRequests.length !== 1 ? 's' : ''}
+              {translate('showing', language)} <span className="font-bold text-slate-800">{filteredRequests.length}</span> {filteredRequests.length !== 1 ? translate('requestPlural', language) : translate('requestSingular', language)}
             </p>
             <button
               onClick={() => navigate('/request-resource')}
               className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-teal-700 hover:shadow-md hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
               <Send size={15} />
-              New Request
+              {translate('newRequest', language)}
             </button>
           </div>
         </div>
@@ -188,14 +198,14 @@ export const MyRequestsPage = () => {
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 mb-5">
               <Inbox size={28} className="text-slate-400" />
             </div>
-            <p className="text-slate-700 text-lg font-semibold mb-1">No requests found</p>
-            <p className="text-slate-400 text-sm mb-6 max-w-sm text-center">Try adjusting your search or filter, or submit a new request.</p>
+            <p className="text-slate-700 text-lg font-semibold mb-1">{translate('noRequestsFound', language)}</p>
+            <p className="text-slate-400 text-sm mb-6 max-w-sm text-center">{translate('tryAdjustingRequests', language)}</p>
             <button
               onClick={() => navigate('/request-resource')}
               className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-teal-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
               <Send size={15} />
-              Submit a Request
+              {translate('submitARequest', language)}
             </button>
           </div>
         )}
@@ -205,6 +215,7 @@ export const MyRequestsPage = () => {
 };
 
 const RequestItem = ({ request, index }) => {
+  const { language } = useLanguage();
   const statusConfig = {
     Approved: {
       bg: 'bg-emerald-50',
@@ -273,7 +284,7 @@ const RequestItem = ({ request, index }) => {
             </span>
             <span className="flex items-center gap-1.5 text-slate-400 font-medium">
               <Clock size={11} />
-              Submitted: {request.submittedDate}
+              {translate('submittedColon', language)} {request.submittedDate}
             </span>
           </div>
         </div>

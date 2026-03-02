@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { ArrowLeft, BookOpen, Users, Download, Mail } from 'lucide-react';
+import { ArrowLeft, BookOpen, Users, Download, Mail, FileText, Film, TrendingUp, Clock, CheckCircle, XCircle, AlertCircle, Upload, Activity } from 'lucide-react';
 import {
   Bar,
   BarChart,
@@ -429,7 +429,7 @@ export const ResourcesAnalytics = () => {
             {/* Resources Mini Analytics */}
             <section className="dashboard-section">
               <h2 className="section-title heading-entrance heading-premium">Resource Distribution</h2>
-              <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6">
+              <div className="analytics-chart-card">
                 <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
                   <div className="h-72">
                     <ResponsiveContainer width="100%" height="100%">
@@ -455,7 +455,7 @@ export const ResourcesAnalytics = () => {
                   </div>
                   <div className="space-y-3">
                     {resourceStats.map((stat, index) => (
-                      <div key={stat.name} className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                      <div key={stat.name} className="analytics-mini-stat">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <div style={{ backgroundColor: resourceColors[index % resourceColors.length] }} className="h-3 w-3 rounded-full"></div>
@@ -473,8 +473,8 @@ export const ResourcesAnalytics = () => {
             {/* Users Mini Analytics */}
             <section className="dashboard-section">
               <h2 className="section-title heading-entrance heading-premium">User Demographics</h2>
-              <div className="insight-grid">
-                <div className="insight-panel">
+              <div className="analytics-insight-grid">
+                <div className="analytics-insight-panel">
                   <h3 className="heading-entrance heading-entrance-card heading-premium">Gender Distribution</h3>
                   <div className="h-56">
                     <ResponsiveContainer width="100%" height="100%">
@@ -498,7 +498,7 @@ export const ResourcesAnalytics = () => {
                     </ResponsiveContainer>
                   </div>
                 </div>
-                <div className="insight-panel">
+                <div className="analytics-insight-panel" style={{ animationDelay: '0.35s' }}>
                   <h3 className="heading-entrance heading-entrance-card heading-premium">Age Distribution</h3>
                   <div className="h-56">
                     <ResponsiveContainer width="100%" height="100%">
@@ -517,7 +517,7 @@ export const ResourcesAnalytics = () => {
             {/* Requests Dashboard */}
             <section className="dashboard-section">
               <h2 className="section-title heading-entrance heading-premium">Request Status Overview</h2>
-              <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6">
+              <div className="analytics-chart-card">
                 <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
                   <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
@@ -535,7 +535,7 @@ export const ResourcesAnalytics = () => {
                   </div>
                   <div className="space-y-3">
                     {requestStatusStats.map((stat, index) => (
-                      <div key={stat.status} className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                      <div key={stat.status} className="analytics-mini-stat">
                         <div className="flex items-center justify-between">
                           <span className="text-sm font-medium text-slate-700">{stat.status}</span>
                           <span className="text-xl font-semibold text-slate-900">{stat.count}</span>
@@ -559,7 +559,7 @@ export const ResourcesAnalytics = () => {
             {/* Uploads Mini Analytics */}
             <section className="dashboard-section">
               <h2 className="section-title heading-entrance heading-premium">Upload Activity</h2>
-              <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6">
+              <div className="analytics-chart-card">
                 <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
                   <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
@@ -572,15 +572,15 @@ export const ResourcesAnalytics = () => {
                     </ResponsiveContainer>
                   </div>
                   <div className="space-y-2">
-                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                    <div className="analytics-mini-stat">
                       <p className="text-xs uppercase tracking-wide text-slate-500">Weekly Total</p>
                       <p className="text-2xl font-semibold text-slate-900">{totalUploads}</p>
                     </div>
-                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                    <div className="analytics-mini-stat">
                       <p className="text-xs uppercase tracking-wide text-slate-500">Average Per Day</p>
                       <p className="text-2xl font-semibold text-slate-900">{Math.round(totalUploads / 7)}</p>
                     </div>
-                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                    <div className="analytics-mini-stat">
                       <p className="text-xs uppercase tracking-wide text-slate-500">Peak Day</p>
                       <p className="text-2xl font-semibold text-slate-900">{Math.max(...recentUploadsStats.map((d) => d.uploads))}</p>
                     </div>
@@ -593,27 +593,42 @@ export const ResourcesAnalytics = () => {
 
         {activeSection === 'resources' && (
           <section className="dashboard-section">
-            <h2 className="section-title heading-entrance heading-premium">Resource Breakdown</h2>
-            
-            {/* Stats for Resources */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+            <div className="analytics-section-banner">
+              <div className="banner-icon"><BookOpen size={26} /></div>
+              <div className="banner-text">
+                <h2>Resource Breakdown</h2>
+                <p>Distribution across all resource categories</p>
+              </div>
+            </div>
+
+            {/* Stats for Resources - Premium */}
+            <div className="admin-stats-grid">
+              <div className="heading-entrance admin-stat-card" style={{ animationDelay: '0ms' }}>
+                <div className="stat-icon flex items-center justify-center rounded-xl bg-teal-50 text-teal-600 p-3 h-14 w-14"><BookOpen size={28} /></div>
+                <div className="stat-content">
+                  <h3 className="heading-entrance heading-entrance-card heading-premium">Total Resources</h3>
+                  <p className="stat-number">{totalResources}</p>
+                  <span className="stat-meta">All categories</span>
+                </div>
+              </div>
               {resourceStats.map((stat, index) => (
-                <div key={stat.name} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-slate-500">{stat.name} Resources</p>
-                      <p className="text-2xl font-semibold text-slate-900">{stat.count}</p>
-                    </div>
-                    <div
-                      style={{ backgroundColor: resourceColors[index % resourceColors.length] }}
-                      className="h-10 w-10 rounded-lg opacity-20"
-                    ></div>
+                <div key={stat.name} className="heading-entrance admin-stat-card" style={{ animationDelay: `${(index + 1) * 80}ms` }}>
+                  <div className="stat-icon flex items-center justify-center rounded-xl p-3 h-14 w-14"
+                       style={{ backgroundColor: `${resourceColors[index % resourceColors.length]}15`, color: resourceColors[index % resourceColors.length] }}>
+                    {stat.name === 'PDF' && <FileText size={28} />}
+                    {stat.name === 'Document' && <FileText size={28} />}
+                    {stat.name === 'Video' && <Film size={28} />}
+                  </div>
+                  <div className="stat-content">
+                    <h3 className="heading-entrance heading-entrance-card heading-premium">{stat.name}</h3>
+                    <p className="stat-number">{stat.count}</p>
+                    <span className="stat-meta">{totalResources > 0 ? ((stat.count / totalResources) * 100).toFixed(1) : 0}% of total</span>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6">
+            <div className="analytics-chart-card">
               <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
                 <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
@@ -638,18 +653,18 @@ export const ResourcesAnalytics = () => {
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="rounded-xl border border-gray-100 bg-gray-50 p-5">
+                <div className="rounded-xl border border-gray-100 bg-gradient-to-br from-gray-50 to-slate-50 p-5">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs uppercase tracking-wide text-slate-500">Total Resources</p>
                       <p className="text-2xl font-semibold text-slate-900">{totalResources}</p>
                     </div>
-                    <span className="text-xs font-semibold text-teal-700 bg-teal-50 px-3 py-1 rounded-full">Live demo</span>
+                    <span className="text-xs font-semibold text-teal-700 bg-teal-50 px-3 py-1 rounded-full border border-teal-100">Live demo</span>
                   </div>
                   <div className="mt-5 space-y-2">
                     <h3 className="text-sm font-semibold text-slate-900">{selectedType} Resources</h3>
                     {dummyResources[selectedType]?.map((item) => (
-                      <div key={item.id} className="rounded-lg border border-gray-100 bg-white px-4 py-3 text-sm text-slate-700">
+                      <div key={item.id} className="analytics-resource-item">
                         {item.title}
                       </div>
                     ))}
@@ -662,26 +677,45 @@ export const ResourcesAnalytics = () => {
 
         {activeSection === 'users' && (
           <section className="dashboard-section">
-            <h2 className="section-title heading-entrance heading-premium">User Demographics</h2>
-            
-            {/* Stats for Users */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-              <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-wide text-slate-500">Total Users</p>
-                <p className="text-2xl font-semibold text-slate-900">{totalUsers}</p>
-                <span className="text-xs text-slate-500 mt-1">Registered students</span>
+            <div className="analytics-section-banner">
+              <div className="banner-icon"><Users size={26} /></div>
+              <div className="banner-text">
+                <h2>User Demographics</h2>
+                <p>Demographic trends for active student users</p>
               </div>
-              {userGenderStats.map((stat, index) => (
-                <div key={stat.name} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                  <p className="text-xs uppercase tracking-wide text-slate-500">{stat.name}</p>
-                  <p className="text-2xl font-semibold text-slate-900">{stat.value}</p>
-                  <span className="text-xs text-slate-500 mt-1">{((stat.value / totalUsers) * 100).toFixed(1)}%</span>
-                </div>
-              ))}
             </div>
 
-            <div className="insight-grid">
-              <div className="insight-panel">
+            {/* Stats for Users - Premium */}
+            <div className="admin-stats-grid">
+              <div className="heading-entrance admin-stat-card" style={{ animationDelay: '0ms' }}>
+                <div className="stat-icon flex items-center justify-center rounded-xl bg-teal-50 text-teal-600 p-3 h-14 w-14"><Users size={28} /></div>
+                <div className="stat-content">
+                  <h3 className="heading-entrance heading-entrance-card heading-premium">Total Users</h3>
+                  <p className="stat-number">{totalUsers}</p>
+                  <span className="stat-meta">Registered students</span>
+                </div>
+              </div>
+              {userGenderStats.map((stat, index) => {
+                const genderColors = ['#ec4899', '#3b82f6', '#8b5cf6'];
+                const genderBgs = ['bg-pink-50', 'bg-blue-50', 'bg-purple-50'];
+                return (
+                  <div key={stat.name} className="heading-entrance admin-stat-card" style={{ animationDelay: `${(index + 1) * 80}ms` }}>
+                    <div className={`stat-icon flex items-center justify-center rounded-xl p-3 h-14 w-14 ${genderBgs[index]}`}
+                         style={{ color: genderColors[index] }}>
+                      <Users size={28} />
+                    </div>
+                    <div className="stat-content">
+                      <h3 className="heading-entrance heading-entrance-card heading-premium">{stat.name}</h3>
+                      <p className="stat-number">{stat.value}</p>
+                      <span className="stat-meta">{((stat.value / totalUsers) * 100).toFixed(1)}%</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="analytics-insight-grid">
+              <div className="analytics-insight-panel">
                 <h3 className="heading-entrance heading-entrance-card heading-premium">Gender Split</h3>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
@@ -705,7 +739,7 @@ export const ResourcesAnalytics = () => {
                   </ResponsiveContainer>
                 </div>
               </div>
-              <div className="insight-panel">
+              <div className="analytics-insight-panel" style={{ animationDelay: '0.35s' }}>
                 <h3 className="heading-entrance heading-entrance-card heading-premium">Age Distribution</h3>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
@@ -728,24 +762,45 @@ export const ResourcesAnalytics = () => {
 
         {activeSection === 'requests' && (
           <section className="dashboard-section">
-            <h2 className="section-title heading-entrance heading-premium">Request Status</h2>
-            
-            {/* Stats for Requests */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-              <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-wide text-slate-500">Total Requests</p>
-                <p className="text-2xl font-semibold text-slate-900">{totalRequests}</p>
+            <div className="analytics-section-banner">
+              <div className="banner-icon"><Mail size={26} /></div>
+              <div className="banner-text">
+                <h2>Request Status</h2>
+                <p>Request status trends and approval flow insights</p>
               </div>
-              {requestStatusStats.map((stat, index) => (
-                <div key={stat.status} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                  <p className="text-xs uppercase tracking-wide text-slate-500">{stat.status}</p>
-                  <p className="text-2xl font-semibold text-slate-900">{stat.count}</p>
-                  <span className="text-xs text-slate-500 mt-1">{((stat.count / totalRequests) * 100).toFixed(1)}%</span>
-                </div>
-              ))}
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6">
+            {/* Stats for Requests - Premium */}
+            <div className="admin-stats-grid">
+              <div className="heading-entrance admin-stat-card" style={{ animationDelay: '0ms' }}>
+                <div className="stat-icon flex items-center justify-center rounded-xl bg-teal-50 text-teal-600 p-3 h-14 w-14"><Mail size={28} /></div>
+                <div className="stat-content">
+                  <h3 className="heading-entrance heading-entrance-card heading-premium">Total Requests</h3>
+                  <p className="stat-number">{totalRequests}</p>
+                  <span className="stat-meta">All submissions</span>
+                </div>
+              </div>
+              {requestStatusStats.map((stat, index) => {
+                const statusIcons = [<Clock size={28} />, <CheckCircle size={28} />, <XCircle size={28} />];
+                const statusColors = ['#f59e0b', '#10b981', '#ef4444'];
+                const statusBgs = ['bg-amber-50', 'bg-emerald-50', 'bg-red-50'];
+                return (
+                  <div key={stat.status} className="heading-entrance admin-stat-card" style={{ animationDelay: `${(index + 1) * 80}ms` }}>
+                    <div className={`stat-icon flex items-center justify-center rounded-xl p-3 h-14 w-14 ${statusBgs[index]}`}
+                         style={{ color: statusColors[index] }}>
+                      {statusIcons[index]}
+                    </div>
+                    <div className="stat-content">
+                      <h3 className="heading-entrance heading-entrance-card heading-premium">{stat.status}</h3>
+                      <p className="stat-number">{stat.count}</p>
+                      <span className="stat-meta">{totalRequests > 0 ? ((stat.count / totalRequests) * 100).toFixed(1) : 0}%</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="analytics-chart-card">
               <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={requestStatusStats} barSize={36}>
@@ -763,7 +818,7 @@ export const ResourcesAnalytics = () => {
               <button
                 type="button"
                 onClick={() => navigate('/requests-log')}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-teal-200 bg-teal-50 px-4 py-2 text-xs font-semibold text-teal-700 transition-colors hover:bg-teal-100"
+                className="analytics-action-btn mt-5"
               >
                 View pending requests
                 <span aria-hidden="true">→</span>
@@ -774,30 +829,51 @@ export const ResourcesAnalytics = () => {
 
         {activeSection === 'uploads' && (
           <section className="dashboard-section">
-            <h2 className="section-title heading-entrance heading-premium">Recent Uploads</h2>
-            
-            {/* Stats for Uploads */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-              <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-wide text-slate-500">Total Uploads</p>
-                <p className="text-2xl font-semibold text-slate-900">{totalUploads}</p>
-                <span className="text-xs text-slate-500 mt-1">This week</span>
-              </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-wide text-slate-500">Average Per Day</p>
-                <p className="text-2xl font-semibold text-slate-900">{(totalUploads / 7).toFixed(1)}</p>
-              </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-wide text-slate-500">Peak Day</p>
-                <p className="text-2xl font-semibold text-slate-900">{Math.max(...recentUploadsStats.map((d) => d.uploads))}</p>
-              </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-wide text-slate-500">Lowest Day</p>
-                <p className="text-2xl font-semibold text-slate-900">{Math.min(...recentUploadsStats.map((d) => d.uploads))}</p>
+            <div className="analytics-section-banner">
+              <div className="banner-icon"><Upload size={26} /></div>
+              <div className="banner-text">
+                <h2>Recent Uploads</h2>
+                <p>Upload volume and activity trends this week</p>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6">
+            {/* Stats for Uploads - Premium */}
+            <div className="admin-stats-grid">
+              <div className="heading-entrance admin-stat-card" style={{ animationDelay: '0ms' }}>
+                <div className="stat-icon flex items-center justify-center rounded-xl bg-teal-50 text-teal-600 p-3 h-14 w-14"><Upload size={28} /></div>
+                <div className="stat-content">
+                  <h3 className="heading-entrance heading-entrance-card heading-premium">Total Uploads</h3>
+                  <p className="stat-number">{totalUploads}</p>
+                  <span className="stat-meta">This week</span>
+                </div>
+              </div>
+              <div className="heading-entrance admin-stat-card" style={{ animationDelay: '80ms' }}>
+                <div className="stat-icon flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 p-3 h-14 w-14"><Activity size={28} /></div>
+                <div className="stat-content">
+                  <h3 className="heading-entrance heading-entrance-card heading-premium">Average / Day</h3>
+                  <p className="stat-number">{(totalUploads / 7).toFixed(1)}</p>
+                  <span className="stat-meta">Daily average</span>
+                </div>
+              </div>
+              <div className="heading-entrance admin-stat-card" style={{ animationDelay: '160ms' }}>
+                <div className="stat-icon flex items-center justify-center rounded-xl bg-green-50 text-green-600 p-3 h-14 w-14"><TrendingUp size={28} /></div>
+                <div className="stat-content">
+                  <h3 className="heading-entrance heading-entrance-card heading-premium">Peak Day</h3>
+                  <p className="stat-number">{Math.max(...recentUploadsStats.map((d) => d.uploads))}</p>
+                  <span className="stat-meta">Highest uploads</span>
+                </div>
+              </div>
+              <div className="heading-entrance admin-stat-card" style={{ animationDelay: '240ms' }}>
+                <div className="stat-icon flex items-center justify-center rounded-xl bg-orange-50 text-orange-600 p-3 h-14 w-14"><Clock size={28} /></div>
+                <div className="stat-content">
+                  <h3 className="heading-entrance heading-entrance-card heading-premium">Lowest Day</h3>
+                  <p className="stat-number">{Math.min(...recentUploadsStats.map((d) => d.uploads))}</p>
+                  <span className="stat-meta">Minimum uploads</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="analytics-chart-card">
               <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={recentUploadsStats} barSize={28}>
@@ -811,7 +887,7 @@ export const ResourcesAnalytics = () => {
               <button
                 type="button"
                 onClick={() => navigate('/recent-uploads')}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-teal-200 bg-teal-50 px-4 py-2 text-xs font-semibold text-teal-700 transition-colors hover:bg-teal-100"
+                className="analytics-action-btn mt-5"
               >
                 Open upload logs
                 <span aria-hidden="true">→</span>

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThumbsUp, ThumbsDown, MessageSquare, Send, ArrowLeft } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 export const FeedbackPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,7 +21,7 @@ export const FeedbackPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Thank you for your feedback! We appreciate your input.');
+    alert(translate('thankYouFeedback', language));
     setFormData({ name: '', email: '', category: '', rating: '', message: '' });
   };
 
@@ -52,23 +55,23 @@ export const FeedbackPage = () => {
           }}
         >
           <ArrowLeft size={20} />
-          Back to Home
+          {translate('backToHome', language)}
         </button>
         <div style={{ background: 'white', padding: '50px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <MessageSquare size={48} color="#008080" style={{ marginBottom: '16px' }} />
           <h1 style={{ fontSize: '2rem', color: '#008080', marginBottom: '12px' }}>
-            We Value Your Feedback
+            {translate('feedbackTitle', language)}
           </h1>
           <p style={{ color: '#666', fontSize: '1.05rem' }}>
-            Help us improve NDLI by sharing your thoughts, suggestions, and experiences
+            {translate('feedbackSubtitle', language)}
           </p>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '24px' }}>
             <label style={{ display: 'block', marginBottom: '8px', color: '#0f4c4c', fontWeight: '500' }}>
-              Your Name *
+              {translate('yourName', language)} *
             </label>
             <input
               type="text"
@@ -89,7 +92,7 @@ export const FeedbackPage = () => {
 
           <div style={{ marginBottom: '24px' }}>
             <label style={{ display: 'block', marginBottom: '8px', color: '#0f4c4c', fontWeight: '500' }}>
-              Email Address *
+              {translate('emailAddress', language)} *
             </label>
             <input
               type="email"
@@ -110,7 +113,7 @@ export const FeedbackPage = () => {
 
           <div style={{ marginBottom: '24px' }}>
             <label style={{ display: 'block', marginBottom: '8px', color: '#0f4c4c', fontWeight: '500' }}>
-              Feedback Category *
+              {translate('feedbackCategory', language)} *
             </label>
             <select
               name="category"
@@ -127,43 +130,43 @@ export const FeedbackPage = () => {
                 background: 'white'
               }}
             >
-              <option value="">Select a category</option>
-              <option value="usability">Website Usability</option>
-              <option value="content">Content Quality</option>
-              <option value="feature">Feature Request</option>
-              <option value="bug">Bug Report</option>
-              <option value="general">General Feedback</option>
-              <option value="other">Other</option>
+              <option value="">{translate('selectCategory', language)}</option>
+              <option value="usability">{translate('websiteUsability', language)}</option>
+              <option value="content">{translate('contentQuality', language)}</option>
+              <option value="feature">{translate('featureRequest', language)}</option>
+              <option value="bug">{translate('bugReport', language)}</option>
+              <option value="general">{translate('generalFeedback', language)}</option>
+              <option value="other">{translate('other', language)}</option>
             </select>
           </div>
 
           <div style={{ marginBottom: '24px' }}>
             <label style={{ display: 'block', marginBottom: '12px', color: '#0f4c4c', fontWeight: '500' }}>
-              Overall Experience *
+              {translate('overallExperience', language)} *
             </label>
             <div style={{ display: 'flex', gap: '12px' }}>
-              {['Excellent', 'Good', 'Average', 'Poor'].map((rating) => (
-                <label key={rating} style={{ flex: 1, cursor: 'pointer' }}>
+              {[{key: 'excellent', value: 'Excellent'}, {key: 'good', value: 'Good'}, {key: 'average', value: 'Average'}, {key: 'poor', value: 'Poor'}].map((rating) => (
+                <label key={rating.value} style={{ flex: 1, cursor: 'pointer' }}>
                   <input
                     type="radio"
                     name="rating"
-                    value={rating}
-                    checked={formData.rating === rating}
+                    value={rating.value}
+                    checked={formData.rating === rating.value}
                     onChange={handleChange}
                     required
                     style={{ display: 'none' }}
                   />
                   <div style={{
                     padding: '12px',
-                    border: `2px solid ${formData.rating === rating ? '#008080' : '#d1fae5'}`,
+                    border: `2px solid ${formData.rating === rating.value ? '#008080' : '#d1fae5'}`,
                     borderRadius: '8px',
                     textAlign: 'center',
-                    background: formData.rating === rating ? '#e0f2f1' : 'white',
-                    color: formData.rating === rating ? '#008080' : '#666',
-                    fontWeight: formData.rating === rating ? '600' : '400',
+                    background: formData.rating === rating.value ? '#e0f2f1' : 'white',
+                    color: formData.rating === rating.value ? '#008080' : '#666',
+                    fontWeight: formData.rating === rating.value ? '600' : '400',
                     transition: 'all 0.2s'
                   }}>
-                    {rating}
+                    {translate(rating.key, language)}
                   </div>
                 </label>
               ))}
@@ -172,7 +175,7 @@ export const FeedbackPage = () => {
 
           <div style={{ marginBottom: '24px' }}>
             <label style={{ display: 'block', marginBottom: '8px', color: '#0f4c4c', fontWeight: '500' }}>
-              Your Feedback *
+              {translate('yourFeedback', language)} *
             </label>
             <textarea
               name="message"
@@ -180,7 +183,7 @@ export const FeedbackPage = () => {
               onChange={handleChange}
               required
               rows="6"
-              placeholder="Please share your detailed feedback, suggestions, or report any issues..."
+              placeholder={translate('feedbackPlaceholder', language)}
               style={{
                 width: '100%',
                 padding: '12px',
@@ -222,18 +225,18 @@ export const FeedbackPage = () => {
             }}
           >
             <Send size={20} />
-            Submit Feedback
+            {translate('submitFeedback', language)}
           </button>
         </form>
 
         <div style={{ marginTop: '32px', padding: '20px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e0e0e0' }}>
           <h3 style={{ fontSize: '1.1rem', color: '#0f4c4c', marginBottom: '12px', fontWeight: '600' }}>
-            Other Ways to Reach Us
+            {translate('otherWaysToReach', language)}
           </h3>
           <p style={{ color: '#666', fontSize: '0.95rem', lineHeight: '1.6' }}>
-            <strong>Email:</strong> feedback@ndli.gov.in<br />
-            <strong>Phone:</strong> 1800-XXX-XXXX<br />
-            <strong>Response Time:</strong> We typically respond within 2-3 business days
+            <strong>{translate('email', language)}:</strong> feedback@ndli.gov.in<br />
+            <strong>{translate('phone', language)}:</strong> 1800-XXX-XXXX<br />
+            <strong>{translate('responseTime', language)}:</strong> We typically respond within 2-3 business days
           </p>
         </div>
         </div>

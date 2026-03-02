@@ -2,9 +2,12 @@ import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Search, BookOpen } from 'lucide-react';
 import { getCategoryBySlug } from '../data/categoryContentData';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 export const CategoryContentPage = () => {
   const { slug } = useParams();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('All');
 
@@ -14,8 +17,8 @@ export const CategoryContentPage = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="heading-entrance heading-premium text-2xl font-bold text-gray-900 mb-2">Category Not Found</h1>
-          <p className="text-gray-600">The category you're looking for doesn't exist.</p>
+          <h1 className="heading-entrance heading-premium text-2xl font-bold text-gray-900 mb-2">{translate('categoryNotFound', language)}</h1>
+          <p className="text-gray-600">{translate('categoryNotExist', language)}</p>
         </div>
       </div>
     );
@@ -75,8 +78,7 @@ export const CategoryContentPage = () => {
             </div>
 
             <p className="text-gray-600">
-              Showing <span className="font-semibold">{filteredItems.length}</span> item
-              {filteredItems.length !== 1 ? 's' : ''}
+              {translate('showing', language)} <span className="font-semibold">{filteredItems.length}</span> {filteredItems.length !== 1 ? translate('items', language) : translate('items', language)}
             </p>
           </div>
 
@@ -89,8 +91,8 @@ export const CategoryContentPage = () => {
           ) : (
             <div className="uiExtension-emptyState text-center py-16">
               <BookOpen size={64} className="mx-auto text-gray-300 mb-4" />
-              <h3 className="heading-entrance heading-entrance-card text-2xl font-semibold tracking-[-0.01em] text-gray-700 mb-2">No items found</h3>
-              <p className="text-gray-500">Try adjusting your search or filters</p>
+              <h3 className="heading-entrance heading-entrance-card text-2xl font-semibold tracking-[-0.01em] text-gray-700 mb-2">{translate('noItemsFound', language)}</h3>
+              <p className="text-gray-500">{translate('tryAdjusting', language)}</p>
             </div>
           )}
         </div>
@@ -100,6 +102,7 @@ export const CategoryContentPage = () => {
 };
 
 const ContentItem = ({ item }) => {
+  const { language } = useLanguage();
   return (
     <div className="border-l-4 border-teal-600 bg-gradient-to-r from-teal-50 to-transparent rounded-lg p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
@@ -112,7 +115,7 @@ const ContentItem = ({ item }) => {
           </div>
           <p className="text-gray-600 text-sm mb-3">{item.description}</p>
           <div className="flex items-center gap-3 text-sm text-gray-500">
-            <span>Published: {item.publishDate}</span>
+            <span>{translate('published', language)} {item.publishDate}</span>
             <div className="flex gap-2">
               {item.tags.map((tag) => (
                 <span

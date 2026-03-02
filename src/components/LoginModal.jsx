@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { LogIn, Mail, Lock, Eye, EyeOff, X, UserPlus, KeyRound, GraduationCap, ShieldCheck, Loader2 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 /**
  * Login Modal - Modern Animated Design
  * Teal/green theme matching the Digital Library branding
  */
 export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
+  const { language } = useLanguage();
+  const t = (key) => translate(key, language);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -52,10 +56,10 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
     e.preventDefault();
     setError('');
 
-    if (!formData.email.trim()) { setError('Email is required'); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) { setError('Please enter a valid email'); return; }
-    if (!formData.password.trim()) { setError('Password is required'); return; }
-    if (formData.password.length < 6) { setError('Password must be at least 6 characters'); return; }
+    if (!formData.email.trim()) { setError(t('emailRequired')); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) { setError(t('validEmail')); return; }
+    if (!formData.password.trim()) { setError(t('passwordRequired')); return; }
+    if (formData.password.length < 6) { setError(t('passwordMinLength')); return; }
 
     setIsLoading(true);
     setTimeout(() => {
@@ -63,7 +67,7 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
       const user = users.find(u => u.email === formData.email);
 
       if (!user) {
-        setError('Email not found. Please register first.');
+        setError(t('emailNotFound'));
         setIsLoading(false);
         return;
       }
@@ -153,9 +157,9 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
               <LogIn size={28} strokeWidth={2} />
             )}
           </div>
-          <h2 className="lm-title">{successLogin ? 'Welcome Back!' : 'Sign In'}</h2>
+          <h2 className="lm-title">{successLogin ? t('welcomeBackExclaim') : t('signIn')}</h2>
           <p className="lm-subtitle">
-            {successLogin ? 'Redirecting you now...' : 'Access the Digital Library'}
+            {successLogin ? t('redirectingNow') : t('accessDigitalLibrary')}
           </p>
         </div>
 
@@ -193,7 +197,7 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
                 placeholder=" "
                 autoComplete="email"
               />
-              <label className="lm-float-label">Email address</label>
+              <label className="lm-float-label">{t('emailAddress')}</label>
               <div className="lm-input-highlight" />
             </div>
 
@@ -211,7 +215,7 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
                 placeholder=" "
                 autoComplete="current-password"
               />
-              <label className="lm-float-label">Password</label>
+              <label className="lm-float-label">{t('password')}</label>
               <button
                 type="button"
                 className="lm-eye-btn"
@@ -234,7 +238,7 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
                   className="lm-checkbox"
                 />
                 <span className="lm-checkbox-custom" />
-                Keep me signed in
+                {t('keepMeSignedIn')}
               </label>
               <button
                 type="button"
@@ -242,7 +246,7 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
                 onClick={handleRecoveryClick}
                 disabled={!onRecoveryClick}
               >
-                <KeyRound size={13} /> Forgot password?
+                <KeyRound size={13} /> {t('forgotPassword')}
               </button>
             </div>
 
@@ -250,37 +254,37 @@ export const LoginModal = ({ isOpen, onClose, onRecoveryClick }) => {
             <button type="submit" className="lm-submit-btn" disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <Loader2 size={18} className="lm-spinner" /> Signing in...
+                  <Loader2 size={18} className="lm-spinner" /> {t('signingIn')}
                 </>
               ) : (
                 <>
-                  <LogIn size={18} /> Sign In
+                  <LogIn size={18} /> {t('signIn')}
                 </>
               )}
             </button>
 
             {/* Divider */}
             <div className="lm-divider">
-              <span>or try a quick demo</span>
+              <span>{t('orTryQuickDemo')}</span>
             </div>
 
             {/* Demo buttons */}
             <div className="lm-demo-row">
               <button type="button" className="lm-demo-btn lm-demo-btn--student" onClick={() => createDemoSession('student')}>
                 <GraduationCap size={16} />
-                Student
+                {t('demoStudent')}
               </button>
               <button type="button" className="lm-demo-btn lm-demo-btn--admin" onClick={() => createDemoSession('admin')}>
                 <ShieldCheck size={16} />
-                Admin
+                {t('demoAdmin')}
               </button>
             </div>
 
             {/* Register link */}
             <p className="lm-register-text">
-              Don't have an account?{' '}
+              {t('noAccount')}{' '}
               <a href="/register" className="lm-register-link">
-                <UserPlus size={14} /> Create one
+                <UserPlus size={14} /> {t('createOne')}
               </a>
             </p>
           </form>

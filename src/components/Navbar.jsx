@@ -101,6 +101,13 @@ export const Navbar = () => {
               <option value="Telugu">తెలుగు</option>
               <option value="Bengali">বাংলা</option>
               <option value="Marathi">मराठी</option>
+              <option value="Kannada">ಕನ್ನಡ</option>
+              <option value="Malayalam">മലയാളം</option>
+              <option value="Gujarati">ગુજરાતી</option>
+              <option value="Punjabi">ਪੰਜਾਬੀ</option>
+              <option value="Odia">ଓଡ଼ିଆ</option>
+              <option value="Assamese">অসমীয়া</option>
+              <option value="Urdu">اردو</option>
             </select>
 
             {/* Fullscreen Toggle */}
@@ -190,6 +197,13 @@ export const Navbar = () => {
               <option value="Telugu">తెలుగు</option>
               <option value="Bengali">বাংলা</option>
               <option value="Marathi">मराठी</option>
+              <option value="Kannada">ಕನ್ನಡ</option>
+              <option value="Malayalam">മലയാളം</option>
+              <option value="Gujarati">ગુજરાતી</option>
+              <option value="Punjabi">ਪੰਜਾਬੀ</option>
+              <option value="Odia">ଓଡ଼ିଆ</option>
+              <option value="Assamese">অসমীয়া</option>
+              <option value="Urdu">اردو</option>
             </select>
             
             {isLoggedIn ? (

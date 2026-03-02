@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Send, ArrowLeft, CheckCircle, BookOpen, FileText, Lightbulb } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { addStudentRequest } from '../utils/resourceStore.js';
+import { useLanguage } from '../contexts/LanguageContext.jsx';
+import { translate } from '../translations/index.js';
 
 const REQUEST_CATEGORIES = [
   'Computer Science',
@@ -14,6 +16,7 @@ const REQUEST_CATEGORIES = [
 
 export const RequestResourcePage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState(REQUEST_CATEGORIES[0]);
@@ -57,18 +60,18 @@ export const RequestResourcePage = () => {
             className="heading-entrance mb-5 inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3.5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/40"
           >
             <ArrowLeft size={15} />
-            Dashboard
+            {translate('dashboard', language)}
           </button>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex-1 min-w-0">
               <p className="heading-entrance mb-2 text-xs font-semibold uppercase tracking-widest text-teal-200">
-                Resource Request
+                {translate('resourceRequest', language)}
               </p>
               <h1 className="heading-entrance heading-premium text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white mb-3">
-                Suggest a Resource
+                {translate('suggestResource', language)}
               </h1>
               <p className="heading-entrance heading-entrance-delay-1 text-base sm:text-lg text-teal-100 leading-relaxed max-w-lg">
-                Help us grow the library request books, videos, or documents you'd like added.
+                {translate('helpGrowLibrary', language)}
               </p>
             </div>
             {/* Floating icon cluster */}
@@ -110,8 +113,8 @@ export const RequestResourcePage = () => {
                   <CheckCircle size={22} className="text-emerald-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-emerald-800">Request submitted successfully!</p>
-                  <p className="text-xs text-emerald-600 mt-0.5">The admin will review it shortly. Track it in "My Requests".</p>
+                  <p className="text-sm font-semibold text-emerald-800">{translate('requestSubmitted', language)}</p>
+                  <p className="text-xs text-emerald-600 mt-0.5">{translate('adminWillReview', language)}</p>
                 </div>
               </div>
             )}
@@ -122,16 +125,16 @@ export const RequestResourcePage = () => {
               <div className="p-6 sm:p-8">
                 <h2 className="heading-entrance heading-premium text-xl font-bold text-slate-900 mb-1 flex items-center gap-2">
                   <Send size={18} className="text-teal-600" />
-                  New Request
+                  {translate('newRequest', language)}
                 </h2>
-                <p className="heading-entrance heading-entrance-delay-1 text-sm text-slate-500 mb-7">Fill in the details below to submit your request.</p>
+                <p className="heading-entrance heading-entrance-delay-1 text-sm text-slate-500 mb-7">{translate('fillDetails', language)}</p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Title */}
                   <div className="heading-entrance" style={{ animationDelay: '120ms' }}>
                     <label htmlFor="resource-title" className="flex items-center gap-1.5 text-sm font-semibold text-slate-700 mb-2">
                       <FileText size={14} className="text-teal-600" />
-                      Resource Title
+                      {translate('resourceTitleLabel', language)}
                     </label>
                     <input
                       id="resource-title"
@@ -140,7 +143,7 @@ export const RequestResourcePage = () => {
                       onChange={(event) => setTitle(event.target.value)}
                       onFocus={() => setFocusedField('title')}
                       onBlur={() => setFocusedField(null)}
-                      placeholder="e.g. Advanced Machine Learning Textbook"
+                      placeholder={translate('resourceTitlePlaceholder', language)}
                       required
                       className={`w-full px-4 py-3.5 bg-slate-50 border rounded-xl text-slate-900 placeholder:text-slate-400 transition-all duration-200 focus:outline-none focus:bg-white focus:shadow-sm ${
                         focusedField === 'title'
@@ -154,7 +157,7 @@ export const RequestResourcePage = () => {
                   <div className="heading-entrance" style={{ animationDelay: '200ms' }}>
                     <label htmlFor="resource-description" className="flex items-center gap-1.5 text-sm font-semibold text-slate-700 mb-2">
                       <Lightbulb size={14} className="text-teal-600" />
-                      Description
+                      {translate('descriptionLabel', language)}
                     </label>
                     <textarea
                       id="resource-description"
@@ -162,7 +165,7 @@ export const RequestResourcePage = () => {
                       onChange={(event) => setDescription(event.target.value)}
                       onFocus={() => setFocusedField('description')}
                       onBlur={() => setFocusedField(null)}
-                      placeholder="Describe what you need and why it'd be helpful for your studies..."
+                      placeholder={translate('descriptionPlaceholder', language)}
                       required
                       rows={5}
                       className={`w-full px-4 py-3.5 bg-slate-50 border rounded-xl text-slate-900 placeholder:text-slate-400 transition-all duration-200 resize-y focus:outline-none focus:bg-white focus:shadow-sm ${
@@ -172,7 +175,7 @@ export const RequestResourcePage = () => {
                       }`}
                     />
                     <p className={`mt-1.5 text-xs transition-colors ${charCount > 0 ? 'text-slate-500' : 'text-slate-400'}`}>
-                      {charCount > 0 ? `${charCount} characters` : 'Min. a few words recommended'}
+                      {charCount > 0 ? `${charCount} ${translate('characters', language)}` : translate('minWordsRecommended', language)}
                     </p>
                   </div>
 
@@ -180,7 +183,7 @@ export const RequestResourcePage = () => {
                   <div className="heading-entrance" style={{ animationDelay: '280ms' }}>
                     <label htmlFor="resource-category" className="flex items-center gap-1.5 text-sm font-semibold text-slate-700 mb-2">
                       <BookOpen size={14} className="text-teal-600" />
-                      Category
+                      {translate('categoryLabel', language)}
                     </label>
                     <select
                       id="resource-category"
@@ -218,7 +221,7 @@ export const RequestResourcePage = () => {
                       }`}
                     >
                       <Send size={17} className={`transition-transform duration-200 ${isFormValid ? 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5' : ''}`} />
-                      Submit Request
+                      {translate('submitRequest', language)}
                     </button>
                   </div>
                 </form>
@@ -232,14 +235,14 @@ export const RequestResourcePage = () => {
             <div className="heading-entrance bg-white rounded-2xl shadow-sm border border-gray-200 p-6 transition-shadow hover:shadow-md" style={{ animationDelay: '200ms' }}>
               <h3 className="heading-entrance heading-entrance-card heading-premium text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
                 <Lightbulb size={16} className="text-amber-500" />
-                Tips for a Great Request
+                {translate('tipsForRequest', language)}
               </h3>
               <ul className="space-y-3">
                 {[
-                  { text: 'Be specific — include the full title, edition, or author if known.', color: 'bg-teal-50 text-teal-600 border-teal-100' },
-                  { text: 'Explain why — helps admin prioritize your request faster.', color: 'bg-blue-50 text-blue-600 border-blue-100' },
-                  { text: 'Pick the right category so it reaches the correct department.', color: 'bg-orange-50 text-orange-600 border-orange-100' },
-                  { text: 'Track progress any time from "My Requests" in your dashboard.', color: 'bg-purple-50 text-purple-600 border-purple-100' },
+                  { text: translate('tipSpecific', language), color: 'bg-teal-50 text-teal-600 border-teal-100' },
+                  { text: translate('tipExplainWhy', language), color: 'bg-blue-50 text-blue-600 border-blue-100' },
+                  { text: translate('tipRightCategory', language), color: 'bg-orange-50 text-orange-600 border-orange-100' },
+                  { text: translate('tipTrackProgress', language), color: 'bg-purple-50 text-purple-600 border-purple-100' },
                 ].map((tip, idx) => (
                   <li key={idx} className="flex items-start gap-3 group/tip">
                     <span className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border text-[10px] font-bold ${tip.color}`}>
@@ -255,12 +258,12 @@ export const RequestResourcePage = () => {
 
             {/* Quick Stats */}
             <div className="heading-entrance bg-gradient-to-br from-teal-50 to-slate-50 rounded-2xl border border-teal-100 p-6 transition-shadow hover:shadow-md" style={{ animationDelay: '340ms' }}>
-              <h3 className="heading-entrance heading-entrance-card heading-premium text-base font-bold text-slate-900 mb-4">How It Works</h3>
+              <h3 className="heading-entrance heading-entrance-card heading-premium text-base font-bold text-slate-900 mb-4">{translate('howItWorks', language)}</h3>
               <div className="space-y-4">
                 {[
-                  { step: '1', label: 'Submit', desc: 'Fill out the form with resource details' },
-                  { step: '2', label: 'Review', desc: 'Admin reviews and processes your request' },
-                  { step: '3', label: 'Available', desc: 'Resource added to the library for everyone' },
+                  { step: '1', label: translate('submitStep', language), desc: translate('submitStepDesc', language) },
+                  { step: '2', label: translate('reviewStep', language), desc: translate('reviewStepDesc', language) },
+                  { step: '3', label: translate('availableStep', language), desc: translate('availableStepDesc', language) },
                 ].map((item) => (
                   <div key={item.step} className="flex items-start gap-3">
                     <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white text-xs font-bold shadow-sm">

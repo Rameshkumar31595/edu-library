@@ -99,6 +99,10 @@ export const StudentDashboard = () => {
     { id: 2, title: 'Thermodynamics Fundamentals', subject: 'Mechanical Engg.', type: 'Video', lastAccessed: '5 hours ago', url: 'https://www.youtube.com/watch?v=4LqZdkkBDas' },
     { id: 3, title: 'Digital Signal Processing', subject: 'Electronics', type: 'PDF', lastAccessed: '1 day ago', url: 'https://web.eecs.utk.edu/~hqi/teaching/ece505f15/lecture01_intro.pdf' },
     { id: 4, title: 'Software Engineering Principles', subject: 'Computer Science', type: 'Video', lastAccessed: '2 days ago', url: 'https://www.youtube.com/watch?v=O753uuutqH8' },
+    { id: 5, title: 'Machine Learning Foundations', subject: 'Computer Science', type: 'PDF', lastAccessed: '3 hours ago', url: null },
+    { id: 6, title: 'Linear Algebra for Engineers', subject: 'Mathematics', type: 'PDF', lastAccessed: '1 day ago', url: null },
+    { id: 7, title: 'Computer Networks Masterclass', subject: 'Computer Science', type: 'Video', lastAccessed: '4 hours ago', url: null },
+    { id: 8, title: 'Fluid Mechanics Essentials', subject: 'Mechanical Engg.', type: 'Document', lastAccessed: '2 days ago', url: null },
   ];
 
   // Merge: admin-added resources on top, then defaults (avoid duplicates by title)
@@ -107,12 +111,12 @@ export const StudentDashboard = () => {
   const recentResources = [...uniqueAdminResources, ...defaultResources];
 
   const departments = [
-    { name: 'Computer Science',    count: 45, slug: 'computer-science' },
-    { name: 'Electronics & Comm.', count: 38, slug: 'electronics' },
-    { name: 'Mechanical Engg.',    count: 32, slug: 'mechanical' },
-    { name: 'Civil Engineering',   count: 28, slug: 'civil-engineering' },
-    { name: 'Mathematics',         count: 25, slug: 'mathematics' },
-    { name: 'Physics',             count: 22, slug: 'physics' },
+    { name: 'Computer Science',    count: 156, slug: 'computer-science' },
+    { name: 'Electronics & Comm.', count: 98,  slug: 'electronics' },
+    { name: 'Mechanical Engg.',    count: 84,  slug: 'mechanical' },
+    { name: 'Civil Engineering',   count: 72,  slug: 'civil-engineering' },
+    { name: 'Mathematics',         count: 65,  slug: 'mathematics' },
+    { name: 'Physics',             count: 53,  slug: 'physics' },
   ];
 
   const learningItems = [
@@ -134,14 +138,28 @@ export const StudentDashboard = () => {
       lastAccessed: '3 days ago',
       url: 'https://www.youtube.com/watch?v=4LqZdkkBDas',
     },
+    {
+      title: 'Operating Systems',
+      progress: 45,
+      lastAccessed: 'Today',
+      url: null,
+    },
+    {
+      title: 'Machine Learning',
+      progress: 20,
+      lastAccessed: '2 days ago',
+      url: null,
+    },
   ];
 
   const announcements = [
-    { date: '28 May 2024', message: 'New semester study materials uploaded for all departments', priority: 'high' },
-    { date: '25 May 2024', message: 'Database maintenance scheduled for Saturday 3AM-6AM', priority: 'medium' },
-    { date: '22 May 2024', message: 'Request feature now available for suggesting new resources', priority: 'normal' },
-    { date: '18 May 2024', message: 'Library hours extended till 10PM during exam week', priority: 'high' },
-    { date: '15 May 2024', message: 'Research paper submission deadline: 30 May 2024', priority: 'high' },
+    { date: '26 Feb 2026', message: 'End-semester exam schedule released for all departments', priority: 'high' },
+    { date: '25 Feb 2026', message: 'New video series on Cloud Computing is now available', priority: 'normal' },
+    { date: '24 Feb 2026', message: 'Library will remain closed on 28 Feb for maintenance', priority: 'medium' },
+    { date: '23 Feb 2026', message: 'Updated syllabus materials uploaded for Semester 4 CS', priority: 'high' },
+    { date: '22 Feb 2026', message: 'Research paper submission portal opens next week', priority: 'high' },
+    { date: '20 Feb 2026', message: 'Guest lecture on AI Ethics — Register before 25 Feb', priority: 'normal' },
+    { date: '18 Feb 2026', message: 'Mid-term grades published for all departments', priority: 'high' },
   ];
 
   return (
