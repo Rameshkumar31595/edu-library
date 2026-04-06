@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Megaphone } from 'lucide-react';
-import { getSortedAnnouncements, simulateAdminAddAnnouncement } from '../utils/announcementsStore.js';
+import { addAnnouncement, getSortedAnnouncements, simulateAdminAddAnnouncement } from '../utils/announcementsStore.js';
 
 export const AdminAnnouncements = () => {
   const navigate = useNavigate();
@@ -27,19 +27,13 @@ export const AdminAnnouncements = () => {
     }
     setAnnouncementPublishing(true);
     setTimeout(() => {
-      const normalizedPriority = priority === 'High' ? 'urgent' : 'normal';
-      const nextAnnouncement = {
-        id: Date.now(),
+      addAnnouncement({
         title: `${audience} Announcement`,
         message: announcementDraft.trim(),
-        priority: normalizedPriority,
-        createdAt: new Date().toISOString(),
-      };
+        priority: priority === 'High' ? 'urgent' : 'normal',
+      });
 
-      const currentRaw = localStorage.getItem('announcements');
-      const current = currentRaw ? JSON.parse(currentRaw) : [];
-      const updated = [nextAnnouncement, ...(Array.isArray(current) ? current : [])];
-      localStorage.setItem('announcements', JSON.stringify(updated));
+      window.dispatchEvent(new Event('announcements-updated'));
 
       setAnnouncements(getSortedAnnouncements(20));
       setAnnouncementDraft('');

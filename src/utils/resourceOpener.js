@@ -7,6 +7,40 @@ const SAMPLE_DOC_URL = 'https://calibre-ebook.com/downloads/demos/demo.docx';
 const SAMPLE_IMAGE_URL = 'https://via.placeholder.com/1200x800.png?text=Resource+Preview';
 const TRUSTED_EMBED_HOSTS = new Set([window.location.host]);
 
+const VIDEO_TITLE_MAP = {
+  'react basics tutorial': 'https://www.youtube.com/watch?v=bMknfKXIFA8',
+  'dbms full course': 'https://www.youtube.com/watch?v=HXV3zeQKqGY',
+  'advanced python programming': 'https://www.youtube.com/watch?v=rfscVS0vtbw',
+  'signal processing fundamentals': 'https://www.youtube.com/watch?v=Qy9VGxJ1U0Q',
+  'circuit theory videos': 'https://www.youtube.com/watch?v=5f0x4QyJkN0',
+  'machine learning basics': 'https://www.youtube.com/watch?v=GwIo3gDZCVQ',
+  'embedded systems programming': 'https://www.youtube.com/watch?v=F321087yYy4',
+  'deep learning with pytorch': 'https://www.youtube.com/watch?v=V_xro1bcAuA',
+  'devops & ci/cd pipeline': 'https://www.youtube.com/watch?v=scEDHsr3APg',
+};
+
+const normalizeTitle = (value) =>
+  String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');
+
+const getYouTubeUrlForResource = (resource, currentUrl) => {
+  const current = String(currentUrl || '').trim();
+  if (/youtube\.com|youtu\.be/i.test(current)) {
+    return current;
+  }
+
+  const title = String(resource?.title || '').trim();
+  const key = normalizeTitle(title);
+  if (VIDEO_TITLE_MAP[key]) {
+    return VIDEO_TITLE_MAP[key];
+  }
+
+  const query = encodeURIComponent(title || 'educational video lecture');
+  return `https://www.youtube.com/results?search_query=${query}`;
+};
+
 const getUrlFromResource = (resource) => {
   if (!resource || typeof resource !== 'object') return '';
   return (
@@ -80,15 +114,19 @@ const remapBrokenLocalFileUrl = (url, resource) => {
 };
 
 export const openResourceByType = (resource) => {
+  const declaredType = String(resource?.type || '').trim().toLowerCase();
   const rawUrl = getUrlFromResource(resource);
-  if (!rawUrl) {
+  if (!rawUrl && declaredType !== 'video') {
     window.alert('Resource not available');
     return;
   }
 
-  const url = remapBrokenLocalFileUrl(normalizeAbsoluteUrl(rawUrl), resource);
+  const resolvedUrl = declaredType === 'video'
+    ? getYouTubeUrlForResource(resource, rawUrl)
+    : rawUrl;
+
+  const url = remapBrokenLocalFileUrl(normalizeAbsoluteUrl(resolvedUrl), resource);
   const extension = getFileExtension(url);
-  const declaredType = String(resource?.type || '').trim().toLowerCase();
 
   const isPdf = declaredType === 'pdf' || PDF_EXTENSIONS.includes(extension);
   const isDoc = ['doc', 'docx', 'word'].includes(declaredType) || DOC_EXTENSIONS.includes(extension);

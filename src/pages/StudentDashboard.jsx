@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Save, Download, Mail, Megaphone, LogOut, LayoutDashboard, Bell, X } from 'lucide-react';
+import { BookOpen, Save, Download, Mail, Megaphone, LogOut, LayoutDashboard, Bell } from 'lucide-react';
 import { SAVED_RESOURCES_DATA, DOWNLOADS_DATA } from '../data/studentResourcesData';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { translate } from '../translations/index.js';
@@ -43,9 +43,7 @@ export const StudentDashboard = () => {
   const [userRole, setUserRole] = useState('');
   const [userName, setUserName] = useState('Student');
   const [activeNav, setActiveNav] = useState('overview');
-  const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
-  const announcementsRef = useRef(null);
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -66,7 +64,6 @@ export const StudentDashboard = () => {
 
   useEffect(() => {
     const loadAnnouncements = () => {
-      console.log('announcements raw:', localStorage.getItem('announcements'));
       setAnnouncements(getSortedAnnouncements(5));
     };
 
@@ -80,14 +77,17 @@ export const StudentDashboard = () => {
 
     window.addEventListener('storage', handleStorage);
     window.addEventListener('focus', loadAnnouncements);
+    window.addEventListener('announcements-updated', loadAnnouncements);
 
     return () => {
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('focus', loadAnnouncements);
+      window.removeEventListener('announcements-updated', loadAnnouncements);
     };
   }, []);
 
   // Close announcements dropdown when clicking outside
+  /*
   useEffect(() => {
     const handler = (e) => {
       if (announcementsRef.current && !announcementsRef.current.contains(e.target)) {
@@ -97,6 +97,7 @@ export const StudentDashboard = () => {
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
+  */
 
   const handleLogout = () => {
     localStorage.removeItem('uiExtension-isLoggedIn');
@@ -321,12 +322,12 @@ export const StudentDashboard = () => {
             </div>
             <div className="flex items-center gap-2">
               {/* Announcements Bell */}
-              <div ref={announcementsRef} className="relative">
+              <div className="relative">
                 <button
-                  onClick={() => setAnnouncementsOpen((o) => !o)}
+                  onClick={() => navigate('/announcements')}
                   className="relative inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200 bg-white text-slate-600 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors"
                   aria-label="Announcements"
-                  aria-expanded={announcementsOpen}
+                  aria-expanded={false}
                 >
                   <Bell size={18} />
                   {/* High-priority badge */}
@@ -334,55 +335,7 @@ export const StudentDashboard = () => {
                     {announcements.filter(a => a.priority === 'urgent').length}
                   </span>
                 </button>
-
-                {/* Dropdown */}
-                {announcementsOpen && (
-                  <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 rounded-2xl bg-white border border-gray-200 shadow-2xl overflow-hidden animate-fade-in">
-                    {/* Header */}
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-orange-50 to-red-50">
-                      <div className="flex items-center gap-2">
-                        <Bell size={15} className="text-orange-600" />
-                        <span className="font-semibold text-slate-800 text-sm">{translate('announcements', language)}</span>
-                        <span className="inline-flex items-center justify-center h-5 px-1.5 rounded-full bg-red-500 text-white text-[10px] font-bold">
-                          {announcements.filter(a => a.priority === 'urgent').length} {translate('urgent', language)}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => setAnnouncementsOpen(false)}
-                        className="text-slate-400 hover:text-slate-600 transition-colors"
-                        aria-label="Close"
-                      >
-                        <X size={15} />
-                      </button>
-                    </div>
-                    {/* List */}
-                    <ul className="divide-y divide-gray-100 max-h-72 overflow-y-auto">
-                      {announcements.length === 0 ? (
-                        <li className="px-4 py-5 text-sm text-slate-500">No announcements available</li>
-                      ) : announcements.map((a) => (
-                        <li key={a.id} className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
-                          <span className={`mt-0.5 flex-shrink-0 h-2.5 w-2.5 rounded-full ${
-                            a.priority === 'urgent' ? 'bg-red-500' : 'bg-teal-400'
-                          }`} />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs font-semibold text-slate-800 mb-0.5">{a.title}</p>
-                            <p className="text-sm text-slate-700 leading-snug">{a.message}</p>
-                            <p className="text-xs text-slate-400 mt-0.5">{new Date(a.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                    {/* Footer */}
-                    <div className="px-4 py-2.5 border-t border-gray-100 bg-gray-50">
-                      <button
-                        onClick={() => { setAnnouncementsOpen(false); navigate('/announcements'); }}
-                        className="w-full text-center text-xs font-semibold text-teal-700 hover:text-teal-900 transition-colors"
-                      >
-                        {translate('viewAllAnnouncements', language)} →
-                      </button>
-                    </div>
-                  </div>
-                )}
+                {/* Dropdown removed - bell now navigates to announcements page */}
               </div>
 
               {/* Logout */}
