@@ -36,12 +36,54 @@ export const RegistrationPage = () => {
     'Uttarakhand', 'West Bengal'
   ];
 
-  const districts = [
-    'District 1', 'District 2', 'District 3', 'District 4', 'District 5'
-  ];
+  const stateDistrictMap = {
+    'Andhra Pradesh': ['Anantapur', 'Chittoor', 'Guntur', 'Krishna', 'Nellore', 'Prakasam', 'Visakhapatnam', 'Vizianagaram'],
+    'Arunachal Pradesh': ['Anjaw', 'Changlang', 'East Siang', 'Lohit', 'Papum Pare', 'Tawang', 'West Siang'],
+    Assam: ['Baksa', 'Barpeta', 'Cachar', 'Dibrugarh', 'Kamrup', 'Nagaon', 'Sonitpur'],
+    Bihar: ['Araria', 'Bhagalpur', 'Darbhanga', 'Gaya', 'Muzaffarpur', 'Patna', 'Purnia'],
+    Chhattisgarh: ['Balod', 'Bilaspur', 'Durg', 'Janjgir-Champa', 'Korba', 'Raipur', 'Rajnandgaon'],
+    Delhi: ['Central Delhi', 'East Delhi', 'New Delhi', 'North Delhi', 'North West Delhi', 'South Delhi', 'West Delhi'],
+    Goa: ['North Goa', 'South Goa'],
+    Gujarat: ['Ahmedabad', 'Bhavnagar', 'Gandhinagar', 'Kutch', 'Rajkot', 'Surat', 'Vadodara'],
+    Haryana: ['Ambala', 'Faridabad', 'Gurugram', 'Hisar', 'Karnal', 'Panipat', 'Rohtak'],
+    'Himachal Pradesh': ['Bilaspur', 'Chamba', 'Hamirpur', 'Kangra', 'Kullu', 'Mandi', 'Shimla'],
+    Jharkhand: ['Bokaro', 'Dhanbad', 'East Singhbhum', 'Hazaribagh', 'Palamu', 'Ranchi', 'West Singhbhum'],
+    Karnataka: ['Ballari', 'Belagavi', 'Bengaluru Rural', 'Bengaluru Urban', 'Dharwad', 'Mysuru', 'Shivamogga'],
+    Kerala: ['Alappuzha', 'Ernakulam', 'Idukki', 'Kannur', 'Kasaragod', 'Kollam', 'Thiruvananthapuram'],
+    'Madhya Pradesh': ['Bhopal', 'Gwalior', 'Indore', 'Jabalpur', 'Rewa', 'Sagar', 'Ujjain'],
+    Maharashtra: ['Ahmednagar', 'Aurangabad', 'Kolhapur', 'Mumbai City', 'Nagpur', 'Nashik', 'Pune'],
+    Manipur: ['Bishnupur', 'Chandel', 'Imphal East', 'Imphal West', 'Senapati', 'Thoubal', 'Ukhrul'],
+    Meghalaya: ['East Khasi Hills', 'North Garo Hills', 'Ri Bhoi', 'South Garo Hills', 'South West Khasi Hills', 'West Garo Hills', 'West Jaintia Hills'],
+    Mizoram: ['Aizawl', 'Champhai', 'Kolasib', 'Lawngtlai', 'Lunglei', 'Mamit', 'Serchhip'],
+    Nagaland: ['Dimapur', 'Kiphire', 'Kohima', 'Mokokchung', 'Mon', 'Peren', 'Tuensang'],
+    Odisha: ['Balasore', 'Cuttack', 'Ganjam', 'Khordha', 'Mayurbhanj', 'Puri', 'Sundargarh'],
+    Punjab: ['Amritsar', 'Bathinda', 'Gurdaspur', 'Jalandhar', 'Ludhiana', 'Patiala', 'Sangrur'],
+    Rajasthan: ['Ajmer', 'Alwar', 'Bikaner', 'Jaipur', 'Jodhpur', 'Kota', 'Udaipur'],
+    Sikkim: ['East Sikkim', 'North Sikkim', 'South Sikkim', 'West Sikkim'],
+    'Tamil Nadu': ['Chennai', 'Coimbatore', 'Erode', 'Madurai', 'Salem', 'Thanjavur', 'Tiruchirappalli'],
+    Telangana: ['Adilabad', 'Hyderabad', 'Karimnagar', 'Khammam', 'Nalgonda', 'Nizamabad', 'Warangal'],
+    Tripura: ['Dhalai', 'Gomati', 'Khowai', 'North Tripura', 'Sepahijala', 'South Tripura', 'West Tripura'],
+    'Uttar Pradesh': ['Agra', 'Aligarh', 'Ghaziabad', 'Kanpur Nagar', 'Lucknow', 'Prayagraj', 'Varanasi'],
+    Uttarakhand: ['Almora', 'Dehradun', 'Haridwar', 'Nainital', 'Pauri Garhwal', 'Tehri Garhwal', 'Udham Singh Nagar'],
+    'West Bengal': ['Alipurduar', 'Darjeeling', 'Howrah', 'Kolkata', 'Murshidabad', 'North 24 Parganas', 'South 24 Parganas'],
+  };
+
+  const districts = formData.state ? (stateDistrictMap[formData.state] || []) : [];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Keep district in sync with state selection.
+    if (name === 'state') {
+      setFormData((prev) => ({
+        ...prev,
+        state: value,
+        district: '',
+      }));
+      setError('');
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
@@ -89,6 +131,10 @@ export const RegistrationPage = () => {
     }
     if (!formData.state) {
       setError('State is required');
+      return;
+    }
+    if (!formData.district) {
+      setError('District is required');
       return;
     }
 
@@ -317,8 +363,10 @@ export const RegistrationPage = () => {
                   name="district"
                   value={formData.district}
                   onChange={handleChange}
+                  disabled={!formData.state}
+                  required
                 >
-                  <option value="">Select district</option>
+                  <option value="">{formData.state ? 'Select district' : 'Select state first'}</option>
                   {districts.map((d) => (
                     <option key={d} value={d}>{d}</option>
                   ))}

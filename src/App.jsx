@@ -4,7 +4,6 @@ import { LanguageProvider } from './contexts/LanguageContext.jsx';
 import { LandingPage } from './pages/LandingPage.jsx';
 import { HomePage } from './pages/HomePage.jsx';
 import { LoginPage } from './pages/LoginPage.jsx';
-import { RegisterPage } from './pages/RegisterPage.jsx';
 import { RegistrationPage } from './pages/RegistrationPage.jsx';
 import { BrowseCatalogsPage } from './pages/BrowseCatalogsPage.jsx';
 import { SavedResourcesPage } from './pages/SavedResourcesPage.jsx';
@@ -72,9 +71,6 @@ function App() {
         {/* Home Page - Resource browsing page */}
         <Route path="/home" element={<HomePage />} />
 
-        {/* Register Page - Full-width registration page */}
-        <Route path="/register" element={<RegistrationPage />} />
-
         {/* Footer Pages - Always accessible */}
         <Route path="/about" element={<AboutPage />} />
         <Route path="/disclaimer" element={<DisclaimerPage />} />
@@ -100,7 +96,7 @@ function App() {
         {/* Register Page - Redirect to home if already logged in */}
         <Route
           path="/register"
-          element={isLoggedIn ? <Navigate to="/" replace /> : <RegisterPage />}
+          element={isLoggedIn ? <Navigate to="/" replace /> : <RegistrationPage />}
         />
 
         {/* Browse Catalogs - Always accessible */}
